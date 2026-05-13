@@ -17,6 +17,7 @@ class Shop extends Model
         'slug',
         'logo_path',
         'description',
+        'address',
     ];
 
     public function owner(): BelongsTo

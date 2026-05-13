@@ -7,109 +7,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="../tokoq_design_system/responsive.css" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "inverse-primary": "#b8cf8c",
-                    "tertiary-fixed": "#dae9ac",
-                    "surface-bright": "#f8fbea",
-                    "primary-fixed-dim": "#b8cf8c",
-                    "primary-fixed": "#d3eba6",
-                    "on-surface": "#191d13",
-                    "inverse-on-surface": "#f0f2e2",
-                    "surface-tint": "#51652e",
-                    "outline": "#75786b",
-                    "background": "#f8fbea",
-                    "surface-variant": "#e1e4d4",
-                    "on-secondary-container": "#596841",
-                    "on-tertiary": "#ffffff",
-                    "secondary-fixed-dim": "#bccd9e",
-                    "on-error-container": "#93000a",
-                    "inverse-surface": "#2e3227",
-                    "secondary": "#55633d",
-                    "surface-dim": "#d9dccb",
-                    "secondary-fixed": "#d8e9b9",
-                    "error-container": "#ffdad6",
-                    "surface-container-highest": "#e1e4d4",
-                    "on-tertiary-fixed": "#161f00",
-                    "primary-container": "#576b33",
-                    "surface-container-high": "#e7ead9",
-                    "on-background": "#191d13",
-                    "on-error": "#ffffff",
-                    "surface-container-low": "#f2f5e4",
-                    "tertiary": "#445122",
-                    "secondary-container": "#d5e6b6",
-                    "on-primary-container": "#d3eba5",
-                    "tertiary-container": "#5c6938",
-                    "on-secondary-fixed": "#131f02",
-                    "outline-variant": "#c5c8b9",
-                    "on-secondary": "#ffffff",
-                    "on-primary-fixed": "#131f00",
-                    "on-secondary-fixed-variant": "#3d4b28",
-                    "surface": "#f8fbea",
-                    "tertiary-fixed-dim": "#becd92",
-                    "surface-container-lowest": "#ffffff",
-                    "on-tertiary-container": "#d9e8aa",
-                    "on-surface-variant": "#45483d",
-                    "surface-container": "#edefdf",
-                    "on-primary": "#ffffff",
-                    "primary": "#40521d",
-                    "on-primary-fixed-variant": "#3a4d18",
-                    "error": "#ba1a1a",
-                    "on-tertiary-fixed-variant": "#3f4b1d"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-            },
-            "spacing": {
-                    "container-padding": "32px",
-                    "section-margin": "48px",
-                    "gutter": "24px",
-                    "unit": "8px",
-                    "card-gap": "24px"
-            },
-            "fontFamily": {},
-            "fontSize": {
-                    "h2-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
-                    "h1-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
-                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
-                    "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                    "h3": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
-                    "label-caps": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700"}],
-                    "h2": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "700"}]
-            }
-          },
-        },
-      }
-    </script>
+<link href="/css/tokoq-colors.css" rel="stylesheet"/>
+<script src="/js/tailwind-config.js"></script>
 <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
         .active-nav-border {
-            box-shadow: inset 4px 0 0 0 #d3eba6;
+            box-shadow: inset 4px 0 0 0 #10B981;
         }
         .digital-twin-gradient {
-            background: radial-gradient(circle at center, #ffffff 0%, #f8fbea 100%);
+            background: radial-gradient(circle at center, #ffffff 0%, #ECFDF5 100%);
         }
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background-color: #c5c8b9;
+            background-color: #D1D5DB;
             border-radius: 10px;
         }
     </style>
 </head>
-<body class="app-shell bg-background text-on-background font-body-md overflow-x-hidden">
+<body class="app-shell bg-secondary text-text font-body-md overflow-x-hidden">
 <!-- SideNavBar Shell -->
 @include('owner.layouts.sidebar', ['activeMenu' => 'dashboard'])
 @php
@@ -145,7 +64,11 @@
 <p class="font-bold text-on-surface leading-none">{{ $user->name }}</p>
 <p class="text-body-sm text-on-surface-variant">{{ $user->shop?->name ?? 'Toko Anda' }}</p>
 </div>
+@if ($user->profile_photo_url)
+<img src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" class="w-10 h-10 rounded-full object-cover border-2 border-primary-fixed shadow-sm"/>
+@else
 <div class="w-10 h-10 rounded-full border-2 border-primary-fixed shadow-sm bg-primary text-on-primary flex items-center justify-center font-bold">{{ $initials }}</div>
+@endif
 </div>
 </div>
 </header>
@@ -246,7 +169,7 @@
 @foreach($dailyRevenue as $day)
 @php $height = max(12, round(($day['total'] / $maxRevenue) * 100)); @endphp
 <div class="flex-1 flex flex-col items-center gap-2 group">
-<div class="w-full bg-surface-container-high rounded-t-xl group-hover:bg-primary-container transition-colors" style="height: {{ $height }}%"></div>
+<div class="w-full bg-white rounded-t-xl group-hover:bg-primary-container transition-colors" style="height: {{ $height }}%"></div>
 <span class="text-label-caps text-on-surface-variant">{{ $day['label'] }}</span>
 </div>
 @endforeach
@@ -263,12 +186,12 @@
 </div>
 <ul class="space-y-4">
 @forelse($insights as $insight)
-<li class="flex items-start gap-4 p-4 rounded-2xl bg-surface-container-low border border-outline-variant/30">
+<li class="flex items-start gap-4 p-4 rounded-2xl bg-white border border-outline-variant/30">
 <span class="material-symbols-outlined text-tertiary text-[20px] mt-1" data-icon="insights">insights</span>
 <p class="text-body-md text-on-surface">{{ $insight }}</p>
 </li>
 @empty
-<li class="flex items-start gap-4 p-4 rounded-2xl bg-surface-container-low border border-outline-variant/30">
+<li class="flex items-start gap-4 p-4 rounded-2xl bg-white border border-outline-variant/30">
 <span class="material-symbols-outlined text-tertiary text-[20px] mt-1" data-icon="insights">insights</span>
 <p class="text-body-md text-on-surface">Belum cukup data transaksi untuk membentuk insight otomatis.</p>
 </li>
@@ -303,7 +226,7 @@
 </div>
 <div class="table-responsive overflow-x-auto">
 <table class="w-full text-left">
-<thead class="bg-surface-container text-on-surface-variant font-label-caps uppercase">
+<thead class="bg-white text-on-surface-variant font-label-caps uppercase">
 <tr>
 <th class="px-8 py-4">Produk</th>
 <th class="px-8 py-4">Sisa Stok</th>
@@ -340,7 +263,7 @@
 <div class="space-y-6">
     @forelse($bestSellers as $index => $item)
     <div class="flex items-center gap-4">
-        <div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center font-bold text-primary">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</div>
+        <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center font-bold text-primary">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</div>
         <div class="flex-1">
             <p class="font-bold text-on-surface">{{ $item->name }}</p>
             <p class="text-body-sm text-on-surface-variant">{{ $item->total_sold }} Terjual</p>

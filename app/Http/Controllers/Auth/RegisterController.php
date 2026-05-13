@@ -25,6 +25,8 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'shop_name' => ['required', 'string', 'max:255'],
+            'shop_address' => ['required', 'string', 'max:2000'],
+            'profile_photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
         $user = User::create([
@@ -33,12 +35,16 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
             'role' => 'owner',
             'status' => 'pending',
+            'profile_photo_path' => $request->hasFile('profile_photo')
+                ? $request->file('profile_photo')->store('profile-photos', 'public')
+                : null,
         ]);
 
         Shop::create([
             'owner_id' => $user->id,
             'name' => $request->shop_name,
             'slug' => Str::slug($request->shop_name),
+            'address' => $request->shop_address,
         ]);
 
         Auth::login($user);

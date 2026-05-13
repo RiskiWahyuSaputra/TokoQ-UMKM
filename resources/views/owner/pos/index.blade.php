@@ -8,17 +8,47 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="/template/tokoq_design_system/responsive.css" rel="stylesheet"/>
-<script id="tailwind-config">
-tailwind.config = {
-  darkMode: "class",
-  theme: { extend: { "colors": { "inverse-primary": "#b8cf8c","tertiary-fixed": "#dae9ac","surface-bright": "#f8fbea","primary-fixed-dim": "#b8cf8c","primary-fixed": "#d3eba6","on-surface": "#191d13","inverse-on-surface": "#f0f2e2","surface-tint": "#51652e","outline": "#75786b","background": "#f8fbea","surface-variant": "#e1e4d4","on-secondary-container": "#596841","on-tertiary": "#ffffff","secondary-fixed-dim": "#bccd9e","on-error-container": "#93000a","inverse-surface": "#2e3227","secondary": "#55633d","surface-dim": "#d9dccb","secondary-fixed": "#d8e9b9","error-container": "#ffdad6","surface-container-highest": "#e1e4d4","on-tertiary-fixed": "#161f00","primary-container": "#576b33","surface-container-high": "#e7ead9","on-background": "#191d13","on-error": "#ffffff","surface-container-low": "#f2f5e4","tertiary": "#445122","secondary-container": "#d5e6b6","on-primary-container": "#d3eba5","tertiary-container": "#5c6938","on-secondary-fixed": "#131f02","outline-variant": "#c5c8b9","on-secondary": "#ffffff","on-primary-fixed": "#131f00","on-secondary-fixed-variant": "#3d4b28","surface": "#f8fbea","tertiary-fixed-dim": "#becd92","surface-container-lowest": "#ffffff","on-tertiary-container": "#d9e8aa","on-surface-variant": "#45483d","surface-container": "#edefdf","on-primary": "#ffffff","primary": "#40521d","on-primary-fixed-variant": "#3a4d18","error": "#ba1a1a","on-tertiary-fixed-variant": "#3f4b1d" }, "borderRadius": { "DEFAULT": "0.25rem","lg": "0.5rem","xl": "0.75rem","full": "9999px" }, "spacing": { "container-padding": "32px","section-margin": "48px","gutter": "24px","unit": "8px","card-gap": "24px" }, "fontSize": { "h2-mobile": ["24px", {"lineHeight": "1.3","fontWeight": "700"}],"h1-mobile": ["28px", {"lineHeight": "1.2","fontWeight": "700"}],"body-md": ["16px", {"lineHeight": "1.6","fontWeight": "400"}],"body-lg": ["18px", {"lineHeight": "1.6","fontWeight": "400"}],"body-sm": ["14px", {"lineHeight": "1.5","fontWeight": "400"}],"h1": ["40px", {"lineHeight": "1.2","letterSpacing": "-0.02em","fontWeight": "700"}],"h3": ["24px", {"lineHeight": "1.4","fontWeight": "600"}],"label-caps": ["12px", {"lineHeight": "1.2","letterSpacing": "0.05em","fontWeight": "700"}],"h2": ["32px", {"lineHeight": "1.3","letterSpacing": "-0.01em","fontWeight": "700"}] } } }
-}
-</script>
+<link href="/css/tokoq-colors.css" rel="stylesheet"/>
+<script src="/js/tailwind-config.js"></script>
 <style>
 .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+.qris-pixel:nth-child(1),
+.qris-pixel:nth-child(2),
+.qris-pixel:nth-child(3),
+.qris-pixel:nth-child(5),
+.qris-pixel:nth-child(7),
+.qris-pixel:nth-child(8),
+.qris-pixel:nth-child(9),
+.qris-pixel:nth-child(11),
+.qris-pixel:nth-child(13),
+.qris-pixel:nth-child(15),
+.qris-pixel:nth-child(16),
+.qris-pixel:nth-child(19),
+.qris-pixel:nth-child(20),
+.qris-pixel:nth-child(21),
+.qris-pixel:nth-child(23),
+.qris-pixel:nth-child(25),
+.qris-pixel:nth-child(26),
+.qris-pixel:nth-child(27),
+.qris-pixel:nth-child(29),
+.qris-pixel:nth-child(30),
+.qris-pixel:nth-child(33),
+.qris-pixel:nth-child(35),
+.qris-pixel:nth-child(36),
+.qris-pixel:nth-child(37),
+.qris-pixel:nth-child(39),
+.qris-pixel:nth-child(40),
+.qris-pixel:nth-child(42),
+.qris-pixel:nth-child(43),
+.qris-pixel:nth-child(45),
+.qris-pixel:nth-child(46),
+.qris-pixel:nth-child(48),
+.qris-pixel:nth-child(49) {
+    background-color: #374151;
+}
 </style>
 </head>
-<body class="bg-background text-on-surface font-body-md">
+<body class="bg-secondary text-text font-body-md">
 @include('owner.layouts.sidebar', ['activeMenu' => 'pos'])
 
 @php
@@ -38,7 +68,7 @@ tailwind.config = {
 
 <main class="ml-64 min-h-screen flex flex-col xl:flex-row gap-6 p-8">
     <section class="flex-1 space-y-6">
-        <div class="bg-surface-container-lowest rounded-3xl border border-outline-variant p-6 shadow-sm">
+        <div class="bg-white rounded-3xl border border-outline-variant p-6 shadow-sm">
             <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
                 <div>
                     <h1 class="font-h3 text-h3 text-primary font-bold">Kasir POS</h1>
@@ -51,7 +81,11 @@ tailwind.config = {
                             <p class="font-bold text-primary">{{ $user->name }}</p>
                             <p class="text-body-sm text-on-surface-variant">{{ $user->shop?->name ?? 'Toko Anda' }}</p>
                         </div>
-                        <div class="w-11 h-11 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold">{{ $initials }}</div>
+                        @if ($user->profile_photo_url)
+                            <img src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" class="w-11 h-11 rounded-full object-cover border-2 border-primary-fixed">
+                        @else
+                            <div class="w-11 h-11 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold">{{ $initials }}</div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -59,7 +93,7 @@ tailwind.config = {
             <div class="mt-6 flex flex-col gap-4">
                 <div class="relative">
                     <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
-                    <input id="product-search" type="text" placeholder="Cari produk..." class="w-full pl-12 pr-4 py-4 bg-surface-container-low border border-outline-variant rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary outline-none"/>
+                    <input id="product-search" type="text" placeholder="Cari produk..." class="w-full pl-12 pr-4 py-4 bg-white border border-outline-variant rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary outline-none"/>
                 </div>
                 <div class="flex flex-wrap gap-2">
                     <button type="button" data-category-filter="all" class="category-filter px-4 py-2 rounded-full bg-primary text-on-primary font-bold">Semua</button>
@@ -71,7 +105,7 @@ tailwind.config = {
         </div>
 
         @if ($products->isEmpty())
-            <div class="bg-surface-container-lowest rounded-3xl border border-outline-variant p-16 text-center">
+            <div class="bg-white rounded-3xl border border-outline-variant p-16 text-center">
                 <span class="material-symbols-outlined text-[56px] text-primary mb-4 block">point_of_sale</span>
                 <h2 class="font-h3 text-h3 text-primary mb-3">POS belum punya produk</h2>
                 <p class="text-body-sm text-on-surface-variant max-w-md mx-auto mb-6">Tambahkan produk terlebih dahulu agar kasir bisa digunakan untuk transaksi nyata.</p>
@@ -91,7 +125,7 @@ tailwind.config = {
                         };
                     @endphp
                     <article
-                        class="product-card bg-surface-container-lowest rounded-3xl border border-outline-variant p-5 shadow-sm"
+                        class="product-card bg-white rounded-3xl border border-outline-variant p-5 shadow-sm"
                         data-product-card
                         data-product-id="{{ $product->id }}"
                         data-product-name="{{ strtolower($product->name) }}"
@@ -137,7 +171,7 @@ tailwind.config = {
     </section>
 
     <aside class="w-full xl:w-[26rem] shrink-0">
-        <div class="bg-surface-container-lowest rounded-3xl border border-outline-variant shadow-lg overflow-hidden sticky top-8">
+        <div class="bg-white rounded-3xl border border-outline-variant shadow-lg overflow-hidden sticky top-8">
             <div class="p-6 border-b border-outline-variant flex items-center justify-between">
                 <div>
                     <h2 class="font-h3 text-h3 text-primary">Keranjang</h2>
@@ -155,13 +189,30 @@ tailwind.config = {
                 </div>
             </div>
 
-            <div class="p-6 border-t border-outline-variant bg-surface-container-low space-y-5">
+            <div class="p-6 border-t border-outline-variant bg-white space-y-5">
                 <div>
                     <p class="font-label-caps text-secondary uppercase tracking-widest mb-3">Metode Pembayaran</p>
                     <div class="grid grid-cols-3 gap-2">
                         <button type="button" data-payment="tunai" class="payment-method px-3 py-3 rounded-xl border-2 border-primary bg-primary/5 text-primary font-bold">Tunai</button>
                         <button type="button" data-payment="qris" class="payment-method px-3 py-3 rounded-xl border border-outline-variant font-bold">QRIS</button>
                         <button type="button" data-payment="e-wallet" class="payment-method px-3 py-3 rounded-xl border border-outline-variant font-bold">E-Wallet</button>
+                    </div>
+                    <div id="ewallet-picker" class="hidden mt-4">
+                        <p class="block text-body-sm font-bold text-on-surface mb-2">Pilih E-Wallet Tujuan</p>
+                        <div class="space-y-2">
+                            <button type="button" data-ewallet-provider="dana" data-ewallet-number="085789910963" class="ewallet-option w-full rounded-xl border-2 border-primary bg-primary/5 px-4 py-3 text-left">
+                                <span class="block font-bold text-primary">DANA</span>
+                                <span class="block text-body-sm text-on-surface-variant">No. 085789910963</span>
+                            </button>
+                            <button type="button" data-ewallet-provider="gopay" data-ewallet-number="085789910963" class="ewallet-option w-full rounded-xl border border-outline-variant px-4 py-3 text-left">
+                                <span class="block font-bold text-on-surface">GoPay</span>
+                                <span class="block text-body-sm text-on-surface-variant">No. 085789910963</span>
+                            </button>
+                            <button type="button" data-ewallet-provider="ovo" data-ewallet-number="085789910963" class="ewallet-option w-full rounded-xl border border-outline-variant px-4 py-3 text-left">
+                                <span class="block font-bold text-on-surface">OVO</span>
+                                <span class="block text-body-sm text-on-surface-variant">No. 085789910963</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -188,6 +239,59 @@ tailwind.config = {
     </aside>
 </main>
 
+<div id="qris-modal" class="hidden fixed inset-0 z-[80]">
+    <div id="qris-overlay" class="absolute inset-0 bg-[#191d13]/55 backdrop-blur-sm"></div>
+    <div class="relative min-h-full flex items-center justify-center p-6">
+        <div class="w-full max-w-md rounded-[28px] bg-white border border-outline-variant shadow-2xl overflow-hidden">
+            <div class="bg-primary text-on-primary px-6 py-5 flex items-center justify-between">
+                <div>
+                    <p class="text-label-caps uppercase tracking-widest opacity-80">Metode Pembayaran</p>
+                    <h3 class="font-h3 text-h3 font-bold">QRIS</h3>
+                </div>
+                <button id="qris-close" type="button" class="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6 space-y-6">
+                <div class="text-center">
+                    <p class="text-body-sm text-on-surface-variant">Scan QRIS berikut untuk menyelesaikan pembayaran</p>
+                    <p id="qris-merchant" class="font-bold text-primary text-body-lg mt-2">{{ $user->shop?->name ?? 'Toko Anda' }}</p>
+                </div>
+
+                <div class="mx-auto w-[240px] rounded-[28px] border border-outline-variant bg-white p-5 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="font-bold text-primary text-body-lg">QRIS</span>
+                        <span class="text-body-sm text-on-surface-variant">TokoQ Pay</span>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1.5 bg-[#f2f5e4] p-4 rounded-2xl">
+                        @for ($i = 0; $i < 49; $i++)
+                            <span class="qris-pixel aspect-square rounded-[3px] bg-white"></span>
+                        @endfor
+                    </div>
+                    <div class="mt-4 text-center">
+                        <p class="text-body-sm text-on-surface-variant">Total yang harus dibayar</p>
+                        <p id="qris-total" class="font-h3 text-h3 text-primary font-bold">Rp 0</p>
+                    </div>
+                </div>
+
+                <div class="rounded-2xl bg-white p-4">
+                    <p class="font-bold text-on-surface mb-2">Langkah Pembayaran</p>
+                    <ol class="text-body-sm text-on-surface-variant space-y-1">
+                        <li>1. Buka aplikasi e-wallet atau mobile banking.</li>
+                        <li>2. Scan QRIS pada layar ini.</li>
+                        <li>3. Setelah pembayaran berhasil, klik tombol konfirmasi.</li>
+                    </ol>
+                </div>
+
+                <div class="flex gap-3">
+                    <button id="qris-cancel" type="button" class="flex-1 px-4 py-3 rounded-xl border border-outline-variant font-bold text-on-surface">Batal</button>
+                    <button id="qris-confirm" type="button" class="flex-1 px-4 py-3 rounded-xl bg-primary text-on-primary font-bold">Sudah Dibayar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 const products = @json($posProducts);
 
@@ -203,6 +307,17 @@ const totalEl = document.getElementById('summary-total');
 const qtyEl = document.getElementById('summary-qty');
 const checkoutBtn = document.getElementById('checkout-button');
 const messageEl = document.getElementById('checkout-message');
+const qrisModal = document.getElementById('qris-modal');
+const qrisTotalEl = document.getElementById('qris-total');
+const qrisMerchantEl = document.getElementById('qris-merchant');
+const qrisConfirmBtn = document.getElementById('qris-confirm');
+const qrisCloseBtn = document.getElementById('qris-close');
+const qrisCancelBtn = document.getElementById('qris-cancel');
+const qrisOverlay = document.getElementById('qris-overlay');
+const ewalletPicker = document.getElementById('ewallet-picker');
+const ewalletOptions = document.querySelectorAll('.ewallet-option');
+let ewalletProvider = 'dana';
+let ewalletNumber = '085789910963';
 
 function showMessage(type, text) {
     messageEl.className = `mx-6 mt-6 rounded-2xl px-4 py-3 text-body-sm ${type === 'error' ? 'bg-error-container text-on-error-container' : 'bg-primary/10 text-primary'}`;
@@ -212,6 +327,30 @@ function showMessage(type, text) {
 
 function hideMessage() {
     messageEl.classList.add('hidden');
+}
+
+function currentCartItems() {
+    return Array.from(cart.values()).map((item) => ({
+        product_id: item.id,
+        quantity: item.quantity,
+        price: item.price,
+    }));
+}
+
+function currentSubtotal() {
+    return Array.from(cart.values()).reduce((sum, item) => sum + (item.quantity * item.price), 0);
+}
+
+function openQrisModal() {
+    qrisTotalEl.textContent = currency(currentSubtotal());
+    qrisMerchantEl.textContent = @json($user->shop?->name ?? 'Toko Anda');
+    qrisModal.classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+}
+
+function closeQrisModal() {
+    qrisModal.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
 }
 
 function renderCart() {
@@ -256,6 +395,55 @@ function renderCart() {
     subtotalEl.textContent = currency(subtotal);
     totalEl.textContent = currency(subtotal);
     checkoutBtn.disabled = !items.length;
+}
+
+async function submitCheckout() {
+    const items = currentCartItems();
+
+    if (!items.length) {
+        showMessage('error', 'Keranjang masih kosong.');
+        return;
+    }
+
+    checkoutBtn.disabled = true;
+    checkoutBtn.textContent = 'Menyimpan Transaksi...';
+    qrisConfirmBtn.disabled = true;
+    qrisConfirmBtn.textContent = 'Memproses...';
+
+    try {
+        const response = await fetch('{{ route('pos.checkout') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            },
+            body: JSON.stringify({
+                payment_method: paymentMethod === 'e-wallet' ? `e-wallet:${ewalletProvider}:${ewalletNumber}` : paymentMethod,
+                discount_amount: 0,
+                items,
+            }),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+            throw new Error(result.message || 'Transaksi gagal disimpan.');
+        }
+
+        closeQrisModal();
+        cart.clear();
+        renderCart();
+        showMessage('success', 'Transaksi berhasil disimpan. Stok dan penjualan sudah diperbarui.');
+        setTimeout(() => window.location.reload(), 900);
+    } catch (error) {
+        showMessage('error', error.message);
+    } finally {
+        checkoutBtn.disabled = false;
+        checkoutBtn.textContent = 'Selesaikan Transaksi';
+        qrisConfirmBtn.disabled = false;
+        qrisConfirmBtn.textContent = 'Sudah Dibayar';
+    }
 }
 
 function updateCart(productId, delta) {
@@ -309,6 +497,41 @@ document.querySelectorAll('.payment-method').forEach((button) => {
             item.className = 'payment-method px-3 py-3 rounded-xl border border-outline-variant font-bold';
         });
         button.className = 'payment-method px-3 py-3 rounded-xl border-2 border-primary bg-primary/5 text-primary font-bold';
+
+        if (paymentMethod === 'e-wallet') {
+            ewalletPicker.classList.remove('hidden');
+        } else {
+            ewalletPicker.classList.add('hidden');
+        }
+
+        if (paymentMethod === 'qris') {
+            if (currentCartItems().length) {
+                hideMessage();
+                openQrisModal();
+            } else {
+                showMessage('error', 'Tambahkan produk ke keranjang terlebih dahulu sebelum membuka QRIS.');
+            }
+            return;
+        }
+
+        closeQrisModal();
+    });
+});
+
+ewalletOptions.forEach((button) => {
+    button.addEventListener('click', () => {
+        ewalletProvider = button.dataset.ewalletProvider;
+        ewalletNumber = button.dataset.ewalletNumber;
+
+        ewalletOptions.forEach((item) => {
+            item.className = 'ewallet-option w-full rounded-xl border border-outline-variant px-4 py-3 text-left';
+            item.querySelector('span:first-child').className = 'block font-bold text-on-surface';
+            item.querySelector('span:last-child').className = 'block text-body-sm text-on-surface-variant';
+        });
+
+        button.className = 'ewallet-option w-full rounded-xl border-2 border-primary bg-primary/5 px-4 py-3 text-left';
+        button.querySelector('span:first-child').className = 'block font-bold text-primary';
+        button.querySelector('span:last-child').className = 'block text-body-sm text-on-surface-variant';
     });
 });
 
@@ -335,51 +558,28 @@ document.querySelectorAll('.category-filter').forEach((button) => {
 
 checkoutBtn.addEventListener('click', async () => {
     hideMessage();
-    const items = Array.from(cart.values()).map((item) => ({
-        product_id: item.id,
-        quantity: item.quantity,
-        price: item.price,
-    }));
+    const items = currentCartItems();
 
     if (!items.length) {
         showMessage('error', 'Keranjang masih kosong.');
         return;
     }
 
-    checkoutBtn.disabled = true;
-    checkoutBtn.textContent = 'Menyimpan Transaksi...';
-
-    try {
-        const response = await fetch('{{ route('pos.checkout') }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-            },
-            body: JSON.stringify({
-                payment_method: paymentMethod,
-                discount_amount: 0,
-                items,
-            }),
-        });
-
-        const result = await response.json();
-
-        if (!response.ok || !result.success) {
-            throw new Error(result.message || 'Transaksi gagal disimpan.');
-        }
-
-        cart.clear();
-        renderCart();
-        showMessage('success', 'Transaksi berhasil disimpan. Stok dan penjualan sudah diperbarui.');
-        setTimeout(() => window.location.reload(), 900);
-    } catch (error) {
-        showMessage('error', error.message);
-    } finally {
-        checkoutBtn.disabled = false;
-        checkoutBtn.textContent = 'Selesaikan Transaksi';
+    if (paymentMethod === 'qris') {
+        openQrisModal();
+        return;
     }
+
+    await submitCheckout();
+});
+
+qrisConfirmBtn.addEventListener('click', async () => {
+    hideMessage();
+    await submitCheckout();
+});
+
+[qrisCloseBtn, qrisCancelBtn, qrisOverlay].forEach((element) => {
+    element.addEventListener('click', closeQrisModal);
 });
 
 renderCart();

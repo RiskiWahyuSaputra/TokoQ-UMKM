@@ -8,106 +8,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="../tokoq_design_system/responsive.css" rel="stylesheet"/>
+<link href="/css/tokoq-colors.css" rel="stylesheet"/>
 <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
         body {
-            background-color: #f8fbea; /* surface-bright */
-            color: #191d13; /* on-surface */
+            background-color: #ECFDF5; /* secondary - soft mint */
+            color: #374151; /* text - charcoal */
         }
         .matcha-gradient {
-            background: linear-gradient(135deg, #f8fbea 0%, #edefdf 100%);
+            background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
         }
         .paper-elevation {
-            box-shadow: 0 10px 30px -10px rgba(73, 89, 42, 0.12);
+            box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.12);
         }
         .paper-border {
-            border: 1px solid #dde3d2;
+            border: 1px solid #D1D5DB;
         }
     </style>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "inverse-primary": "#b8cf8c",
-                        "tertiary-fixed": "#dae9ac",
-                        "surface-bright": "#f8fbea",
-                        "primary-fixed-dim": "#b8cf8c",
-                        "primary-fixed": "#d3eba6",
-                        "on-surface": "#191d13",
-                        "inverse-on-surface": "#f0f2e2",
-                        "surface-tint": "#51652e",
-                        "outline": "#75786b",
-                        "background": "#f8fbea",
-                        "surface-variant": "#e1e4d4",
-                        "on-secondary-container": "#596841",
-                        "on-tertiary": "#ffffff",
-                        "secondary-fixed-dim": "#bccd9e",
-                        "on-error-container": "#93000a",
-                        "inverse-surface": "#2e3227",
-                        "secondary": "#55633d",
-                        "surface-dim": "#d9dccb",
-                        "secondary-fixed": "#d8e9b9",
-                        "error-container": "#ffdad6",
-                        "surface-container-highest": "#e1e4d4",
-                        "on-tertiary-fixed": "#161f00",
-                        "primary-container": "#576b33",
-                        "surface-container-high": "#e7ead9",
-                        "on-background": "#191d13",
-                        "on-error": "#ffffff",
-                        "surface-container-low": "#f2f5e4",
-                        "tertiary": "#445122",
-                        "secondary-container": "#d5e6b6",
-                        "on-primary-container": "#d3eba5",
-                        "tertiary-container": "#5c6938",
-                        "on-secondary-fixed": "#131f02",
-                        "outline-variant": "#c5c8b9",
-                        "on-secondary": "#ffffff",
-                        "on-primary-fixed": "#131f00",
-                        "on-secondary-fixed-variant": "#3d4b28",
-                        "surface": "#f8fbea",
-                        "tertiary-fixed-dim": "#becd92",
-                        "surface-container-lowest": "#ffffff",
-                        "on-tertiary-container": "#d9e8aa",
-                        "on-surface-variant": "#45483d",
-                        "surface-container": "#edefdf",
-                        "on-primary": "#ffffff",
-                        "primary": "#40521d",
-                        "on-primary-fixed-variant": "#3a4d18",
-                        "error": "#ba1a1a",
-                        "on-tertiary-fixed-variant": "#3f4b1d"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "container-padding": "32px",
-                        "section-margin": "48px",
-                        "gutter": "24px",
-                        "unit": "8px",
-                        "card-gap": "24px"
-                    },
-                    "fontSize": {
-                        "h2-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
-                        "h1-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
-                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
-                        "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                        "h3": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
-                        "label-caps": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700"}],
-                        "h2": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "700"}]
-                    }
-                }
-            }
-        }
-    </script>
+<script src="/js/tailwind-config.js"></script>
 </head>
 <body class="landing-shell font-body-md">
 <!-- Navigation Header -->
@@ -350,24 +270,24 @@
 </section>
 </main>
 <!-- Footer -->
-<footer class="bg-inverse-surface text-surface-variant py-20">
+<footer class="bg-text-dark text-white py-20">
 <div class="max-w-7xl mx-auto px-container-padding grid md:grid-cols-4 gap-12">
 <div class="col-span-2">
 <div class="flex items-center gap-2 mb-6">
 <div class="w-8 h-8 bg-primary rounded flex items-center justify-center">
-<span class="material-symbols-outlined text-on-primary text-[20px]">storefront</span>
+<span class="material-symbols-outlined text-white text-[20px]">storefront</span>
 </div>
 <span class="font-h3 text-h3 font-bold text-white">TokoQ</span>
 </div>
-<p class="max-w-sm mb-8">Mendigitalisasi UMKM Indonesia melalui solusi kasir dan inventori berbasis AI yang intuitif dan mudah digunakan.</p>
+<p class="max-w-sm mb-8 text-gray-300">Mendigitalisasi UMKM Indonesia melalui solusi kasir dan inventori berbasis AI yang intuitif dan mudah digunakan.</p>
 <div class="flex gap-4">
-<a class="w-10 h-10 rounded-full border border-outline flex items-center justify-center hover:bg-primary transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">language</span></a>
-<a class="w-10 h-10 rounded-full border border-outline flex items-center justify-center hover:bg-primary transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">group</span></a>
+<a class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center hover:bg-primary hover:border-primary transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">language</span></a>
+<a class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center hover:bg-primary hover:border-primary transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">group</span></a>
 </div>
 </div>
 <div>
 <h4 class="font-bold text-white mb-6">Produk</h4>
-<ul class="space-y-4">
+<ul class="space-y-4 text-gray-300">
 <li><a class="hover:text-primary transition-colors" href="#">Sistem Kasir</a></li>
 <li><a class="hover:text-primary transition-colors" href="#">Manajemen Stok</a></li>
 <li><a class="hover:text-primary transition-colors" href="#">Laporan Keuangan</a></li>
@@ -376,7 +296,7 @@
 </div>
 <div>
 <h4 class="font-bold text-white mb-6">Dukungan</h4>
-<ul class="space-y-4">
+<ul class="space-y-4 text-gray-300">
 <li><a class="hover:text-primary transition-colors" href="#">Pusat Bantuan</a></li>
 <li><a class="hover:text-primary transition-colors" href="#">Tutorial</a></li>
 <li><a class="hover:text-primary transition-colors" href="#">Komunitas</a></li>
@@ -384,11 +304,11 @@
 </ul>
 </div>
 </div>
-<div class="landing-footer-meta max-w-7xl mx-auto px-container-padding mt-20 pt-8 border-t border-outline/30 flex flex-col md:flex-row justify-between text-sm">
+<div class="landing-footer-meta max-w-7xl mx-auto px-container-padding mt-20 pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between text-sm text-gray-400">
 <p>© 2024 TokoQ Indonesia. Semua hak dilindungi undang-undang.</p>
 <div class="flex gap-8 mt-4 md:mt-0">
-<a href="#">Kebijakan Privasi</a>
-<a href="#">Syarat &amp; Ketentuan</a>
+<a class="hover:text-primary transition-colors" href="#">Kebijakan Privasi</a>
+<a class="hover:text-primary transition-colors" href="#">Syarat &amp; Ketentuan</a>
 </div>
 </div>
 </footer>

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
@@ -23,6 +25,7 @@ class User extends Authenticatable
         'password',
         'role',
         'status',
+        'profile_photo_path',
     ];
 
     /**
@@ -51,5 +54,12 @@ class User extends Authenticatable
     public function shop(): HasOne
     {
         return $this->hasOne(Shop::class, 'owner_id');
+    }
+
+    protected function profilePhotoUrl(): Attribute
+    {
+        return Attribute::get(function () {
+            return $this->profile_photo_path ? Storage::url($this->profile_photo_path) : null;
+        });
     }
 }

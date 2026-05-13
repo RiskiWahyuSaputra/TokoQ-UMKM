@@ -1,0 +1,77 @@
+/* TokoQ Color Palette */
+:root {
+    /* Primary - Emerald Green */
+    --color-primary: #10B981;
+    --color-primary-dark: #059669;
+    --color-primary-light: #34D399;
+    
+    /* Secondary - Soft Mint */
+    --color-secondary: #ECFDF5;
+    --color-secondary-dark: #D1FAE5;
+    
+    /* Action - Gold/Amber */
+    --color-action: #F59E0B;
+    --color-action-dark: #D97706;
+    --color-action-light: #FBBF24;
+    
+    /* Text - Charcoal */
+    --color-text: #374151;
+    --color-text-light: #6B7280;
+    --color-text-dark: #1F2937;
+    
+    /* Background */
+    --color-background: #ECFDF5;
+    --color-surface: #ffffff;
+}
+
+body {
+    background-color: var(--color-secondary);
+    color: var(--color-text);
+}
+
+/* Utility classes */
+.bg-primary { background-color: var(--color-primary) !important; }
+.bg-secondary { background-color: var(--color-secondary) !important; }
+.bg-action { background-color: var(--color-action) !important; }
+.bg-surface { background-color: var(--color-surface) !important; }
+
+.text-primary { color: var(--color-primary) !important; }
+.text-secondary { color: var(--color-secondary) !important; }
+.text-action { color: var(--color-action) !important; }
+.text-text { color: var(--color-text) !important; }
+.text-text-light { color: var(--color-text-light) !important; }
+
+.border-primary { border-color: var(--color-primary) !important; }
+.border-action { border-color: var(--color-action) !important; }
+
+/* Button styles */
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-dark);
+}
+
+.btn-action {
+    background-color: var(--color-action);
+    color: white;
+}
+
+.btn-action:hover {
+    background-color: var(--color-action-dark);
+}
+
+/* Card styles */
+.card {
+    background-color: var(--color-surface);
+    border: 1px solid #E5E7EB;
+    border-radius: 1rem;
+}
+
+/* Override old color scheme */
+.bg-\[\#40521d\], .bg-\[\#576b33\] { background-color: var(--color-primary) !important; }
+.text-\[\#40521d\], .text-\[\#576b33\] { color: var(--color-primary) !important; }
+.bg-\[\#f8fbea\] { background-color: var(--color-secondary) !important; }
+.bg-\[\#edefdf\] { background-color: var(--color-surface) !important; }

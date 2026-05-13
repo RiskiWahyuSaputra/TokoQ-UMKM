@@ -16,7 +16,7 @@
 
         <!-- Form Card -->
         <div class="bg-white rounded-3xl shadow-xl p-8 border border-[#dde3d2]">
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                 @csrf
 
                 <!-- Data Pemilik -->
@@ -59,6 +59,16 @@
                             class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#576b33]"
                             placeholder="Ulangi password">
                     </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Foto Profil</label>
+                        <input name="profile_photo" type="file" accept=".jpg,.jpeg,.png,.webp"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#576b33] bg-white">
+                        <p class="text-sm text-gray-500 mt-2">Opsional. Bisa diupload sekarang atau nanti lewat pengaturan akun.</p>
+                        @error('profile_photo')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
 
                 <!-- Data Toko -->
@@ -71,6 +81,16 @@
                             class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#576b33]"
                             placeholder="Contoh: Warung Maju Jaya">
                         @error('shop_name')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Alamat Toko</label>
+                        <textarea name="shop_address" rows="4" required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#576b33]"
+                            placeholder="Masukkan alamat lengkap toko">{{ old('shop_address') }}</textarea>
+                        @error('shop_address')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
