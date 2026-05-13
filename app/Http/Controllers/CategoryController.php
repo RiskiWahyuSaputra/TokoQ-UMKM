@@ -10,8 +10,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Auth::user()->shop->categories;
-        return view('owner.inventory.categories', compact('categories'));
+        return redirect()->route('products.create');
     }
 
     public function store(Request $request)

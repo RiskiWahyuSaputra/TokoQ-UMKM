@@ -1,423 +1,388 @@
 <!DOCTYPE html>
-
-<html lang="id"><head>
+<html lang="id">
+<head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="csrf-token" content="{{ csrf_token() }}"/>
+<title>Kasir POS - TokoQ</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="/template/tokoq_design_system/responsive.css" rel="stylesheet"/>
 <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "on-secondary": "#ffffff",
-                        "on-primary-fixed": "#131f00",
-                        "surface-container-highest": "#e1e4d4",
-                        "on-primary-fixed-variant": "#3a4d18",
-                        "on-tertiary-fixed-variant": "#3f4b1d",
-                        "secondary-fixed": "#d8e9b9",
-                        "on-secondary-container": "#596841",
-                        "on-secondary-fixed": "#131f02",
-                        "on-tertiary": "#ffffff",
-                        "on-background": "#191d13",
-                        "inverse-primary": "#b8cf8c",
-                        "background": "#f8fbea",
-                        "inverse-on-surface": "#f0f2e2",
-                        "surface-container": "#edefdf",
-                        "outline-variant": "#c5c8b9",
-                        "outline": "#75786b",
-                        "tertiary": "#445122",
-                        "error": "#ba1a1a",
-                        "error-container": "#ffdad6",
-                        "tertiary-fixed-dim": "#becd92",
-                        "tertiary-fixed": "#dae9ac",
-                        "secondary-fixed-dim": "#bccd9e",
-                        "tertiary-container": "#5c6938",
-                        "surface": "#f8fbea",
-                        "primary-container": "#576b33",
-                        "on-primary": "#ffffff",
-                        "primary-fixed-dim": "#b8cf8c",
-                        "surface-container-lowest": "#ffffff",
-                        "on-secondary-fixed-variant": "#3d4b28",
-                        "surface-container-high": "#e7ead9",
-                        "surface-bright": "#f8fbea",
-                        "secondary-container": "#d5e6b6",
-                        "on-surface": "#191d13",
-                        "on-error": "#ffffff",
-                        "primary": "#40521d",
-                        "surface-tint": "#51652e",
-                        "primary-fixed": "#d3eba6",
-                        "surface-container-low": "#f2f5e4",
-                        "on-error-container": "#93000a",
-                        "inverse-surface": "#2e3227",
-                        "on-primary-container": "#d3eba5",
-                        "on-tertiary-fixed": "#161f00",
-                        "secondary": "#55633d",
-                        "on-surface-variant": "#45483d",
-                        "surface-dim": "#d9dccb",
-                        "surface-variant": "#e1e4d4",
-                        "on-tertiary-container": "#d9e8aa"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "container-padding": "32px",
-                        "unit": "8px",
-                        "gutter": "24px",
-                        "section-margin": "48px",
-                        "card-gap": "24px"
-                    },
-                    "fontSize": {
-                        "h2": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "700"}],
-                        "label-caps": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700"}],
-                        "h3": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
-                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
-                        "h1-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
-                        "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                        "h2-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}]
-                    }
-                },
-            },
-        }
-    </script>
+tailwind.config = {
+  darkMode: "class",
+  theme: { extend: { "colors": { "inverse-primary": "#b8cf8c","tertiary-fixed": "#dae9ac","surface-bright": "#f8fbea","primary-fixed-dim": "#b8cf8c","primary-fixed": "#d3eba6","on-surface": "#191d13","inverse-on-surface": "#f0f2e2","surface-tint": "#51652e","outline": "#75786b","background": "#f8fbea","surface-variant": "#e1e4d4","on-secondary-container": "#596841","on-tertiary": "#ffffff","secondary-fixed-dim": "#bccd9e","on-error-container": "#93000a","inverse-surface": "#2e3227","secondary": "#55633d","surface-dim": "#d9dccb","secondary-fixed": "#d8e9b9","error-container": "#ffdad6","surface-container-highest": "#e1e4d4","on-tertiary-fixed": "#161f00","primary-container": "#576b33","surface-container-high": "#e7ead9","on-background": "#191d13","on-error": "#ffffff","surface-container-low": "#f2f5e4","tertiary": "#445122","secondary-container": "#d5e6b6","on-primary-container": "#d3eba5","tertiary-container": "#5c6938","on-secondary-fixed": "#131f02","outline-variant": "#c5c8b9","on-secondary": "#ffffff","on-primary-fixed": "#131f00","on-secondary-fixed-variant": "#3d4b28","surface": "#f8fbea","tertiary-fixed-dim": "#becd92","surface-container-lowest": "#ffffff","on-tertiary-container": "#d9e8aa","on-surface-variant": "#45483d","surface-container": "#edefdf","on-primary": "#ffffff","primary": "#40521d","on-primary-fixed-variant": "#3a4d18","error": "#ba1a1a","on-tertiary-fixed-variant": "#3f4b1d" }, "borderRadius": { "DEFAULT": "0.25rem","lg": "0.5rem","xl": "0.75rem","full": "9999px" }, "spacing": { "container-padding": "32px","section-margin": "48px","gutter": "24px","unit": "8px","card-gap": "24px" }, "fontSize": { "h2-mobile": ["24px", {"lineHeight": "1.3","fontWeight": "700"}],"h1-mobile": ["28px", {"lineHeight": "1.2","fontWeight": "700"}],"body-md": ["16px", {"lineHeight": "1.6","fontWeight": "400"}],"body-lg": ["18px", {"lineHeight": "1.6","fontWeight": "400"}],"body-sm": ["14px", {"lineHeight": "1.5","fontWeight": "400"}],"h1": ["40px", {"lineHeight": "1.2","letterSpacing": "-0.02em","fontWeight": "700"}],"h3": ["24px", {"lineHeight": "1.4","fontWeight": "600"}],"label-caps": ["12px", {"lineHeight": "1.2","letterSpacing": "0.05em","fontWeight": "700"}],"h2": ["32px", {"lineHeight": "1.3","letterSpacing": "-0.01em","fontWeight": "700"}] } } }
+}
+</script>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        body {
-            background-color: #CDD0C0; /* Level 0 Floor from Style Guidance */
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #c5c8b9;
-            border-radius: 10px;
-        }
-    </style>
+.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+</style>
 </head>
-<body class="font-body-md text-on-surface">
-<!-- Sidebar Navigation -->
-<aside class="h-screen w-64 fixed left-0 top-0 bg-inverse-surface shadow-md shadow-[#49592A]/10 flex flex-col py-8 px-4 z-50">
-<div class="mb-10 px-4">
-<h1 class="font-h2 text-h2 font-bold text-primary-fixed">TokoQ</h1>
-<p class="text-body-sm text-surface-variant/70">Manajemen UMKM</p>
-</div>
-<nav class="flex-1 space-y-2">
-<a class="flex items-center gap-3 px-4 py-3 text-surface-variant hover:text-primary-fixed-dim hover:bg-surface-variant/10 transition-colors duration-200 active:scale-95 transition-transform" href="#">
-<span class="material-symbols-outlined">dashboard</span>
-<span class="font-body-md">Dashboard</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-xl border-l-4 border-primary-fixed active:scale-95 transition-transform" href="#">
-<span class="material-symbols-outlined">point_of_sale</span>
-<span class="font-body-md">Kasir POS</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-surface-variant hover:text-primary-fixed-dim hover:bg-surface-variant/10 transition-colors duration-200 active:scale-95 transition-transform" href="#">
-<span class="material-symbols-outlined">analytics</span>
-<span class="font-body-md">Penjualan</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-surface-variant hover:text-primary-fixed-dim hover:bg-surface-variant/10 transition-colors duration-200 active:scale-95 transition-transform" href="#">
-<span class="material-symbols-outlined">inventory_2</span>
-<span class="font-body-md">Inventori</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-surface-variant hover:text-primary-fixed-dim hover:bg-surface-variant/10 transition-colors duration-200 active:scale-95 transition-transform" href="#">
-<span class="material-symbols-outlined">psychology</span>
-<span class="font-body-md">Prediksi AI</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-surface-variant hover:text-primary-fixed-dim hover:bg-surface-variant/10 transition-colors duration-200 active:scale-95 transition-transform" href="#">
-<span class="material-symbols-outlined">description</span>
-<span class="font-body-md">Laporan</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-surface-variant hover:text-primary-fixed-dim hover:bg-surface-variant/10 transition-colors duration-200 active:scale-95 transition-transform" href="#">
-<span class="material-symbols-outlined">settings</span>
-<span class="font-body-md">Pengaturan</span>
-</a>
-</nav>
-<div class="mt-auto space-y-2 border-t border-surface-variant/20 pt-6">
-<button class="w-full bg-primary-fixed text-on-primary-fixed py-3 rounded-xl font-bold mb-4 active:scale-95 transition-transform">Upgrade Plan</button>
-<a class="flex items-center gap-3 px-4 py-2 text-surface-variant hover:text-primary-fixed-dim" href="#">
-<span class="material-symbols-outlined">help</span>
-<span class="font-body-md">Bantuan</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-2 text-surface-variant hover:text-primary-fixed-dim" href="#">
-<span class="material-symbols-outlined">logout</span>
-<span class="font-body-md">Keluar</span>
-</a>
-</div>
-</aside>
-<!-- Main Content Canvas -->
-<main class="ml-64 min-h-screen flex flex-col md:flex-row gap-6 p-8">
-<!-- Left Column: Catalog -->
-<section class="flex-1 flex flex-col gap-6">
-<!-- Top Search & Info -->
-<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/30 flex flex-col gap-4">
-<div class="flex justify-between items-center">
-<div>
-<h2 class="font-h3 text-h3 text-primary">Kasir POS</h2>
-<p class="text-on-surface-variant body-sm">Melayani pelanggan dengan cepat &amp; akurat</p>
-</div>
-<div class="flex items-center gap-4">
-<div class="text-right">
-<p class="text-label-caps text-on-surface-variant">KASIR AKTIF</p>
-<p class="font-bold text-primary">Bu Sari</p>
-</div>
-<img alt="Avatar Bu Sari" class="w-12 h-12 rounded-full border-2 border-secondary-fixed" data-alt="A professional close-up portrait of a friendly Indonesian woman in her late 40s, representing a small business owner. She is smiling warmly towards the camera, illuminated by soft, natural morning light in a bright, clean indoor setting. The image has a high-quality, professional aesthetic with a slightly blurred background to emphasize the subject. The overall tone is nurturing, premium, and grounded, consistent with the Matcha brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZnQ4S-qSOQlDLUXR0hbFs1viQssSTWY_Dqf5PGFlF7x_yhQbNQuRGvVylpwt6ZAs3TJ6eVcu-8B2Jb5-3KjFSUr94zSCtU3E3ZJQv_JlWgE1ikVjinyXGPVeowwGVvN9_lTMw8x_mejTG0EConef2cnHqURiJCzUeoSYPTc0aPz9YcVZJUq2keDx0qq4VXg-x0nCtUXo_UIWWmdXpRkDTe5UfG0fmRpaHkujWFByr8QWaMABOcVcfeHSm3dtTyBUGluf1ZgirhOY"/>
-</div>
-</div>
-<div class="relative">
-<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
-<input class="w-full pl-12 pr-4 py-4 bg-surface-container-low border border-outline-variant rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none text-body-md" placeholder="Cari produk atau scan barcode..." type="text"/>
-</div>
-<!-- Category Filters -->
-<div class="flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
-<button class="px-6 py-2 bg-primary text-on-primary rounded-full font-bold whitespace-nowrap active:scale-95 transition-transform">Semua</button>
-<button class="px-6 py-2 bg-secondary-container text-on-secondary-container rounded-full font-medium whitespace-nowrap hover:bg-secondary-fixed transition-colors">Sembako</button>
-<button class="px-6 py-2 bg-secondary-container text-on-secondary-container rounded-full font-medium whitespace-nowrap hover:bg-secondary-fixed transition-colors">Minuman</button>
-<button class="px-6 py-2 bg-secondary-container text-on-secondary-container rounded-full font-medium whitespace-nowrap hover:bg-secondary-fixed transition-colors">Snack</button>
-<button class="px-6 py-2 bg-secondary-container text-on-secondary-container rounded-full font-medium whitespace-nowrap hover:bg-secondary-fixed transition-colors">Rumah Tangga</button>
-<button class="px-6 py-2 bg-secondary-container text-on-secondary-container rounded-full font-medium whitespace-nowrap hover:bg-secondary-fixed transition-colors">Produk Harian</button>
-</div>
-</div>
-<!-- Product Grid -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-<!-- Product Card 1 (Aman) -->
-<div class="bg-surface-container-lowest p-5 rounded-2xl border border-outline-variant/30 shadow-sm flex flex-col gap-3 group hover:shadow-md transition-shadow">
-<div class="relative h-40 w-full rounded-xl overflow-hidden bg-surface-container">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A high-quality studio photograph of a 5kg bag of premium jasmine rice, set against a clean, minimalist wooden background. The lighting is soft and natural, emphasizing the texture of the packaging. The color palette features organic tones like soft beige and muted greens, reflecting a premium and grounded MSME aesthetic. The overall mood is clean, wholesome, and professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_Cch64RgMJkYegSEeAjes4NoXSEwEjN7d5Bvhy1tkgGkY76GFIYQ-DdVjB0UcFcWWkz6xxloMtk4qMbeG1-GF9zpGXHMachCuh6QoQEYPu7VLkbjBu7uOJzjUQ8XcryV5_9TvBnYa7CjgYMj04OJzjozYBZ7EMC0AsFKH_3VV7bI1srrmJ_dvCZwMJ_-w-qqw6lHve0uXSf4pCEXNLICXL3iB87too4pJFpWev-xBeFSROAR1O0kTFL6OgmwKaZtqGMX1EcVTBWE"/>
-<span class="absolute top-2 right-2 px-3 py-1 bg-primary/10 text-primary border border-primary/20 rounded-full text-xs font-bold flex items-center gap-1">
-<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-                            Aman
-                        </span>
-</div>
-<div>
-<h3 class="font-bold text-on-surface text-body-md">Beras Pandan Wangi 5kg</h3>
-<p class="text-primary font-bold text-body-lg">Rp 72.500</p>
-<p class="text-on-surface-variant body-sm mt-1">Stok: 42 Sak</p>
-</div>
-<button class="w-full py-2.5 bg-secondary-container text-on-secondary-container rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-primary hover:text-on-primary transition-all active:scale-95">
-<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
-                        Tambah
-                    </button>
-</div>
-<!-- Product Card 2 (Kritis) -->
-<div class="bg-surface-container-lowest p-5 rounded-2xl border border-outline-variant/30 shadow-sm flex flex-col gap-3 group hover:shadow-md transition-shadow">
-<div class="relative h-40 w-full rounded-xl overflow-hidden bg-surface-container">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A pack of popular Indonesian instant noodles displayed artistically on a rustic wooden countertop. The scene is bright with high-key lighting, emphasizing the vibrant but tasteful packaging. The surrounding environment is clean and modern, fitting the TokoQ design language. The photograph is clear and crisp, highlighting the product as an essential inventory item." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDerGgrQvsM4TIsQUFn6iWlauVsFvIOjKY0DZ4RWDGwVVOyrOZVHgooX-XutZeP5rKJC1t7GWoA_n45jUhvuXBh8-8n24t8N01Oea_-CEVFaTWZL3jPUJMl3OJUtssONhqiInAU8VgJJjFeoim1__CyitW_yvqwiTmnp4qsx4JmiklZqJvwFl6pEJ7anOjHmTVZ0xzXmiXDaBfQxDZeb88xQla57HkKUahGrn6--hH4qMLG3ImO9Ld2H7_CI15rbfuqNFXXVTEAGdk"/>
-<span class="absolute top-2 right-2 px-3 py-1 bg-error/10 text-error border border-error/20 rounded-full text-xs font-bold flex items-center gap-1">
-<span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span>
-                            Kritis
-                        </span>
-</div>
-<div>
-<h3 class="font-bold text-on-surface text-body-md">Mie Instan Kari Spesial</h3>
-<p class="text-primary font-bold text-body-lg">Rp 3.100</p>
-<p class="text-on-surface-variant body-sm mt-1">Stok: 3 Dus</p>
-</div>
-<button class="w-full py-2.5 bg-secondary-container text-on-secondary-container rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-primary hover:text-on-primary transition-all active:scale-95">
-<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
-                        Tambah
-                    </button>
-</div>
-<!-- Product Card 3 (Menipis) -->
-<div class="bg-surface-container-lowest p-5 rounded-2xl border border-outline-variant/30 shadow-sm flex flex-col gap-3 group hover:shadow-md transition-shadow">
-<div class="relative h-40 w-full rounded-xl overflow-hidden bg-surface-container">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="An assortment of gourmet coffee sachets neatly arranged on a clean, light-colored wooden surface. The lighting is soft and even, creating a calm and premium atmosphere. The scene evokes a sense of local craft and high-quality sourcing, matching the organic Matcha aesthetic of the TokoQ brand. The visual style is minimalist yet tactile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3ZbYOSe-8WKzVqWnuszEn6ZxGDtEv15hGQbTH18QF_n_pv3Xkxziio7WHJ2J3SbXrBjrrlJwbT5LMUreOdLgL_t1_2IQ1hSyqyE7L5zgscwFwVbqiz3oHvTaD-tkdQ-J8c3IX2HYTLSolIlJ-pq_C5biKax3D9cOQ-6aeQMS29L31WmzAH5-io-1CtYUWfLT4UBGCZcaAHzcDMwtJy73Q51n6waBbiaT9mreYzxBEMoxvkCjOHKYhNMgjKjGiEwJEPyC5SKWCdMM"/>
-<span class="absolute top-2 right-2 px-3 py-1 bg-amber-100 text-amber-700 border border-amber-200 rounded-full text-xs font-bold flex items-center gap-1">
-<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                            Menipis
-                        </span>
-</div>
-<div>
-<h3 class="font-bold text-on-surface text-body-md">Kopi Sachet Arabika (10)</h3>
-<p class="text-primary font-bold text-body-lg">Rp 18.500</p>
-<p class="text-on-surface-variant body-sm mt-1">Stok: 12 Pcs</p>
-</div>
-<button class="w-full py-2.5 bg-secondary-container text-on-secondary-container rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-primary hover:text-on-primary transition-all active:scale-95">
-<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
-                        Tambah
-                    </button>
-</div>
-<!-- Card 4 -->
-<div class="bg-surface-container-lowest p-5 rounded-2xl border border-outline-variant/30 shadow-sm flex flex-col gap-3 group">
-<div class="relative h-40 w-full rounded-xl overflow-hidden bg-surface-container">
-<img class="w-full h-full object-cover" data-alt="A clean, minimalist presentation of laundry detergent bottles in a modern utility room. The lighting is bright and high-key, creating a fresh and hygienic atmosphere. The color palette is dominated by whites and soft greens, perfectly aligning with the TokoQ brand's focus on premium local business management. The product looks organized and high-quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVf5lSMxA7mH3MBHS8QrsWl7PMNWTLKG4jF3jU1J5HxMwiYsPk3z0QPF7vnXj01FsJ85f3R6AKl8Xwi6kraVOFUGxQFf4DSylcw-u4RuUmGCSORyRWXTfuaMMkzU5vakOkny6_giB1HXXM0k-QxdYH3bKq-fPv4QExh4tlW-h75-rghfnJ3dvpKHVHs-5Goz-PPm-VKUlDxTxI-TQC6ewL8GQ9dWb-hfejsFQDnJFTs_ijpeSfYZjX5hacmtYs109Y8TUysmMF-6w"/>
-<span class="absolute top-2 right-2 px-3 py-1 bg-primary/10 text-primary border border-primary/20 rounded-full text-xs font-bold flex items-center gap-1">
-<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-                            Aman
-                        </span>
-</div>
-<div>
-<h3 class="font-bold text-on-surface text-body-md">Deterjen Cair 800ml</h3>
-<p class="text-primary font-bold text-body-lg">Rp 24.500</p>
-<p class="text-on-surface-variant body-sm mt-1">Stok: 24 Botol</p>
-</div>
-<button class="w-full py-2.5 bg-secondary-container text-on-secondary-container rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-primary hover:text-on-primary transition-all">
-<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
-                        Tambah
-                    </button>
-</div>
-<!-- Card 5 -->
-<div class="bg-surface-container-lowest p-5 rounded-2xl border border-outline-variant/30 shadow-sm flex flex-col gap-3 group">
-<div class="relative h-40 w-full rounded-xl overflow-hidden bg-surface-container">
-<img class="w-full h-full object-cover" data-alt="A refreshing bottle of mineral water displayed against a soft, bright backdrop. The photography uses natural light to create clean reflections on the bottle, suggesting purity and freshness. The scene is minimalist, focusing on the product as a daily essential in an Indonesian MSME storefront. The aesthetic is clean, modern, and high-fidelity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZNV6eain3_2xFTxbQg0g4DaNFvfc9-jVEdOOqWrWxDGNTKnT9WR6RP87BMrWqcPsSmeLnxYKzEmZYuIEaSxpNlhkUJOgtiG5_IdKgH2KJLJ65F21bHThZX0d5DBcAIf_Z2G3dMLluXPTHMa2boQ4CLvcJSePNdtNBjpGsb0fOFxZZ0MvgS52EGgoAx0CAT-hQyTJ5rNWvEWjOnhSfucWxFLjaQVSLh6KxZK3lHPLHxPGxg_TdywezTlWIFZRPQ8R-oGnMT_-Afp4"/>
-<span class="absolute top-2 right-2 px-3 py-1 bg-primary/10 text-primary border border-primary/20 rounded-full text-xs font-bold flex items-center gap-1">
-<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-                            Aman
-                        </span>
-</div>
-<div>
-<h3 class="font-bold text-on-surface text-body-md">Air Mineral 600ml</h3>
-<p class="text-primary font-bold text-body-lg">Rp 3.500</p>
-<p class="text-on-surface-variant body-sm mt-1">Stok: 120 Pcs</p>
-</div>
-<button class="w-full py-2.5 bg-secondary-container text-on-secondary-container rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-primary hover:text-on-primary transition-all">
-<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
-                        Tambah
-                    </button>
-</div>
-<!-- Card 6 -->
-<div class="bg-surface-container-lowest p-5 rounded-2xl border border-outline-variant/30 shadow-sm flex flex-col gap-3 group">
-<div class="relative h-40 w-full rounded-xl overflow-hidden bg-surface-container">
-<img class="w-full h-full object-cover" data-alt="A stack of organic cotton tissue boxes in a modern, clean environment. The lighting is diffused and soft, highlighting the natural textures of the packaging. The color palette is earthy and grounded, reflecting the premium local-business identity of the TokoQ platform. The overall impression is one of high-quality household essentials in a professional retail setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJJBUqaHqBqikBo8YzuKtr1KvYd2bc2RK_2rwKMx2gvZ9wjnLA00lM8Ar2bv5IqEw8Y029-4QuPOGOP3oNM0cQqHwxQhHKqRS0Id6RMdrL0O_B7vs6Nlqr8ADbSE-v5vKLvIfDWLssi3oYUHByVLSCYCqx0y6TKooGPxwKFWeVHhGAbvk6CLLUKR5ZyqH255RQUERpk-t7rYRP8lPIahhFP8EjtiMnCWcL5UrPC24cQT2pZRKC95FJpNdm58BcSCUlp0M7jdUHeIQ"/>
-<span class="absolute top-2 right-2 px-3 py-1 bg-amber-100 text-amber-700 border border-amber-200 rounded-full text-xs font-bold flex items-center gap-1">
-<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                            Menipis
-                        </span>
-</div>
-<div>
-<h3 class="font-bold text-on-surface text-body-md">Tisu Wajah 250 sheet</h3>
-<p class="text-primary font-bold text-body-lg">Rp 12.000</p>
-<p class="text-on-surface-variant body-sm mt-1">Stok: 8 Pcs</p>
-</div>
-<button class="w-full py-2.5 bg-secondary-container text-on-secondary-container rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-primary hover:text-on-primary transition-all">
-<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
-                        Tambah
-                    </button>
-</div>
-</div>
-</section>
-<!-- Right Column: Cart Sticky -->
-<aside class="w-full md:w-96 flex flex-col gap-6 sticky top-8 h-[calc(100vh-64px)]">
-<div class="bg-surface-container-lowest rounded-3xl shadow-lg border border-outline-variant/30 flex flex-col h-full overflow-hidden">
-<!-- Cart Header -->
-<div class="p-6 border-b border-outline-variant/30 flex justify-between items-center bg-white">
-<div class="flex items-center gap-3">
-<div class="bg-primary-container text-on-primary-container p-2 rounded-xl">
-<span class="material-symbols-outlined">shopping_basket</span>
-</div>
-<h2 class="font-h3 text-h3 text-on-surface">Keranjang</h2>
-</div>
-<button class="text-error font-bold text-body-sm hover:underline">Hapus Semua</button>
-</div>
-<!-- Cart Items (Scrollable) -->
-<div class="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar">
-<!-- Item 1 -->
-<div class="flex items-center gap-4 group">
-<div class="w-16 h-16 rounded-xl overflow-hidden bg-surface-container flex-shrink-0">
-<img alt="Beras" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwUsfpGaMftkie4IQKsBO-FYHk68ysUZzREsLrqLALmJXorHhgJsUIHZwcSI2lsHwzH_osDdKBNrFW9C6HVbMFP3KrXQrWW2e3thzZUC1aCE42hDvg_uWwRlcFX7wGfG82_kvGW4j1UaY8h19d4KHCLQNKqfo2qbMvwB5w5x0C8KPqiO6f_NSH50NZdvDii9cVnX3Na4nH3BnjG04stlEsrClCwBOVN15RsmNCg-K0IhZKfc9sS_v422ehdLLYZMbEoChNav6eEio"/>
-</div>
-<div class="flex-1">
-<h4 class="font-bold text-body-sm line-clamp-1">Beras Pandan Wangi 5kg</h4>
-<p class="text-primary font-bold text-body-sm">Rp 72.500</p>
-</div>
-<div class="flex items-center gap-2 bg-surface-container rounded-lg p-1">
-<button class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-white transition-colors text-primary font-bold active:scale-90">-</button>
-<span class="font-bold text-body-sm w-4 text-center">1</span>
-<button class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-white transition-colors text-primary font-bold active:scale-90">+</button>
-</div>
-</div>
-<!-- Item 2 -->
-<div class="flex items-center gap-4 group">
-<div class="w-16 h-16 rounded-xl overflow-hidden bg-surface-container flex-shrink-0">
-<img alt="Mie" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOcnkDUXisZUoVq-czKffuIj48bp-7x_izFqqK09EmDWruiDbtS3OACH5oVWPa3-tExcS7gy5mDBBlxT9LWitkL1_xkF_JzxjTDEr0KJwpprN9EL9dn0Ta9XxrrQarndDAlXQQnimlcgOjR8dgJ27nrdVkJP77RDhYhKLPSUAntWKupIeub_xJHk7s8NKne3_Eb6PVjpFm99aM0EybSNxgcgGlw_4xoX7d7t_hGWAC83k4Y6OQe-DlB9kqCw1qhNaORJ1By4SJB7I"/>
-</div>
-<div class="flex-1">
-<h4 class="font-bold text-body-sm line-clamp-1">Mie Instan Kari</h4>
-<p class="text-primary font-bold text-body-sm">Rp 15.500</p>
-<p class="text-on-surface-variant text-[10px]">5 x Rp 3.100</p>
-</div>
-<div class="flex items-center gap-2 bg-surface-container rounded-lg p-1">
-<button class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-white transition-colors text-primary font-bold active:scale-90">-</button>
-<span class="font-bold text-body-sm w-4 text-center">5</span>
-<button class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-white transition-colors text-primary font-bold active:scale-90">+</button>
-</div>
-</div>
-<!-- Item 3 -->
-<div class="flex items-center gap-4 group">
-<div class="w-16 h-16 rounded-xl overflow-hidden bg-surface-container flex-shrink-0">
-<img alt="Kopi" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3e2q6K0F2YPQ8qvQKGz9-yJT6yk2f3VqFTno1cLvAWoY8iy8e-8TCs7mbBvni63efDXH8dUovrkvajB8FRSBus9z2Tm6lCC3M06N6eoRLw0v_RKFwKs7JYLQIAtkXKjTAnHg2UyJeP5cpT0hbsZ9HIkLjM-wa-Z5yfGBvpPWCVudQJRIFkISoUG1vsbt6TKatiBTUdqjno32tHNnwI9NRndQ22nw5Yj2L4_oqtygxMPn6tnNJXTTVXspLYiqPjyxjVs0fVDVBZgU"/>
-</div>
-<div class="flex-1">
-<h4 class="font-bold text-body-sm line-clamp-1">Kopi Sachet Arabika</h4>
-<p class="text-primary font-bold text-body-sm">Rp 37.000</p>
-<p class="text-on-surface-variant text-[10px]">2 x Rp 18.500</p>
-</div>
-<div class="flex items-center gap-2 bg-surface-container rounded-lg p-1">
-<button class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-white transition-colors text-primary font-bold active:scale-90">-</button>
-<span class="font-bold text-body-sm w-4 text-center">2</span>
-<button class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-white transition-colors text-primary font-bold active:scale-90">+</button>
-</div>
-</div>
-</div>
-<!-- Payment Summary Area -->
-<div class="p-6 bg-surface-container-low border-t border-outline-variant/30 space-y-4">
-<div class="space-y-2">
-<div class="flex justify-between text-on-surface-variant text-body-sm">
-<span>Subtotal</span>
-<span class="font-medium">Rp 125.000</span>
-</div>
-<div class="flex justify-between text-on-surface-variant text-body-sm">
-<span>Diskon (Member)</span>
-<span class="text-error font-medium">- Rp 5.000</span>
-</div>
-<div class="flex justify-between items-end pt-2">
-<span class="font-bold text-on-surface text-body-lg">Total Bayar</span>
-<span class="font-h3 text-h3 text-primary">Rp 120.000</span>
-</div>
-</div>
-<!-- Payment Methods -->
-<div class="grid grid-cols-3 gap-2">
-<button class="flex flex-col items-center gap-1 p-3 rounded-xl border-2 border-primary bg-primary/5 text-primary">
-<span class="material-symbols-outlined">payments</span>
-<span class="text-[10px] font-bold">Tunai</span>
-</button>
-<button class="flex flex-col items-center gap-1 p-3 rounded-xl border border-outline-variant hover:bg-white transition-colors">
-<span class="material-symbols-outlined">qr_code_2</span>
-<span class="text-[10px] font-bold">QRIS</span>
-</button>
-<button class="flex flex-col items-center gap-1 p-3 rounded-xl border border-outline-variant hover:bg-white transition-colors">
-<span class="material-symbols-outlined">account_balance_wallet</span>
-<span class="text-[10px] font-bold">E-Wallet</span>
-</button>
-</div>
-<!-- Primary CTA -->
-<button class="w-full py-5 bg-primary text-on-primary rounded-2xl font-bold text-body-lg shadow-md shadow-[#49592A]/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3">
-<span class="material-symbols-outlined">check_circle</span>
-                        Selesaikan Transaksi
-                    </button>
-</div>
-</div>
-<!-- Optional Quick Insights (Style Guidance Inspired) -->
-<div class="bg-primary text-on-primary p-4 rounded-3xl border-t-4 border-[#86945E] shadow-sm flex items-center gap-4">
-<div class="bg-white/20 p-2 rounded-full">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">psychology</span>
-</div>
-<div>
-<p class="text-[11px] font-bold opacity-80 uppercase tracking-widest">Prediksi AI Hari Ini</p>
-<p class="text-body-sm font-medium">Stok Beras akan habis jam 16:00. Siapkan restock!</p>
-</div>
-</div>
-</aside>
+<body class="bg-background text-on-surface font-body-md">
+@include('owner.layouts.sidebar', ['activeMenu' => 'pos'])
+
+@php
+    $user = Auth::user();
+    $initials = collect(explode(' ', trim($user->name)))->filter()->take(2)->map(fn ($part) => strtoupper(substr($part, 0, 1)))->implode('');
+    $posProducts = $products->map(function ($product) {
+        return [
+            'id' => $product->id,
+            'name' => $product->name,
+            'price' => (float) $product->price,
+            'stock' => (int) $product->stock,
+            'category_id' => $product->category_id,
+            'image_url' => $product->image_url,
+        ];
+    })->values();
+@endphp
+
+<main class="ml-64 min-h-screen flex flex-col xl:flex-row gap-6 p-8">
+    <section class="flex-1 space-y-6">
+        <div class="bg-surface-container-lowest rounded-3xl border border-outline-variant p-6 shadow-sm">
+            <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                    <h1 class="font-h3 text-h3 text-primary font-bold">Kasir POS</h1>
+                    <p class="text-body-sm text-on-surface-variant">Semua produk di bawah ini diambil dari inventori toko Anda secara real-time.</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="{{ route('products.create') }}" class="px-5 py-3 rounded-xl border border-outline-variant font-bold text-on-surface">Tambah Produk</a>
+                    <div class="flex items-center gap-3">
+                        <div class="text-right hidden md:block">
+                            <p class="font-bold text-primary">{{ $user->name }}</p>
+                            <p class="text-body-sm text-on-surface-variant">{{ $user->shop?->name ?? 'Toko Anda' }}</p>
+                        </div>
+                        <div class="w-11 h-11 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold">{{ $initials }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 flex flex-col gap-4">
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+                    <input id="product-search" type="text" placeholder="Cari produk..." class="w-full pl-12 pr-4 py-4 bg-surface-container-low border border-outline-variant rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary outline-none"/>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" data-category-filter="all" class="category-filter px-4 py-2 rounded-full bg-primary text-on-primary font-bold">Semua</button>
+                    @foreach ($categories as $category)
+                        <button type="button" data-category-filter="{{ $category->id }}" class="category-filter px-4 py-2 rounded-full bg-secondary-container text-on-secondary-container font-medium">{{ $category->name }}</button>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        @if ($products->isEmpty())
+            <div class="bg-surface-container-lowest rounded-3xl border border-outline-variant p-16 text-center">
+                <span class="material-symbols-outlined text-[56px] text-primary mb-4 block">point_of_sale</span>
+                <h2 class="font-h3 text-h3 text-primary mb-3">POS belum punya produk</h2>
+                <p class="text-body-sm text-on-surface-variant max-w-md mx-auto mb-6">Tambahkan produk terlebih dahulu agar kasir bisa digunakan untuk transaksi nyata.</p>
+                <a href="{{ route('products.create') }}" class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-xl font-bold">
+                    <span class="material-symbols-outlined">add</span>
+                    Isi Produk Sekarang
+                </a>
+            </div>
+        @else
+            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6">
+                @foreach ($products as $product)
+                    @php
+                        $statusClass = match ($product->status) {
+                            'kritis' => 'bg-error-container text-on-error-container',
+                            'menipis' => 'bg-amber-100 text-amber-800',
+                            default => 'bg-primary-fixed text-primary',
+                        };
+                    @endphp
+                    <article
+                        class="product-card bg-surface-container-lowest rounded-3xl border border-outline-variant p-5 shadow-sm"
+                        data-product-card
+                        data-product-id="{{ $product->id }}"
+                        data-product-name="{{ strtolower($product->name) }}"
+                        data-category-id="{{ $product->category_id ?? '' }}"
+                        data-stock="{{ $product->stock }}"
+                        data-price="{{ $product->price }}"
+                    >
+                        <div class="flex items-start justify-between gap-4 mb-4">
+                            @if ($product->image_url)
+                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-16 h-16 rounded-2xl object-cover border border-outline-variant">
+                            @else
+                                <div class="w-16 h-16 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+                                    <span class="material-symbols-outlined">inventory_2</span>
+                                </div>
+                            @endif
+                            <span class="px-3 py-1 rounded-full text-body-sm font-bold {{ $statusClass }}">{{ ucfirst($product->status) }}</span>
+                        </div>
+                        <h3 class="font-bold text-body-lg text-on-surface">{{ $product->name }}</h3>
+                        <p class="text-body-sm text-on-surface-variant mt-1">{{ $product->category?->name ?? 'Tanpa kategori' }}</p>
+                        <div class="mt-5 flex items-end justify-between gap-4">
+                            <div>
+                                <p class="font-bold text-primary text-body-lg">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                                <p class="text-body-sm text-on-surface-variant">Stok: {{ $product->stock }}</p>
+                            </div>
+                            <button
+                                type="button"
+                                class="add-to-cart px-4 py-3 rounded-xl bg-secondary-container text-on-secondary-container font-bold flex items-center gap-2 disabled:opacity-50"
+                                data-add-product
+                                data-product-id="{{ $product->id }}"
+                                data-product-name="{{ $product->name }}"
+                                data-product-price="{{ $product->price }}"
+                                data-product-stock="{{ $product->stock }}"
+                                @disabled($product->stock < 1)
+                            >
+                                <span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+                                {{ $product->stock < 1 ? 'Habis' : 'Tambah' }}
+                            </button>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
+        @endif
+    </section>
+
+    <aside class="w-full xl:w-[26rem] shrink-0">
+        <div class="bg-surface-container-lowest rounded-3xl border border-outline-variant shadow-lg overflow-hidden sticky top-8">
+            <div class="p-6 border-b border-outline-variant flex items-center justify-between">
+                <div>
+                    <h2 class="font-h3 text-h3 text-primary">Keranjang</h2>
+                    <p class="text-body-sm text-on-surface-variant">Transaksi nyata dari toko Anda.</p>
+                </div>
+                <button id="clear-cart" type="button" class="text-error font-bold text-body-sm">Hapus Semua</button>
+            </div>
+
+            <div id="checkout-message" class="hidden mx-6 mt-6 rounded-2xl px-4 py-3 text-body-sm"></div>
+
+            <div id="cart-items" class="max-h-[420px] overflow-y-auto px-6 py-6 space-y-4">
+                <div id="cart-empty" class="text-center text-on-surface-variant py-14">
+                    <span class="material-symbols-outlined text-[52px] mb-3 block">shopping_basket</span>
+                    <p>Keranjang masih kosong.</p>
+                </div>
+            </div>
+
+            <div class="p-6 border-t border-outline-variant bg-surface-container-low space-y-5">
+                <div>
+                    <p class="font-label-caps text-secondary uppercase tracking-widest mb-3">Metode Pembayaran</p>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button type="button" data-payment="tunai" class="payment-method px-3 py-3 rounded-xl border-2 border-primary bg-primary/5 text-primary font-bold">Tunai</button>
+                        <button type="button" data-payment="qris" class="payment-method px-3 py-3 rounded-xl border border-outline-variant font-bold">QRIS</button>
+                        <button type="button" data-payment="e-wallet" class="payment-method px-3 py-3 rounded-xl border border-outline-variant font-bold">E-Wallet</button>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <div class="flex justify-between text-body-sm text-on-surface-variant">
+                        <span>Jumlah Item</span>
+                        <span id="summary-qty">0</span>
+                    </div>
+                    <div class="flex justify-between text-body-sm text-on-surface-variant">
+                        <span>Subtotal</span>
+                        <span id="summary-subtotal">Rp 0</span>
+                    </div>
+                    <div class="flex justify-between items-end pt-2">
+                        <span class="font-bold text-body-lg text-on-surface">Total Bayar</span>
+                        <span id="summary-total" class="font-h3 text-h3 text-primary">Rp 0</span>
+                    </div>
+                </div>
+
+                <button id="checkout-button" type="button" class="w-full py-4 rounded-2xl bg-primary text-on-primary font-bold text-body-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                    Selesaikan Transaksi
+                </button>
+            </div>
+        </div>
+    </aside>
 </main>
-</body></html>
+
+<script>
+const products = @json($posProducts);
+
+const cart = new Map();
+let activeCategory = 'all';
+let paymentMethod = 'tunai';
+
+const currency = (value) => `Rp ${Number(value || 0).toLocaleString('id-ID')}`;
+const cartItemsEl = document.getElementById('cart-items');
+const cartEmptyEl = document.getElementById('cart-empty');
+const subtotalEl = document.getElementById('summary-subtotal');
+const totalEl = document.getElementById('summary-total');
+const qtyEl = document.getElementById('summary-qty');
+const checkoutBtn = document.getElementById('checkout-button');
+const messageEl = document.getElementById('checkout-message');
+
+function showMessage(type, text) {
+    messageEl.className = `mx-6 mt-6 rounded-2xl px-4 py-3 text-body-sm ${type === 'error' ? 'bg-error-container text-on-error-container' : 'bg-primary/10 text-primary'}`;
+    messageEl.textContent = text;
+    messageEl.classList.remove('hidden');
+}
+
+function hideMessage() {
+    messageEl.classList.add('hidden');
+}
+
+function renderCart() {
+    const items = Array.from(cart.values());
+    cartItemsEl.querySelectorAll('[data-cart-item]').forEach((node) => node.remove());
+
+    if (!items.length) {
+        cartEmptyEl.classList.remove('hidden');
+    } else {
+        cartEmptyEl.classList.add('hidden');
+    }
+
+    let totalQty = 0;
+    let subtotal = 0;
+
+    items.forEach((item) => {
+        totalQty += item.quantity;
+        subtotal += item.quantity * item.price;
+
+        const row = document.createElement('div');
+        row.dataset.cartItem = item.id;
+        row.className = 'flex items-center gap-4 rounded-2xl bg-surface px-4 py-4';
+        row.innerHTML = `
+            ${item.image_url
+                ? `<img src="${item.image_url}" alt="${item.name}" class="w-12 h-12 rounded-xl object-cover border border-outline-variant shrink-0">`
+                : `<div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined">shopping_bag</span></div>`
+            }
+            <div class="flex-1 min-w-0">
+                <p class="font-bold truncate">${item.name}</p>
+                <p class="text-body-sm text-on-surface-variant">${currency(item.price)} x ${item.quantity}</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <button type="button" class="cart-decrease w-8 h-8 rounded-lg border border-outline-variant" data-id="${item.id}">-</button>
+                <span class="w-6 text-center font-bold">${item.quantity}</span>
+                <button type="button" class="cart-increase w-8 h-8 rounded-lg border border-outline-variant" data-id="${item.id}">+</button>
+            </div>
+        `;
+        cartItemsEl.appendChild(row);
+    });
+
+    qtyEl.textContent = totalQty;
+    subtotalEl.textContent = currency(subtotal);
+    totalEl.textContent = currency(subtotal);
+    checkoutBtn.disabled = !items.length;
+}
+
+function updateCart(productId, delta) {
+    const product = products.find((entry) => entry.id === productId);
+    if (!product) return;
+
+    const current = cart.get(productId) || { ...product, quantity: 0 };
+    const nextQty = current.quantity + delta;
+
+    if (nextQty <= 0) {
+        cart.delete(productId);
+    } else if (nextQty <= product.stock) {
+        cart.set(productId, { ...current, quantity: nextQty });
+    } else {
+        showMessage('error', `Stok ${product.name} tidak mencukupi.`);
+    }
+
+    renderCart();
+}
+
+document.querySelectorAll('[data-add-product]').forEach((button) => {
+    button.addEventListener('click', () => {
+        hideMessage();
+        updateCart(Number(button.dataset.productId), 1);
+    });
+});
+
+cartItemsEl.addEventListener('click', (event) => {
+    const decrease = event.target.closest('.cart-decrease');
+    const increase = event.target.closest('.cart-increase');
+
+    if (decrease) {
+        updateCart(Number(decrease.dataset.id), -1);
+    }
+
+    if (increase) {
+        updateCart(Number(increase.dataset.id), 1);
+    }
+});
+
+document.getElementById('clear-cart').addEventListener('click', () => {
+    cart.clear();
+    hideMessage();
+    renderCart();
+});
+
+document.querySelectorAll('.payment-method').forEach((button) => {
+    button.addEventListener('click', () => {
+        paymentMethod = button.dataset.payment;
+        document.querySelectorAll('.payment-method').forEach((item) => {
+            item.className = 'payment-method px-3 py-3 rounded-xl border border-outline-variant font-bold';
+        });
+        button.className = 'payment-method px-3 py-3 rounded-xl border-2 border-primary bg-primary/5 text-primary font-bold';
+    });
+});
+
+document.getElementById('product-search').addEventListener('input', (event) => {
+    const term = event.target.value.toLowerCase().trim();
+    document.querySelectorAll('[data-product-card]').forEach((card) => {
+        const name = card.dataset.productName;
+        const categoryMatch = activeCategory === 'all' || card.dataset.categoryId === activeCategory;
+        const termMatch = !term || name.includes(term);
+        card.style.display = categoryMatch && termMatch ? '' : 'none';
+    });
+});
+
+document.querySelectorAll('.category-filter').forEach((button) => {
+    button.addEventListener('click', () => {
+        activeCategory = button.dataset.categoryFilter;
+        document.querySelectorAll('.category-filter').forEach((item) => {
+            item.className = 'category-filter px-4 py-2 rounded-full bg-secondary-container text-on-secondary-container font-medium';
+        });
+        button.className = 'category-filter px-4 py-2 rounded-full bg-primary text-on-primary font-bold';
+        document.getElementById('product-search').dispatchEvent(new Event('input'));
+    });
+});
+
+checkoutBtn.addEventListener('click', async () => {
+    hideMessage();
+    const items = Array.from(cart.values()).map((item) => ({
+        product_id: item.id,
+        quantity: item.quantity,
+        price: item.price,
+    }));
+
+    if (!items.length) {
+        showMessage('error', 'Keranjang masih kosong.');
+        return;
+    }
+
+    checkoutBtn.disabled = true;
+    checkoutBtn.textContent = 'Menyimpan Transaksi...';
+
+    try {
+        const response = await fetch('{{ route('pos.checkout') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            },
+            body: JSON.stringify({
+                payment_method: paymentMethod,
+                discount_amount: 0,
+                items,
+            }),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+            throw new Error(result.message || 'Transaksi gagal disimpan.');
+        }
+
+        cart.clear();
+        renderCart();
+        showMessage('success', 'Transaksi berhasil disimpan. Stok dan penjualan sudah diperbarui.');
+        setTimeout(() => window.location.reload(), 900);
+    } catch (error) {
+        showMessage('error', error.message);
+    } finally {
+        checkoutBtn.disabled = false;
+        checkoutBtn.textContent = 'Selesaikan Transaksi';
+    }
+});
+
+renderCart();
+</script>
+</body>
+</html>

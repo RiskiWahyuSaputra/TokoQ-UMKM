@@ -28,7 +28,7 @@ Route::post('/login', function (\Illuminate\Http\Request $request) {
         $request->session()->regenerate();
 
         if (Auth::user()->role === 'admin') {
-            return redirect()->intended('/admin/validate');
+            return redirect()->intended('/admin/dashboard');
         }
 
         return redirect()->intended('/dashboard');
@@ -54,6 +54,9 @@ Route::middleware(['auth', 'active'])->group(function () {
     Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index'])->name('products.index');
     Route::get('/products/create', [\App\Http\Controllers\ProductController::class, 'create'])->name('products.create');
     Route::post('/products', [\App\Http\Controllers\ProductController::class, 'store'])->name('products.store');
+    Route::get('/products/{product}/edit', [\App\Http\Controllers\ProductController::class, 'edit'])->name('products.edit');
+    Route::put('/products/{product}', [\App\Http\Controllers\ProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{product}', [\App\Http\Controllers\ProductController::class, 'destroy'])->name('products.destroy');
 
     Route::get('/categories', [\App\Http\Controllers\CategoryController::class, 'index'])->name('categories.index');
     Route::post('/categories', [\App\Http\Controllers\CategoryController::class, 'store'])->name('categories.store');
@@ -61,10 +64,24 @@ Route::middleware(['auth', 'active'])->group(function () {
     // POS
     Route::get('/pos', [\App\Http\Controllers\PosController::class, 'index'])->name('pos.index');
     Route::post('/pos/checkout', [\App\Http\Controllers\PosController::class, 'checkout'])->name('pos.checkout');
+
+    // Sales
+    Route::get('/sales', [\App\Http\Controllers\SalesController::class, 'index'])->name('sales.index');
+
+    // AI Prediction
+    Route::get('/ai', [\App\Http\Controllers\AiController::class, 'index'])->name('ai.index');
+
+    // Reports
+    Route::get('/reports', [\App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
+
+    // Settings
+    Route::get('/settings', [\App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
+    Route::post('/settings', [\App\Http\Controllers\SettingsController::class, 'update'])->name('settings.update');
 });
 
 // Admin Routes
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/dashboard', [ValidationController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/validate', [ValidationController::class, 'index'])->name('admin.validate');
-    Route::post('/admin/validate/{user}', [ValidationController::class, 'activate']);
+    Route::post('/admin/validate/{user}', [ValidationController::class, 'activate'])->name('admin.activate');
 });

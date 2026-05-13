@@ -124,16 +124,15 @@
 <a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Kasir</a>
 <a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Cara Kerja</a>
 <a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Dampak</a>
-<a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Demo</a>
-<a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Masuk</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="/login">Masuk</a>
 </nav>
 <div class="flex items-center gap-3">
 <button aria-label="Buka menu navigasi" class="landing-mobile-nav-toggle md:hidden" data-landing-menu-toggle="" type="button">
 <span class="material-symbols-outlined">menu</span>
 </button>
-<button class="landing-primary-cta bg-primary-container text-on-primary-container px-6 py-2.5 rounded-full font-bold active:scale-95 transition-transform">
-                Coba Demo
-            </button>
+<a href="/register" class="landing-primary-cta bg-primary-container text-on-primary-container px-6 py-2.5 rounded-full font-bold active:scale-95 transition-transform">
+                Daftar Sekarang
+            </a>
 </div>
 </div>
 <div class="landing-mobile-menu md:hidden">
@@ -142,11 +141,10 @@
 <a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Kasir</a>
 <a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Cara Kerja</a>
 <a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Dampak</a>
-<a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Demo</a>
-<a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Masuk</a>
-<button class="bg-primary text-on-primary px-6 py-3 rounded-2xl font-bold active:scale-95 transition-transform inline-flex">
-                    Coba Demo
-                </button>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="/login">Masuk</a>
+<a href="/register" class="bg-primary text-on-primary px-6 py-3 rounded-2xl font-bold active:scale-95 transition-transform inline-flex">
+                    Daftar Sekarang
+                </a>
 </nav>
 </div>
 </header>
@@ -166,10 +164,10 @@
                         Kelola stok barang, catat penjualan otomatis, dan pantau performa toko Anda melalui satu dashboard cerdas yang terasa nyata.
                     </p>
 <div class="flex flex-wrap gap-4">
-<button class="bg-primary text-on-primary px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
-                            Coba Dashboard Demo
+<a href="/register" class="bg-primary text-on-primary px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+                            Daftar Toko Saya
                             <span class="material-symbols-outlined">arrow_forward</span>
-</button>
+</a>
 <button class="bg-surface-container-high text-primary px-8 py-4 rounded-xl font-bold border border-outline-variant hover:bg-surface-variant transition-all">
                             Lihat Fitur Kasir
                         </button>

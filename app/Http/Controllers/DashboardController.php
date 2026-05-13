@@ -53,13 +53,44 @@ class DashboardController extends Controller
             ->get()
             ->pluck('total', 'date');
 
+        $dailyRevenue = collect(range(6, 0))->map(function ($offset) use ($revenueTrend) {
+            $date = Carbon::today()->subDays($offset)->format('Y-m-d');
+
+            return [
+                'label' => Carbon::parse($date)->translatedFormat('D'),
+                'total' => (int) ($revenueTrend[$date] ?? 0),
+            ];
+        });
+
+        $predictionTomorrow = (int) round($dailyRevenue->avg('total') ?? 0);
+        $healthScore = min(100, max(0, 100 - ($criticalStockCount * 8) + min($todayTransactions * 2, 20)));
+        $insights = collect();
+
+        if ($bestSellers->isNotEmpty()) {
+            $top = $bestSellers->first();
+            $insights->push("Produk terlaris saat ini adalah {$top->name} dengan {$top->total_sold} unit terjual.");
+        }
+
+        if ($criticalProducts->isNotEmpty()) {
+            $critical = $criticalProducts->first();
+            $insights->push("Stok {$critical->name} tinggal {$critical->stock} unit dan perlu diprioritaskan.");
+        }
+
+        if ($todayTransactions > 0) {
+            $insights->push("Hari ini tercatat {$todayTransactions} transaksi dengan omzet Rp " . number_format($todayOmzet, 0, ',', '.') . '.');
+        }
+
         return view('owner.dashboard', compact(
             'todayOmzet', 
             'todayTransactions', 
             'criticalStockCount', 
             'bestSellers', 
             'criticalProducts',
-            'revenueTrend'
+            'revenueTrend',
+            'dailyRevenue',
+            'predictionTomorrow',
+            'healthScore',
+            'insights'
         ));
     }
 }

@@ -8,24 +8,30 @@ use App\Models\TransactionItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class PosController extends Controller
 {
     public function index()
     {
         $shop = Auth::user()->shop;
-        $products = $shop->products;
-        $categories = $shop->categories;
+        $products = $shop->products()->with('category')->orderBy('name')->get();
+        $categories = $shop->categories()->orderBy('name')->get();
         return view('owner.pos.index', compact('products', 'categories'));
     }
 
     public function checkout(Request $request)
     {
+        $shop = Auth::user()->shop;
+
         $request->validate([
             'payment_method' => 'required|string',
             'discount_amount' => 'nullable|numeric|min:0',
             'items' => 'required|array|min:1',
-            'items.*.product_id' => 'required|exists:products,id',
+            'items.*.product_id' => [
+                'required',
+                Rule::exists('products', 'id')->where(fn ($query) => $query->where('shop_id', $shop->id)),
+            ],
             'items.*.quantity' => 'required|integer|min:1',
             'items.*.price' => 'required|numeric',
         ]);
@@ -35,8 +41,15 @@ class PosController extends Controller
             $totalAmount = 0;
 
             foreach ($request->items as $item) {
-                $product = Product::lockForUpdate()->find($item['product_id']);
+                $product = Product::where('shop_id', $shop->id)->lockForUpdate()->find($item['product_id']);
                 
+                if (! $product) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Produk tidak ditemukan untuk toko ini.'
+                    ], 422);
+                }
+
                 if ($product->stock < $item['quantity']) {
                     return response()->json([
                         'success' => false,
@@ -59,7 +72,7 @@ class PosController extends Controller
             ]);
 
             foreach ($request->items as $item) {
-                $product = Product::find($item['product_id']);
+                $product = Product::where('shop_id', $shop->id)->find($item['product_id']);
                 
                 TransactionItem::create([
                     'transaction_id' => $transaction->id,

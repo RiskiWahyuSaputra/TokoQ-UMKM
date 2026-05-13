@@ -111,57 +111,12 @@
 </head>
 <body class="app-shell bg-background text-on-background font-body-md overflow-x-hidden">
 <!-- SideNavBar Shell -->
-<aside class="app-sidebar h-screen w-64 fixed left-0 top-0 bg-inverse-surface flex flex-col py-8 px-4 z-50">
-<div class="mb-10 px-4">
-<h1 class="font-h2 text-h2 font-bold text-primary-fixed">TokoQ</h1>
-<p class="text-surface-variant font-body-sm">Manajemen UMKM</p>
-</div>
-<nav class="flex-1 space-y-2">
-<!-- Active: Dashboard -->
-<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-xl border-l-4 border-primary-fixed active:scale-95 transition-all" href="#">
-<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
-<span class="font-body-md">Dashboard</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-surface-variant hover:text-primary-fixed-dim hover:bg-surface-variant/10 transition-colors duration-200 active:scale-95" href="#">
-<span class="material-symbols-outlined" data-icon="point_of_sale">point_of_sale</span>
-<span class="font-body-md">Kasir POS</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-surface-variant hover:text-primary-fixed-dim hover:bg-surface-variant/10 transition-colors duration-200 active:scale-95" href="#">
-<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
-<span class="font-body-md">Penjualan</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-surface-variant hover:text-primary-fixed-dim hover:bg-surface-variant/10 transition-colors duration-200 active:scale-95" href="#">
-<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
-<span class="font-body-md">Inventori</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-surface-variant hover:text-primary-fixed-dim hover:bg-surface-variant/10 transition-colors duration-200 active:scale-95" href="#">
-<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
-<span class="font-body-md">Prediksi AI</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-surface-variant hover:text-primary-fixed-dim hover:bg-surface-variant/10 transition-colors duration-200 active:scale-95" href="#">
-<span class="material-symbols-outlined" data-icon="description">description</span>
-<span class="font-body-md">Laporan</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-surface-variant hover:text-primary-fixed-dim hover:bg-surface-variant/10 transition-colors duration-200 active:scale-95" href="#">
-<span class="material-symbols-outlined" data-icon="settings">settings</span>
-<span class="font-body-md">Pengaturan</span>
-</a>
-</nav>
-<div class="mt-auto pt-6 border-t border-surface-variant/20 space-y-2">
-<button class="w-full py-3 px-4 mb-4 bg-primary-fixed text-on-primary-fixed font-bold rounded-xl active:scale-95 transition-transform">
-                Upgrade Plan
-            </button>
-<a class="flex items-center gap-3 px-4 py-2 text-surface-variant hover:text-primary-fixed-dim" href="#">
-<span class="material-symbols-outlined" data-icon="help">help</span>
-<span class="font-body-md">Bantuan</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-2 text-error-container hover:text-on-error-container" href="#">
-<span class="material-symbols-outlined" data-icon="logout">logout</span>
-<span class="font-body-md">Keluar</span>
-</a>
-</div>
-</aside>
-<div class="app-sidebar-overlay lg:hidden" data-sidebar-overlay></div>
+@include('owner.layouts.sidebar', ['activeMenu' => 'dashboard'])
+@php
+    $user = Auth::user();
+    $initials = collect(explode(' ', trim($user->name)))->filter()->take(2)->map(fn ($part) => strtoupper(substr($part, 0, 1)))->implode('');
+    $maxRevenue = max($dailyRevenue->max('total') ?? 0, 1);
+@endphp
 <!-- Main Content Area -->
 <main class="app-main ml-64 min-h-screen">
 <!-- TopNavBar Shell -->
@@ -173,7 +128,7 @@
 <h2 class="font-h3 text-h3 font-bold text-primary">Dashboard Utama</h2>
 <div class="app-header-tabs hidden md:flex gap-6">
 <a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">Dashboard</a>
-<a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Laporan</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="{{ route('reports.index') }}">Laporan</a>
 </div>
 </div>
 <div class="app-header-right flex items-center gap-6">
@@ -181,23 +136,23 @@
 <span class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-variant/20 rounded-full cursor-pointer" data-icon="notifications">notifications</span>
 <span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
 </div>
-<button class="app-header-cta flex items-center gap-2 bg-primary text-on-primary px-6 py-2.5 rounded-full font-bold active:opacity-80 transition-opacity">
+<a href="{{ route('pos.index') }}" class="app-header-cta flex items-center gap-2 bg-primary text-on-primary px-6 py-2.5 rounded-full font-bold active:opacity-80 transition-opacity">
 <span class="material-symbols-outlined text-[20px]" data-icon="point_of_sale">point_of_sale</span>
                     Buka Kasir
-                </button>
+                </a>
 <div class="flex items-center gap-3 pl-4 border-l border-outline-variant">
 <div class="app-user-copy text-right hidden lg:block">
-<p class="font-bold text-on-surface leading-none">Bu Sari</p>
-<p class="text-body-sm text-on-surface-variant">Owner Toko</p>
+<p class="font-bold text-on-surface leading-none">{{ $user->name }}</p>
+<p class="text-body-sm text-on-surface-variant">{{ $user->shop?->name ?? 'Toko Anda' }}</p>
 </div>
-<img alt="Avatar Bu Sari" class="w-10 h-10 rounded-full object-cover border-2 border-primary-fixed shadow-sm" data-alt="A warm and professional portrait of a middle-aged Indonesian woman with a kind expression, wearing a sophisticated batik-patterned blouse. She is positioned against a clean, soft-focus background of a modern, well-lit boutique store. The lighting is natural and bright, conveying a nurturing and premium business owner persona. The visual style is high-end photography with a shallow depth of field, using the brand's soft olive and cream color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNkklA5VyYJuj6FNq-RyrwWT_s5SKn517JaaEfk9OAr5i1H0r9t3JuO6TKT5wuaCgTVlZ5TGVuhdzmBsYcwCw3tetWAzqB22-l8scqxjNxMO2PQkxQLvQtzu6Xd30HDElbeibtn79R7UXxzHIgrbsmWE352IEZwvBVDOsVOquf_1__t8Geu5-RzExxuqShzAfz-GCsiqmquTRsNSMsjCSEgcixjPvnNWc43kdCMtfPLhcEstHrDdc5Fh3hb2kZWKbKLDzhMeCiFuw"/>
+<div class="w-10 h-10 rounded-full border-2 border-primary-fixed shadow-sm bg-primary text-on-primary flex items-center justify-center font-bold">{{ $initials }}</div>
 </div>
 </div>
 </header>
 <section class="app-page p-container-padding">
 <!-- Welcome Header -->
 <div class="mb-8">
-<h2 class="font-h2 text-h2 text-primary mb-1">Selamat Pagi, Bu Sari</h2>
+<h2 class="font-h2 text-h2 text-primary mb-1">Selamat Datang, {{ $user->name }}</h2>
 <p class="text-on-surface-variant">Berikut ringkasan performa toko Anda hari ini.</p>
 </div>
 <!-- Metric Cards & Digital Twin Grid -->
@@ -213,15 +168,15 @@
 <circle cx="80" cy="80" fill="transparent" r="70" stroke="#576B33" stroke-dasharray="440" stroke-dashoffset="79.2" stroke-linecap="round" stroke-width="12"></circle>
 </svg>
 <div class="absolute inset-0 flex flex-col items-center justify-center">
-<span class="text-[42px] font-extrabold text-primary">82</span>
+<span class="text-[42px] font-extrabold text-primary">{{ $healthScore }}</span>
 <span class="text-on-surface-variant font-medium">/ 100</span>
 </div>
 </div>
 <div class="flex items-center gap-2 bg-secondary-container px-4 py-2 rounded-full mb-2">
 <span class="material-symbols-outlined text-secondary text-sm" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-<span class="font-bold text-on-secondary-fixed-variant text-body-sm">Toko dalam kondisi sehat</span>
+<span class="font-bold text-on-secondary-fixed-variant text-body-sm">{{ $healthScore >= 80 ? 'Toko dalam kondisi sehat' : ($healthScore >= 60 ? 'Performa toko cukup stabil' : 'Perlu perhatian pada stok dan penjualan') }}</span>
 </div>
-<p class="text-body-sm text-on-surface-variant max-w-[200px]">Semua sistem berjalan optimal, stok aman, dan profit stabil.</p>
+<p class="text-body-sm text-on-surface-variant max-w-[220px]">{{ $criticalStockCount > 0 ? 'Masih ada stok yang perlu diprioritaskan untuk direstock.' : 'Tidak ada stok kritis dan operasional utama berjalan baik.' }}</p>
 </div>
 </div>
 <!-- Main Metrics Grid -->
@@ -268,7 +223,7 @@
 </div>
 </div>
 <p class="text-on-surface-variant font-medium">Prediksi Omzet Besok</p>
-<h3 class="text-h2 font-bold text-primary">Rp 1.520.000</h3>
+<h3 class="text-h2 font-bold text-primary">Rp {{ number_format($predictionTomorrow, 0, ',', '.') }}</h3>
 </div>
 </div>
 </div>
@@ -286,36 +241,15 @@
                             Minggu Ini
                         </button>
 </div>
-<!-- Mock Graph Area -->
+<!-- Dynamic Graph Area -->
 <div class="h-64 flex items-end gap-4">
+@foreach($dailyRevenue as $day)
+@php $height = max(12, round(($day['total'] / $maxRevenue) * 100)); @endphp
 <div class="flex-1 flex flex-col items-center gap-2 group">
-<div class="w-full bg-surface-container-high rounded-t-xl h-[40%] group-hover:bg-primary-container transition-colors"></div>
-<span class="text-label-caps text-on-surface-variant">Sen</span>
+<div class="w-full bg-surface-container-high rounded-t-xl group-hover:bg-primary-container transition-colors" style="height: {{ $height }}%"></div>
+<span class="text-label-caps text-on-surface-variant">{{ $day['label'] }}</span>
 </div>
-<div class="flex-1 flex flex-col items-center gap-2 group">
-<div class="w-full bg-surface-container-high rounded-t-xl h-[55%] group-hover:bg-primary-container transition-colors"></div>
-<span class="text-label-caps text-on-surface-variant">Sel</span>
-</div>
-<div class="flex-1 flex flex-col items-center gap-2 group">
-<div class="w-full bg-surface-container-high rounded-t-xl h-[45%] group-hover:bg-primary-container transition-colors"></div>
-<span class="text-label-caps text-on-surface-variant">Rab</span>
-</div>
-<div class="flex-1 flex flex-col items-center gap-2 group">
-<div class="w-full bg-surface-container-high rounded-t-xl h-[70%] group-hover:bg-primary-container transition-colors"></div>
-<span class="text-label-caps text-on-surface-variant">Kam</span>
-</div>
-<div class="flex-1 flex flex-col items-center gap-2 group">
-<div class="w-full bg-surface-container-high rounded-t-xl h-[60%] group-hover:bg-primary-container transition-colors"></div>
-<span class="text-label-caps text-on-surface-variant">Jum</span>
-</div>
-<div class="flex-1 flex flex-col items-center gap-2 group">
-<div class="w-full bg-primary-container rounded-t-xl h-[85%]"></div>
-<span class="text-label-caps text-on-surface-variant font-bold text-primary">Sab</span>
-</div>
-<div class="flex-1 flex flex-col items-center gap-2 group">
-<div class="w-full bg-surface-container-high rounded-t-xl h-[75%] group-hover:bg-primary-container transition-colors"></div>
-<span class="text-label-caps text-on-surface-variant">Min</span>
-</div>
+@endforeach
 </div>
 </div>
 <!-- AI Insights Sidebar -->
@@ -328,18 +262,17 @@
 <h3 class="text-body-lg font-bold text-primary">AI Business Insights</h3>
 </div>
 <ul class="space-y-4">
+@forelse($insights as $insight)
 <li class="flex items-start gap-4 p-4 rounded-2xl bg-surface-container-low border border-outline-variant/30">
-<span class="material-symbols-outlined text-tertiary text-[20px] mt-1" data-icon="trending_up">trending_up</span>
-<p class="text-body-md text-on-surface">Penjualan <span class="font-bold">mie instan</span> naik <span class="text-primary font-bold">22%</span> hari ini.</p>
+<span class="material-symbols-outlined text-tertiary text-[20px] mt-1" data-icon="insights">insights</span>
+<p class="text-body-md text-on-surface">{{ $insight }}</p>
 </li>
+@empty
 <li class="flex items-start gap-4 p-4 rounded-2xl bg-surface-container-low border border-outline-variant/30">
-<span class="material-symbols-outlined text-on-secondary-fixed-variant text-[20px] mt-1" data-icon="inventory_2">inventory_2</span>
-<p class="text-body-md text-on-surface">Stok gula diperkirakan cukup untuk <span class="font-bold">2 hari</span> saja.</p>
+<span class="material-symbols-outlined text-tertiary text-[20px] mt-1" data-icon="insights">insights</span>
+<p class="text-body-md text-on-surface">Belum cukup data transaksi untuk membentuk insight otomatis.</p>
 </li>
-<li class="flex items-start gap-4 p-4 rounded-2xl bg-surface-container-low border border-outline-variant/30">
-<span class="material-symbols-outlined text-on-secondary-fixed-variant text-[20px] mt-1" data-icon="shopping_cart_checkout">shopping_cart_checkout</span>
-<p class="text-body-md text-on-surface">Waktunya restock <span class="font-bold">kopi</span> minimal <span class="text-primary font-bold">3 dus</span>.</p>
-</li>
+@endforelse
 </ul>
 </div>
 <div class="bg-primary-container p-6 rounded-[24px] shadow-lg relative group cursor-pointer hover:scale-[1.02] transition-transform">
