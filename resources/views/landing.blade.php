@@ -209,10 +209,79 @@ body {
     display: inline-block;
 }
 
-/* Navbar scroll effect */
+/* Navbar scroll effect - transparent by default */
 .nav-scrolled {
     background: rgba(255, 255, 255, 0.95) !important;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Navbar link colors - default (transparent bg) */
+.nav-link {
+    color: rgba(255, 255, 255, 0.85);
+    transition: color 0.3s ease;
+}
+.nav-link:hover {
+    color: #ffffff;
+}
+
+/* Navbar link colors - scrolled (white bg) */
+.nav-scrolled .nav-link {
+    color: #4B5563;
+}
+.nav-scrolled .nav-link:hover {
+    color: #10B981;
+}
+
+/* Navbar brand - default */
+.nav-brand {
+    color: #ffffff;
+    transition: color 0.3s ease;
+}
+
+/* Navbar brand - scrolled */
+.nav-scrolled .nav-brand {
+    color: #10B981;
+}
+
+/* Navbar mobile button - default */
+.nav-mobile-btn {
+    color: #ffffff;
+    transition: color 0.3s ease;
+}
+.nav-mobile-btn:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* Navbar mobile button - scrolled */
+.nav-scrolled .nav-mobile-btn {
+    color: #4B5563;
+}
+.nav-scrolled .nav-mobile-btn:hover {
+    background: #F3F4F6;
+}
+
+/* Navbar drop animation */
+@keyframes navDrop {
+    from {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.nav-drop {
+    animation: navDrop 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Hero with background image */
+.hero-bg {
+    background-image: url('/images/bg-hero.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 /* Image mockup tilt */
@@ -278,26 +347,23 @@ body {
 <body class="font-body-md">
 
 <!-- ===== NAVIGATION ===== -->
-<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/60 backdrop-blur-xl border-b border-white/20">
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-transparent border-b border-transparent">
     <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <a href="#" class="flex items-center gap-2.5 group">
-            <div class="w-9 h-9 bg-gradient-to-br from-primary to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform">
-                <span class="material-symbols-outlined text-white text-[18px]">storefront</span>
-            </div>
-            <span class="text-lg font-extrabold gradient-text">TokoQ</span>
+            <img src="/images/logo-tokoq.png" alt="TokoQ" style="width: 150px;" class=" group-hover:scale-105 transition-transform"/>
         </a>
 
         <nav class="hidden md:flex items-center gap-8">
-            <a href="#fitur" class="text-sm font-medium text-gray-500 hover:text-primary transition-colors">Fitur</a>
-            <a href="#cara-kerja" class="text-sm font-medium text-gray-500 hover:text-primary transition-colors">Cara Kerja</a>
-            <a href="#dampak" class="text-sm font-medium text-gray-500 hover:text-primary transition-colors">Dampak</a>
-            <a href="/login" class="text-sm font-medium text-gray-500 hover:text-primary transition-colors">Masuk</a>
-            <a href="/register" class="px-5 py-2.5 bg-gradient-to-r from-primary to-emerald-600 text-white text-sm font-bold rounded-full shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:scale-105 transition-all">
+            <a href="#fitur" class="nav-link text-sm font-medium transition-colors">Fitur</a>
+            <a href="#cara-kerja" class="nav-link text-sm font-medium transition-colors">Cara Kerja</a>
+            <a href="#dampak" class="nav-link text-sm font-medium transition-colors">Dampak</a>
+            <a href="/login" class="nav-link text-sm font-medium transition-colors">Masuk</a>
+            <a href="/register" class="px-5 py-2.5 bg-white text-primary text-sm font-bold rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all">
                 Daftar Gratis
             </a>
         </nav>
 
-        <button id="mobile-menu-btn" class="md:hidden w-10 h-10 rounded-xl flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors">
+        <button id="mobile-menu-btn" class="nav-mobile-btn md:hidden w-10 h-10 rounded-xl flex items-center justify-center transition-colors">
             <span class="material-symbols-outlined">menu</span>
         </button>
     </div>
@@ -309,7 +375,7 @@ body {
             <a href="#cara-kerja" class="block text-gray-600 font-medium py-2 hover:text-primary transition-colors">Cara Kerja</a>
             <a href="#dampak" class="block text-gray-600 font-medium py-2 hover:text-primary transition-colors">Dampak</a>
             <a href="/login" class="block text-gray-600 font-medium py-2 hover:text-primary transition-colors">Masuk</a>
-            <a href="/register"="block w-full text-center px-5 py-3 bg-gradient-to-r from-primary to-emerald-600 text-white font-bold rounded-xl shadow-lg">
+            <a href="/register" class="block w-full text-center px-5 py-3 bg-gradient-to-r from-primary to-emerald-600 text-white font-bold rounded-xl shadow-lg">
                 Daftar Gratis
             </a>
         </nav>
@@ -318,36 +384,28 @@ body {
 
 <main>
 <!-- ===== HERO SECTION ===== -->
-<section class="relative min-h-screen flex items-center hero-gradient overflow-hidden pt-16">
-    <!-- Floating particles -->
-    <div class="particle w-3 h-3 bg-primary/20 top-1/4 left-[10%] animate-float" style="animation-delay: 0s;"></div>
-    <div class="particle w-2 h-2 bg-emerald-400/30 top-1/3 right-[15%] animate-float" style="animation-delay: 1s;"></div>
-    <div class="particle w-4 h-4 bg-primary/10 bottom-1/4 left-[20%] animate-float-slow" style="animation-delay: 2s;"></div>
-    <div class="particle w-2.5 h-2.5 bg-teal-400/20 top-1/2 right-[25%] animate-float" style="animation-delay: 0.5s;"></div>
-    <div class="particle w-3 h-3 bg-green-300/15 bottom-1/3 right-[10%] animate-float-slow" style="animation-delay: 1.5s;"></div>
+<section class="relative min-h-screen flex items-center hero-bg overflow-hidden pt-16">
+    <!-- Overlay for better text readability -->
+    <div class="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-transparent"></div>
 
-    <!-- Large decorative circles -->
-    <div class="absolute -top-32 -right-32 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-    <div class="absolute -bottom-48 -left-48 w-[500px] h-[500px] bg-emerald-200/20 rounded-full blur-3xl"></div>
-
-    <div class="max-w-7xl mx-auto px-6 py-20 lg:py-0 w-full">
-        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <!-- Left: Text -->
+    <div class="max-w-7xl mx-auto px-6 py-20 lg:py-0 w-full relative z-10">
+        <div class="max-w-2xl">
+            <!-- Left: Text Only -->
             <div class="space-y-8">
                 <div class="animate-fade-in-up">
-                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full text-xs font-bold text-primary border border-primary/10 shadow-sm">
-                        <span class="material-symbols-outlined text-[14px] text-primary">verified</span>
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/15 backdrop-blur-sm rounded-full text-xs font-bold text-white border border-white/20">
+                        <span class="material-symbols-outlined text-[14px] text-emerald-300">verified</span>
                         SOLUSI DIGITAL UMKM INDONESIA
                     </div>
                 </div>
 
-                <h1 class="animate-fade-in-up delay-100 text-4xl md:text-5xl lg:text-[56px] font-extrabold leading-[1.1]">
-                    <span class="text-gray-800">Sistem Kasir &</span><br/>
-                    <span class="gradient-text">Digital</span><br/>
-                    <span class="text-gray-800">untuk UMKM</span>
+                <h1 class="animate-fade-in-up delay-100 text-4xl md:text-5xl lg:text-[56px] font-extrabold leading-[1.1] text-white drop-shadow-lg">
+                    Sistem Kasir &<br/>
+                    Digital Twin<br/>
+                    untuk UMKM
                 </h1>
 
-                <p class="animate-fade-in-up delay-200 text-lg text-gray-500 max-w-lg leading-relaxed">
+                <p class="animate-fade-in-up delay-200 text-lg text-white/80 max-w-lg leading-relaxed drop-shadow-sm">
                     Kelola stok barang, catat penjualan otomatis, dan pantau performa toko Anda melalui satu dashboard cerdas yang terasa nyata.
                 </p>
 
@@ -356,7 +414,7 @@ body {
                         Daftar Toko Saya
                         <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
                     </a>
-                    <a href="#fitur" class="px-8 py-4 bg-white text-primary font-bold rounded-2xl border-2 border-primary/10 hover:border-primary/30 hover:bg-primary/5 transition-all flex items-center gap-2">
+                    <a href="#fitur" class="px-8 py-4 bg-white/15 backdrop-blur-sm text-white font-bold rounded-2xl border border-white/20 hover:bg-white/25 transition-all flex items-center gap-2">
                         <span class="material-symbols-outlined text-[18px]">play_circle</span>
                         Lihat Fitur
                     </a>
@@ -366,59 +424,20 @@ body {
                 <div class="animate-fade-in-up delay-400 flex items-center gap-6 pt-4">
                     <div class="flex items-center gap-2">
                         <div class="flex -space-x-2">
-                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 border-2 border-white"></div>
-                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white"></div>
-                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-white"></div>
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 border-2 border-white/30"></div>
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white/30"></div>
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-white/30"></div>
                         </div>
                         <div>
-                            <p class="text-sm font-bold text-gray-800">10.000+</p>
-                            <p class="text-[10px] text-gray-400">UMKM Bergabung</p>
+                            <p class="text-sm font-bold text-white">10.000+</p>
+                            <p class="text-[10px] text-white/60">UMKM Bergabung</p>
                         </div>
                     </div>
-                    <div class="h-8 w-px bg-gray-200"></div>
+                    <div class="h-8 w-px bg-white/20"></div>
                     <div class="flex items-center gap-1">
                         <span class="material-symbols-outlined text-amber-400 text-[18px]">star</span>
-                        <span class="text-sm font-bold text-gray-800">4.9</span>
-                        <span class="text-xs text-gray-400">Rating</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right: Dashboard Mockup -->
-            <div class="relative animate-fade-in-right delay-200">
-                <!-- Orbiting elements -->
-                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div class="w-[500px] h-[500px] border border-primary/5 rounded-full"></div>
-                </div>
-
-                <div class="relative">
-                    <!-- Main mockup card -->
-                    <div class="mockup-tilt bg-white p-3 rounded-3xl shadow-2xl shadow-primary/10 border border-gray-100 animate-float-slow">
-                        <img alt="Dashboard TokoQ" class="rounded-2xl w-full h-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYU9VD48rS3kvGDQYNd9vXImbRCRJ3TCWeSba83rjjHkZLKQbwfl8tZHRlNjeTLnwH4sPnHK0XC89H_lGNDyKkpMldYRTCdrC1LwsG4HOeaJQjtxTrcGebCTprcsnLpUIViTstqlYn90O52s_GAQ1h7I13ISDr9vCQqD4XSGTQl38uQBTAltMUywJXnE2KwN99jA0Z6GGQULPRtek-pIkRxJoD_2kwO0gyT7S5B45p7Kw27GKE7d5E0NpLlN1Ga-XZPoJXULwFsvk"/>
-                    </div>
-
-                    <!-- Floating AI Insight Card -->
-                    <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl border-l-4 border-primary max-w-[220px] animate-float" style="animation-delay: 1s;">
-                        <div class="flex items-center gap-2 mb-2">
-                            <div class="w-7 h-7 bg-primary/10 rounded-lg flex items-center justify-center">
-                                <span class="material-symbols-outlined text-primary text-[16px]">psychology</span>
-                            </div>
-                            <span class="font-bold text-xs text-gray-800">AI Insight</span>
-                        </div>
-                        <p class="text-xs text-gray-500 leading-relaxed">Stok krupuk pedas diprediksi habis dalam 3 hari. Restok sekarang?</p>
-                    </div>
-
-                    <!-- Floating stat card -->
-                    <div class="absolute -top-4 -right-4 bg-white p-3 rounded-2xl shadow-xl animate-float" style="animation-delay: 2s;">
-                        <div class="flex items-center gap-2">
-                            <div class="w-8 h-8 gradient-success rounded-lg flex items-center justify-center">
-                                <span class="material-symbols-outlined text-white text-[16px]">trending_up</span>
-                            </div>
-                            <div>
-                                <p class="text-xs font-bold text-gray-800">+24%</p>
-                                <p class="text-[10px] text-gray-400">Penjualan</p>
-                            </div>
-                        </div>
+                        <span class="text-sm font-bold text-white">4.9</span>
+                        <span class="text-xs text-white/60">Rating</span>
                     </div>
                 </div>
             </div>
@@ -427,8 +446,8 @@ body {
 
     <!-- Scroll indicator -->
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-subtle">
-        <div class="w-6 h-10 rounded-full border-2 border-gray-300 flex items-start justify-center p-1.5">
-            <div class="w-1.5 h-3 bg-primary rounded-full"></div>
+        <div class="w-6 h-10 rounded-full border-2 border-white/30 flex items-start justify-center p-1.5">
+            <div class="w-1.5 h-3 bg-white/60 rounded-full"></div>
         </div>
     </div>
 </section>
@@ -801,12 +820,28 @@ body {
 <script>
 // ===== NAVBAR SCROLL EFFECT =====
 const navbar = document.getElementById('navbar');
+let lastScroll = 0;
+let isNavbarVisible = true;
+
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
+    const currentScroll = window.scrollY;
+
+    if (currentScroll > 50) {
         navbar.classList.add('nav-scrolled');
+        navbar.classList.remove('bg-transparent', 'border-transparent');
     } else {
         navbar.classList.remove('nav-scrolled');
+        navbar.classList.add('bg-transparent', 'border-transparent');
     }
+
+    // Animate navbar drop when scrolling down from top
+    if (currentScroll > 100 && lastScroll <= 100 && isNavbarVisible) {
+        navbar.classList.remove('nav-drop');
+        void navbar.offsetWidth; // trigger reflow
+        navbar.classList.add('nav-drop');
+    }
+
+    lastScroll = currentScroll;
 });
 
 // ===== MOBILE MENU =====
