@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta name="csrf-token" content="{{ csrf_token() }}"/>
-<title>Kasir POS - TokoQ</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<link href="/template/tokoq_design_system/responsive.css" rel="stylesheet"/>
-<link href="/css/tokoq-colors.css" rel="stylesheet"/>
-<script src="/js/tailwind-config.js"></script>
+@extends('owner.layouts.app')
+
+@section('title', 'Kasir POS - TokoQ')
+
+@section('styles')
 <style>
-.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
 .qris-pixel:nth-child(1),
 .qris-pixel:nth-child(2),
 .qris-pixel:nth-child(3),
@@ -47,15 +39,11 @@
     background-color: #374151;
 }
 </style>
-</head>
-<body class="bg-secondary text-text font-body-md">
-@include('owner.layouts.sidebar', ['activeMenu' => 'pos'])
+@endsection
 
-@include('owner.layouts.header-simple', ['pageTitle' => 'Kasir POS'])
-
+@section('content')
 @php
     $user = Auth::user();
-    $initials = collect(explode(' ', trim($user->name)))->filter()->take(2)->map(fn ($part) => strtoupper(substr($part, 0, 1)))->implode('');
     $posProducts = $products->map(function ($product) {
         return [
             'id' => $product->id,
@@ -68,7 +56,7 @@
     })->values();
 @endphp
 
-<main class="lg:ml-64 min-h-screen flex flex-col xl:flex-row gap-6 p-4 lg:p-8 pt-8">
+<div class="flex flex-col xl:flex-row gap-6 p-4 lg:p-8 pt-8">
     <section class="flex-1 space-y-6">
         <div class="bg-white rounded-3xl border border-outline-variant p-6 shadow-sm">
             <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
@@ -97,10 +85,7 @@
         @if ($products->isEmpty())
             <div class="bg-white rounded-3xl border border-outline-variant p-16 text-center">
                 <span class="material-symbols-outlined text-[56px] text-primary mb-4 block">point_of_sale</span>
-                <button data-hamburger-toggle class="lg:hidden text-primary p-2" type="button">
-<span class="material-symbols-outlined">menu</span>
-</button>
-<h2 class=" font-h3 text-h3 text-primary mb-3">POS belum punya produk</h2>
+                <h2 class="font-h3 text-h3 text-primary mb-3">POS belum punya produk</h2>
                 <p class="text-body-sm text-on-surface-variant max-w-md mx-auto mb-6">Tambahkan produk terlebih dahulu agar kasir bisa digunakan untuk transaksi nyata.</p>
                 <a href="{{ route('products.create') }}" class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-xl font-bold">
                     <span class="material-symbols-outlined">add</span>
@@ -167,10 +152,7 @@
         <div class="bg-white rounded-3xl border border-outline-variant shadow-lg overflow-hidden sticky top-8">
             <div class="p-6 border-b border-outline-variant flex items-center justify-between">
                 <div>
-                    <button data-hamburger-toggle class="lg:hidden text-primary p-2" type="button">
-<span class="material-symbols-outlined">menu</span>
-</button>
-<h2 class=" font-h3 text-h3 text-primary">Keranjang</h2>
+                    <h2 class="font-h3 text-h3 text-primary">Keranjang</h2>
                     <p class="text-body-sm text-on-surface-variant">Transaksi nyata dari toko Anda.</p>
                 </div>
                 <button id="clear-cart" type="button" class="text-error font-bold text-body-sm">Hapus Semua</button>
@@ -233,8 +215,9 @@
             </div>
         </div>
     </aside>
-</main>
+</div>
 
+<!-- QRIS Modal -->
 <div id="qris-modal" class="hidden fixed inset-0 z-[80]">
     <div id="qris-overlay" class="absolute inset-0 bg-[#191d13]/55 backdrop-blur-sm"></div>
     <div class="relative min-h-full flex items-center justify-center p-6">
@@ -287,7 +270,9 @@
         </div>
     </div>
 </div>
+@endsection
 
+@section('scripts')
 <script>
 const products = @json($posProducts);
 
@@ -580,5 +565,4 @@ qrisConfirmBtn.addEventListener('click', async () => {
 
 renderCart();
 </script>
-</body>
-</html>
+@endsection

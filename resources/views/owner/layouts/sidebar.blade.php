@@ -1,7 +1,19 @@
 @php
-    $activeMenu = $activeMenu ?? '';
     $user = auth()->user();
     $shop = $user?->shop;
+    
+    // Determine active menu from current route name
+    $routeName = Route::currentRouteName();
+    $activeMenu = match(true) {
+        str_starts_with($routeName, 'pos') => 'pos',
+        str_starts_with($routeName, 'sales') => 'sales',
+        str_starts_with($routeName, 'products'), str_starts_with($routeName, 'categories') => 'inventory',
+        str_starts_with($routeName, 'ai') => 'ai',
+        str_starts_with($routeName, 'reports') => 'reports',
+        str_starts_with($routeName, 'settings') => 'settings',
+        default => 'dashboard',
+    };
+    
     $menuItems = [
         ['key' => 'dashboard', 'label' => 'Dashboard', 'icon' => 'dashboard', 'route' => route('dashboard')],
         ['key' => 'pos', 'label' => 'Kasir POS', 'icon' => 'point_of_sale', 'route' => route('pos.index')],
@@ -53,55 +65,3 @@
 
 <!-- Overlay -->
 <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lg:hidden"></div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebarOverlay');
-    const hamburgerBtns = document.querySelectorAll('[data-hamburger-toggle]');
-
-    function toggleSidebar() {
-        const isOpen = !sidebar.classList.contains('-translate-x-full');
-        
-        if (isOpen) {
-            // Close sidebar
-            sidebar.classList.add('-translate-x-full');
-            overlay.classList.add('hidden');
-            document.body.style.overflow = '';
-            
-            // Change all hamburger icons back to menu
-            hamburgerBtns.forEach(btn => {
-                const icon = btn.querySelector('.material-symbols-outlined');
-                if (icon) icon.textContent = 'menu';
-            });
-        } else {
-            // Open sidebar
-            sidebar.classList.remove('-translate-x-full');
-            overlay.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            
-            // Change all hamburger icons to close
-            hamburgerBtns.forEach(btn => {
-                const icon = btn.querySelector('.material-symbols-outlined');
-                if (icon) icon.textContent = 'close';
-            });
-        }
-    }
-
-    hamburgerBtns.forEach(btn => {
-        btn.addEventListener('click', toggleSidebar);
-    });
-
-    overlay?.addEventListener('click', toggleSidebar);
-
-    // Close sidebar when clicking a link on mobile
-    const sidebarLinks = sidebar.querySelectorAll('a');
-    sidebarLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (window.innerWidth < 1024) {
-                toggleSidebar();
-            }
-        });
-    });
-});
-</script>

@@ -1,6 +1,7 @@
 @php
-    $user = Auth::user();
+    $user = Auth()->user();
     $initials = collect(explode(' ', trim($user->name)))->filter()->take(2)->map(fn ($part) => strtoupper(substr($part, 0, 1)))->implode('');
+    // $pageTitle is set by sidebar.blade.php or defaults to Dashboard
     $pageTitle = $pageTitle ?? 'Dashboard';
 @endphp
 
@@ -11,13 +12,13 @@
         </button>
         <h2 class="font-h3 text-h3 font-bold text-primary">{{ $pageTitle }}</h2>
     </div>
-    
+
     <div class="app-header-right flex items-center gap-6">
         <a href="{{ route('pos.index') }}" class="app-header-cta flex items-center gap-2 bg-primary text-white px-6 py-2.5 rounded-full font-bold hover:bg-primary-dark active:opacity-80 transition-all">
             <span class="material-symbols-outlined text-[20px]">point_of_sale</span>
             <span class="hidden sm:inline">Buka Kasir</span>
         </a>
-        
+
         <div class="flex items-center gap-3 pl-4 border-l border-outline-variant">
             <div class="app-user-copy text-right hidden lg:block">
                 <p class="font-bold text-text leading-none">{{ $user->name }}</p>

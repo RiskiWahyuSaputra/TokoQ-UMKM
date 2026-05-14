@@ -1,30 +1,16 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Penjualan - TokoQ</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<link href="/template/tokoq_design_system/responsive.css" rel="stylesheet"/>
-<link href="/css/tokoq-colors.css" rel="stylesheet"/>
-<script src="/js/tailwind-config.js"></script>
+@extends('owner.layouts.app')
+
+@section('title', 'Penjualan - TokoQ')
+
+@section('styles')
 <style>
-.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-.paper-card { background-color: #ffffff; border: 1px solid #D1D5DB; box-shadow: 0 4px 20px -2px rgba(16,185,129,0.08); }
-.ai-border { border-top: 4px solid #10B981; }
+    .paper-card { background-color: #ffffff; border: 1px solid #D1D5DB; box-shadow: 0 4px 20px -2px rgba(16,185,129,0.08); }
+    .ai-border { border-top: 4px solid #10B981; }
 </style>
-</head>
-<body class="app-shell bg-secondary text-text">
+@endsection
 
-<!-- Sidebar -->
-@include('owner.layouts.sidebar', ['activeMenu' => 'sales'])
-
-@include('owner.layouts.header-simple', ['pageTitle' => 'Penjualan'])
-
-<!-- Main Content -->
-<main class="app-main app-page ml-64 p-container-padding space-y-gutter pt-8">
-
+@section('content')
+<section class="app-page p-container-padding space-y-gutter">
     <!-- Summary Cards -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-card-gap">
         <div class="paper-card rounded-xl p-6">
@@ -109,8 +95,5 @@
             </div>
         @endif
     </div>
-</main>
-
-<script src="/template/tokoq_design_system/responsive.js"></script>
-</body>
-</html>
+</section>
+@endsection
