@@ -46,7 +46,9 @@
 @section('content')
 @php
     $user = Auth::user();
+    $shop = $user->shop;
     $initials = collect(explode(' ', trim($user->name)))->filter()->take(2)->map(fn ($part) => strtoupper(substr($part, 0, 1)))->implode('');
+    $shopInitials = $shop ? collect(explode(' ', trim($shop->name)))->filter()->take(2)->map(fn ($part) => strtoupper(substr($part, 0, 1)))->implode('') : 'TK';
 @endphp
 
 <div class="p-4 lg:p-6 max-w-3xl mx-auto">
@@ -91,7 +93,113 @@
         </div>
     </div>
 
-    <!-- Settings Form -->
+    <!-- ===== SHOP PROFILE SECTION ===== -->
+    <div class="bg-white rounded-2xl border border-outline-variant overflow-hidden mb-5 animate-fade-in-delay-1">
+        <!-- Section Header -->
+        <div class="p-5 border-b border-outline-variant flex items-center gap-3">
+            <div class="w-9 h-9 bg-emerald-100 rounded-lg flex items-center justify-center">
+                <span class="material-symbols-outlined text-emerald-600 text-[20px]">storefront</span>
+            </div>
+            <div>
+                <h3 class="font-bold text-on-surface">Profil Toko</h3>
+                <p class="text-xs text-gray-400">Kelola informasi toko Anda</p>
+            </div>
+        </div>
+
+        <!-- Shop Form -->
+        <form action="{{ route('settings.update') }}" method="POST" enctype="multipart/form-data" class="p-5 space-y-5">
+            @csrf
+
+            <!-- Hidden file inputs -->
+            <input id="profile_photo" name="profile_photo" type="file" accept=".jpg,.jpeg,.png,.webp" class="hidden" onchange="previewAvatar(this)"/>
+            <input id="shop_logo" name="shop_logo" type="file" accept=".jpg,.jpeg,.png,.webp" class="hidden" onchange="previewShopLogo(this)"/>
+
+            <!-- Shop Logo & Name Row -->
+            <div class="flex flex-col sm:flex-row sm:items-end gap-4">
+                <!-- Shop Logo -->
+                <div class="shrink-0">
+                    <label class="text-xs font-bold text-gray-500 mb-2 block">Logo Toko</label>
+                    <div class="avatar-upload" onclick="document.getElementById('shop_logo').click()">
+                        @if ($shop && $shop->logo_path)
+                            <img src="{{ Storage::url($shop->logo_path) }}" alt="{{ $shop->name }}" class="w-20 h-20 rounded-2xl object-cover border-2 border-gray-100 shadow-sm">
+                        @else
+                            <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/10 to-emerald-100 flex items-center justify-center border-2 border-dashed border-primary/30">
+                                <span class="material-symbols-outlined text-primary text-[28px]">storefront</span>
+                            </div>
+                        @endif
+                        <div class="avatar-overlay rounded-2xl">
+                            <span class="material-symbols-outlined text-white text-[24px]">camera_alt</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shop Name -->
+                <div class="flex-1">
+                    <label class="flex items-center gap-2 text-sm font-bold text-on-surface mb-2" for="shop_name">
+                        <span class="material-symbols-outlined text-[16px] text-gray-400">badge</span>
+                        Nama Toko
+                    </label>
+                    <input id="shop_name" name="shop_name" type="text" value="{{ old('shop_name', $shop->name ?? '') }}"
+                        class="input-focus w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:bg-white outline-none"
+                        placeholder="Masukkan nama toko Anda"/>
+                </div>
+            </div>
+
+            <!-- Deskripsi Toko -->
+            <div>
+                <label class="flex items-center gap-2 text-sm font-bold text-on-surface mb-2" for="shop_description">
+                    <span class="material-symbols-outlined text-[16px] text-gray-400">description</span>
+                    Deskripsi Toko
+                </label>
+                <textarea id="shop_description" name="shop_description" rows="3"
+                    class="input-focus w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:bg-white outline-none resize-none"
+                    placeholder="Ceritakan tentang toko Anda...">{{ old('shop_description', $shop->description ?? '') }}</textarea>
+                <p class="text-xs text-gray-400 mt-1">Maks. 1000 karakter</p>
+            </div>
+
+            <!-- Alamat Toko -->
+            <div>
+                <label class="flex items-center gap-2 text-sm font-bold text-on-surface mb-2" for="shop_address">
+                    <span class="material-symbols-outlined text-[16px] text-gray-400">location_on</span>
+                    Alamat Toko
+                </label>
+                <textarea id="shop_address" name="shop_address" rows="2"
+                    class="input-focus w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:bg-white outline-none resize-none"
+                    placeholder="Alamat lengkap toko Anda">{{ old('shop_address', $shop->address ?? '') }}</textarea>
+            </div>
+
+            <!-- Shop Info Preview (if shop exists) -->
+            @if ($shop)
+            <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-4">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="material-symbols-outlined text-emerald-600 text-[16px]">info</span>
+                    <p class="text-xs font-bold text-emerald-700">Info Toko Aktif</p>
+                </div>
+                <div class="grid grid-cols-2 gap-3 text-xs">
+                    <div>
+                        <p class="text-gray-400">Slug</p>
+                        <p class="font-mono text-emerald-600 font-medium">{{ $shop->slug }}</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400">Dibuat</p>
+                        <p class="text-gray-600 font-medium">{{ $shop->created_at->locale('id')->format('d M Y') }}</p>
+                    </div>
+                </div>
+            </div>
+            @endif
+
+            <!-- Submit for Shop -->
+            <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                <p class="text-xs text-gray-400">Perubahan akan langsung tersimpan.</p>
+                <button type="submit" class="px-6 py-3 bg-gradient-to-r from-primary to-emerald-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all active:scale-[0.98] flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">save</span>
+                    Simpan Profil Toko
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Settings Form (Account) -->
     <div class="bg-white rounded-2xl border border-outline-variant overflow-hidden animate-fade-in-delay-1">
         <!-- Form Header -->
         <div class="p-5 border-b border-outline-variant flex items-center gap-3">
@@ -129,9 +237,6 @@
         <!-- Form -->
         <form action="{{ route('settings.update') }}" method="POST" enctype="multipart/form-data" class="p-5 space-y-5">
             @csrf
-
-            <!-- Hidden file input -->
-            <input id="profile_photo" name="profile_photo" type="file" accept=".jpg,.jpeg,.png,.webp" class="hidden" onchange="previewAvatar(this)"/>
 
             <!-- Nama -->
             <div>
@@ -241,6 +346,25 @@ function previewAvatar(input) {
                 img = document.createElement('img');
                 img.className = 'w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg';
                 avatarContainer.querySelector('div').replaceWith(img);
+            }
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function previewShopLogo(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const containers = document.querySelectorAll('.avatar-upload');
+            const shopContainer = containers[1] || containers[0];
+            let img = shopContainer.querySelector('img');
+            if (!img) {
+                img = document.createElement('img');
+                img.className = 'w-20 h-20 rounded-2xl object-cover border-2 border-gray-100 shadow-sm';
+                const placeholder = shopContainer.querySelector('div');
+                if (placeholder) placeholder.replaceWith(img);
             }
             img.src = e.target.result;
         };
