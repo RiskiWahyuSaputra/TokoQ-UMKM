@@ -2,24 +2,123 @@
 
 @section('title', 'Pengaturan - TokoQ')
 
+@section('styles')
+<style>
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: fadeInUp 0.5s ease-out forwards; }
+.animate-fade-in-delay-1 { animation: fadeInUp 0.5s ease-out 0.1s forwards; opacity: 0; }
+
+.gradient-success { background: linear-gradient(135deg, #10B981 0%, #34D399 100%); }
+
+.input-focus {
+    transition: all 0.2s ease;
+}
+.input-focus:focus {
+    border-color: #10B981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.avatar-upload {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.avatar-upload:hover .avatar-overlay {
+    opacity: 1;
+}
+.avatar-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+</style>
+@endsection
+
 @section('content')
 @php
     $user = Auth::user();
     $initials = collect(explode(' ', trim($user->name)))->filter()->take(2)->map(fn ($part) => strtoupper(substr($part, 0, 1)))->implode('');
 @endphp
 
-<section class="app-page p-4 lg:p-8">
-    <div class="max-w-3xl bg-white border border-outline-variant rounded-2xl p-8">
+<div class="p-4 lg:p-6 max-w-3xl mx-auto">
+
+    <!-- Profile Card -->
+    <div class="bg-white rounded-2xl border border-outline-variant overflow-hidden mb-5 animate-fade-in">
+        <!-- Cover -->
+        <div class="h-28 bg-gradient-to-r from-primary via-emerald-500 to-teal-500 relative">
+            <div class="absolute inset-0 opacity-20">
+                <div class="absolute top-4 left-8 w-16 h-16 border-2 border-white/30 rounded-full"></div>
+                <div class="absolute top-12 right-12 w-8 h-8 border-2 border-white/20 rounded-full"></div>
+                <div class="absolute bottom-4 left-1/3 w-12 h-12 border-2 border-white/25 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Profile Info -->
+        <div class="px-6 pb-6 -mt-12 relative">
+            <div class="flex flex-col sm:flex-row sm:items-end gap-4">
+                <!-- Avatar -->
+                <div class="avatar-upload shrink-0" onclick="document.getElementById('profile_photo').click()">
+                    @if ($user->profile_photo_url)
+                        <img src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg">
+                    @else
+                        <div class="w-24 h-24 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold border-4 border-white shadow-lg">
+                            {{ $initials }}
+                        </div>
+                    @endif
+                    <div class="avatar-overlay">
+                        <span class="material-symbols-outlined text-white text-[28px]">camera_alt</span>
+                    </div>
+                </div>
+
+                <div class="flex-1 pt-2 sm:pt-0">
+                    <h2 class="text-xl font-bold text-on-surface">{{ $user->name }}</h2>
+                    <p class="text-sm text-gray-400">{{ $user->email }}</p>
+                    <div class="flex items-center gap-2 mt-2">
+                        <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-600 text-xs font-bold">✓ Terverifikasi</span>
+                        <span class="text-xs text-gray-400">Bergabung {{ $user->created_at->locale('id')->diffForHumans() }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Form -->
+    <div class="bg-white rounded-2xl border border-outline-variant overflow-hidden animate-fade-in-delay-1">
+        <!-- Form Header -->
+        <div class="p-5 border-b border-outline-variant flex items-center gap-3">
+            <div class="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center">
+                <span class="material-symbols-outlined text-gray-500 text-[20px]">settings</span>
+            </div>
+            <div>
+                <h3 class="font-bold text-on-surface">Pengaturan Akun</h3>
+                <p class="text-xs text-gray-400">Perbarui informasi akun Anda</p>
+            </div>
+        </div>
+
+        <!-- Messages -->
         @if (session('success'))
-            <div class="mb-6 rounded-xl border border-primary/20 bg-primary/10 px-4 py-3 text-primary">
-                {{ session('success') }}
+            <div class="mx-5 mt-5 rounded-xl bg-emerald-50 border border-emerald-200 px-4 py-3 flex items-center gap-3">
+                <span class="material-symbols-outlined text-emerald-500 text-[18px]">check_circle</span>
+                <p class="text-emerald-700 font-medium text-sm">{{ session('success') }}</p>
             </div>
         @endif
 
         @if ($errors->any())
-            <div class="mb-6 rounded-xl border border-error/20 bg-error-container px-4 py-3 text-on-error-container">
-                <p class="font-bold mb-2">Ada data yang perlu diperbaiki:</p>
-                <ul class="list-disc pl-5 text-body-sm">
+            <div class="mx-5 mt-5 rounded-xl bg-red-50 border border-red-200 px-4 py-3">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="material-symbols-outlined text-red-500 text-[18px]">error</span>
+                    <p class="font-bold text-red-700 text-sm">Ada data yang perlu diperbaiki:</p>
+                </div>
+                <ul class="list-disc pl-8 text-sm text-red-600">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
@@ -27,48 +126,126 @@
             </div>
         @endif
 
-        <form action="{{ route('settings.update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+        <!-- Form -->
+        <form action="{{ route('settings.update') }}" method="POST" enctype="multipart/form-data" class="p-5 space-y-5">
             @csrf
-            <div class="flex flex-col md:flex-row md:items-center gap-5">
-                @if ($user->profile_photo_url)
-                    <img src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" class="w-24 h-24 rounded-full object-cover border-2 border-primary-fixed">
-                @else
-                    <div class="w-24 h-24 rounded-full bg-primary text-on-primary flex items-center justify-center text-2xl font-bold">
-                        {{ $initials }}
+
+            <!-- Hidden file input -->
+            <input id="profile_photo" name="profile_photo" type="file" accept=".jpg,.jpeg,.png,.webp" class="hidden" onchange="previewAvatar(this)"/>
+
+            <!-- Nama -->
+            <div>
+                <label class="flex items-center gap-2 text-sm font-bold text-on-surface mb-2" for="name">
+                    <span class="material-symbols-outlined text-[16px] text-gray-400">person</span>
+                    Nama
+                </label>
+                <input id="name" name="name" type="text" value="{{ old('name', $user->name) }}"
+                    class="input-focus w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:bg-white outline-none"
+                    placeholder="Nama lengkap"/>
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label class="flex items-center gap-2 text-sm font-bold text-on-surface mb-2" for="email">
+                    <span class="material-symbols-outlined text-[16px] text-gray-400">mail</span>
+                    Email
+                </label>
+                <input id="email" name="email" type="email" value="{{ old('email', $user->email) }}"
+                    class="input-focus w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:bg-white outline-none"
+                    placeholder="email@contoh.com"/>
+            </div>
+
+            <!-- Password Section -->
+            <div class="pt-3 border-t border-gray-100">
+                <p class="flex items-center gap-2 text-sm font-bold text-on-surface mb-4">
+                    <span class="material-symbols-outlined text-[16px] text-gray-400">lock</span>
+                    Ubah Password
+                </p>
+                <p class="text-xs text-gray-400 mb-4">Kosongkan jika tidak ingin mengubah password.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-xs font-bold text-gray-500 mb-1.5 block" for="password">Password Baru</label>
+                        <div class="relative">
+                            <input id="password" name="password" type="password"
+                                class="input-focus w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:bg-white outline-none pr-10"
+                                placeholder="Min. 8 karakter"/>
+                            <button type="button" onclick="togglePassword('password')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                <span class="material-symbols-outlined text-[18px]">visibility</span>
+                            </button>
+                        </div>
                     </div>
-                @endif
-                <div class="flex-1">
-                    <label class="block text-body-sm font-bold text-on-surface mb-2" for="profile_photo">Foto Profil</label>
-                    <input id="profile_photo" name="profile_photo" type="file" accept=".jpg,.jpeg,.png,.webp" class="w-full rounded-xl border border-outline-variant bg-surface px-4 py-3 focus:border-primary focus:ring-primary"/>
-                    <p class="mt-2 text-body-sm text-on-surface-variant">Opsional. Format `jpg`, `jpeg`, `png`, atau `webp` dengan ukuran maksimal 2MB.</p>
+                    <div>
+                        <label class="text-xs font-bold text-gray-500 mb-1.5 block" for="password_confirmation">Konfirmasi Password</label>
+                        <div class="relative">
+                            <input id="password_confirmation" name="password_confirmation" type="password"
+                                class="input-focus w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:bg-white outline-none pr-10"
+                                placeholder="Ulangi password"/>
+                            <button type="button" onclick="togglePassword('password_confirmation')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                <span class="material-symbols-outlined text-[18px]">visibility</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div>
-                <label class="block text-body-sm font-bold text-on-surface mb-2" for="name">Nama</label>
-                <input id="name" name="name" type="text" value="{{ old('name', $user->name) }}" class="w-full rounded-xl border border-outline-variant bg-surface px-4 py-3 focus:border-primary focus:ring-primary"/>
-            </div>
-
-            <div>
-                <label class="block text-body-sm font-bold text-on-surface mb-2" for="email">Email</label>
-                <input id="email" name="email" type="email" value="{{ old('email', $user->email) }}" class="w-full rounded-xl border border-outline-variant bg-surface px-4 py-3 focus:border-primary focus:ring-primary"/>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label class="block text-body-sm font-bold text-on-surface mb-2" for="password">Password Baru</label>
-                    <input id="password" name="password" type="password" class="w-full rounded-xl border border-outline-variant bg-surface px-4 py-3 focus:border-primary focus:ring-primary"/>
-                </div>
-                <div>
-                    <label class="block text-body-sm font-bold text-on-surface mb-2" for="password_confirmation">Konfirmasi Password</label>
-                    <input id="password_confirmation" name="password_confirmation" type="password" class="w-full rounded-xl border border-outline-variant bg-surface px-4 py-3 focus:border-primary focus:ring-primary"/>
-                </div>
-            </div>
-
-            <div class="flex justify-end">
-                <button type="submit" class="bg-primary text-on-primary px-6 py-3 rounded-xl font-bold">Simpan Perubahan</button>
+            <!-- Submit -->
+            <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                <p class="text-xs text-gray-400">Perubahan akan langsung tersimpan.</p>
+                <button type="submit" class="px-6 py-3 bg-gradient-to-r from-primary to-emerald-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all active:scale-[0.98] flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">save</span>
+                    Simpan Perubahan
+                </button>
             </div>
         </form>
     </div>
-</section>
+
+    <!-- Danger Zone -->
+    <div class="mt-5 bg-white rounded-2xl border border-red-200 overflow-hidden">
+        <div class="p-5 flex items-center gap-3">
+            <div class="w-9 h-9 bg-red-100 rounded-lg flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-red-500 text-[20px]">logout</span>
+            </div>
+            <div class="flex-1">
+                <h3 class="font-bold text-on-surface text-sm">Keluar dari Akun</h3>
+                <p class="text-xs text-gray-400">Anda perlu login kembali setelah keluar.</p>
+            </div>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="px-4 py-2 border border-red-200 text-red-500 rounded-xl text-xs font-bold hover:bg-red-50 transition-colors">
+                    Keluar
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-4 flex flex-col sm:flex-row justify-between items-center gap-2 opacity-40">
+        <p class="text-xs">&copy; 2025 TokoQ. All rights reserved.</p>
+    </footer>
+</div>
+
+<script>
+function togglePassword(id) {
+    const input = document.getElementById(id);
+    input.type = input.type === 'password' ? 'text' : 'password';
+}
+
+function previewAvatar(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const avatarContainer = document.querySelector('.avatar-upload');
+            let img = avatarContainer.querySelector('img');
+            if (!img) {
+                img = document.createElement('img');
+                img.className = 'w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg';
+                avatarContainer.querySelector('div').replaceWith(img);
+            }
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
 @endsection

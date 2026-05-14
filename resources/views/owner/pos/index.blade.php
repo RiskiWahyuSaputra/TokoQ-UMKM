@@ -4,40 +4,59 @@
 
 @section('styles')
 <style>
-.qris-pixel:nth-child(1),
-.qris-pixel:nth-child(2),
-.qris-pixel:nth-child(3),
-.qris-pixel:nth-child(5),
-.qris-pixel:nth-child(7),
-.qris-pixel:nth-child(8),
-.qris-pixel:nth-child(9),
-.qris-pixel:nth-child(11),
-.qris-pixel:nth-child(13),
-.qris-pixel:nth-child(15),
-.qris-pixel:nth-child(16),
-.qris-pixel:nth-child(19),
-.qris-pixel:nth-child(20),
-.qris-pixel:nth-child(21),
-.qris-pixel:nth-child(23),
-.qris-pixel:nth-child(25),
-.qris-pixel:nth-child(26),
-.qris-pixel:nth-child(27),
-.qris-pixel:nth-child(29),
-.qris-pixel:nth-child(30),
-.qris-pixel:nth-child(33),
-.qris-pixel:nth-child(35),
-.qris-pixel:nth-child(36),
-.qris-pixel:nth-child(37),
-.qris-pixel:nth-child(39),
-.qris-pixel:nth-child(40),
-.qris-pixel:nth-child(42),
-.qris-pixel:nth-child(43),
-.qris-pixel:nth-child(45),
-.qris-pixel:nth-child(46),
-.qris-pixel:nth-child(48),
-.qris-pixel:nth-child(49) {
+.qris-pixel:nth-child(1), .qris-pixel:nth-child(2), .qris-pixel:nth-child(3),
+.qris-pixel:nth-child(5), .qris-pixel:nth-child(7), .qris-pixel:nth-child(8),
+.qris-pixel:nth-child(9), .qris-pixel:nth-child(11), .qris-pixel:nth-child(13),
+.qris-pixel:nth-child(15), .qris-pixel:nth-child(16), .qris-pixel:nth-child(19),
+.qris-pixel:nth-child(20), .qris-pixel:nth-child(21), .qris-pixel:nth-child(23),
+.qris-pixel:nth-child(25), .qris-pixel:nth-child(26), .qris-pixel:nth-child(27),
+.qris-pixel:nth-child(29), .qris-pixel:nth-child(30), .qris-pixel:nth-child(33),
+.qris-pixel:nth-child(35), .qris-pixel:nth-child(36), .qris-pixel:nth-child(37),
+.qris-pixel:nth-child(39), .qris-pixel:nth-child(40), .qris-pixel:nth-child(42),
+.qris-pixel:nth-child(43), .qris-pixel:nth-child(45), .qris-pixel:nth-child(46),
+.qris-pixel:nth-child(48), .qris-pixel:nth-child(49) {
     background-color: #374151;
 }
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes bounceIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.05); }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); opacity: 1; }
+}
+@keyframes pulse-green {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+    50% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
+}
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+}
+.animate-slide-in { animation: slideInRight 0.3s ease-out; }
+.animate-bounce-in { animation: bounceIn 0.5s ease-out; }
+.animate-pulse-green { animation: pulse-green 2s infinite; }
+.animate-shake { animation: shake 0.3s ease-in-out; }
+
+.product-card { transition: all 0.2s ease; }
+.product-card:active { transform: scale(0.97); }
+.product-card:hover { box-shadow: 0 8px 25px -5px rgba(16, 185, 129, 0.15); }
+
+.cart-item { animation: slideInRight 0.3s ease-out; }
+
+.gradient-success { background: linear-gradient(135deg, #10B981 0%, #34D399 100%); }
+.gradient-danger { background: linear-gradient(135deg, #EF4444 0%, #F87171 100%); }
+
+.payment-btn { transition: all 0.2s ease; }
+.payment-btn:hover { transform: translateY(-2px); }
+
+.scrollbar-thin::-webkit-scrollbar { width: 4px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 10px; }
 </style>
 @endsection
 
@@ -56,54 +75,61 @@
     })->values();
 @endphp
 
-<div class="flex flex-col xl:flex-row gap-6 p-4 lg:p-8 pt-8">
-    <section class="flex-1 space-y-6">
-        <div class="bg-white rounded-3xl border border-outline-variant p-6 shadow-sm">
-            <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-                <div>
-                    <p class="text-body-sm text-on-surface-variant">Semua produk di bawah ini diambil dari inventori toko Anda secara real-time.</p>
+<div class="flex flex-col xl:flex-row gap-4 p-4 lg:p-6 pt-6">
+    <!-- Product Grid Section -->
+    <section class="flex-1 space-y-4">
+        <!-- Search & Filter Bar -->
+        <div class="bg-white rounded-2xl border border-outline-variant p-4 shadow-sm">
+            <div class="flex flex-col sm:flex-row gap-3">
+                <div class="relative flex-1">
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                    <input id="product-search" type="text" placeholder="Cari nama produk..."
+                        class="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary focus:bg-white outline-none transition-all text-sm"/>
                 </div>
-                <div class="flex items-center gap-4">
-                    <a href="{{ route('products.create') }}" class="px-5 py-3 rounded-xl border border-outline-variant font-bold text-on-surface">Tambah Produk</a>
-                </div>
+                <a href="{{ route('products.create') }}" class="px-4 py-3 rounded-xl border-2 border-dashed border-gray-300 text-gray-500 font-bold text-sm flex items-center gap-2 hover:border-primary hover:text-primary transition-colors justify-center sm:justify-start">
+                    <span class="material-symbols-outlined text-[18px]">add</span>
+                    <span class="hidden sm:inline">Produk Baru</span>
+                </a>
             </div>
-
-            <div class="mt-6 flex flex-col gap-4">
-                <div class="relative">
-                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
-                    <input id="product-search" type="text" placeholder="Cari produk..." class="w-full pl-12 pr-4 py-4 bg-white border border-outline-variant rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary outline-none"/>
-                </div>
-                <div class="flex flex-wrap gap-2">
-                    <button type="button" data-category-filter="all" class="category-filter px-4 py-2 rounded-full bg-primary text-on-primary font-bold">Semua</button>
-                    @foreach ($categories as $category)
-                        <button type="button" data-category-filter="{{ $category->id }}" class="category-filter px-4 py-2 rounded-full bg-secondary-container text-on-secondary-container font-medium">{{ $category->name }}</button>
-                    @endforeach
-                </div>
+            <div class="flex flex-wrap gap-2 mt-3" id="category-filters">
+                <button type="button" data-category-filter="all" class="category-filter px-4 py-1.5 rounded-full bg-primary text-white text-xs font-bold transition-all">Semua</button>
+                @foreach ($categories as $category)
+                    <button type="button" data-category-filter="{{ $category->id }}" class="category-filter px-4 py-1.5 rounded-full bg-gray-100 text-gray-600 text-xs font-medium hover:bg-gray-200 transition-all">{{ $category->name }}</button>
+                @endforeach
             </div>
         </div>
 
         @if ($products->isEmpty())
-            <div class="bg-white rounded-3xl border border-outline-variant p-16 text-center">
-                <span class="material-symbols-outlined text-[56px] text-primary mb-4 block">point_of_sale</span>
-                <h2 class="font-h3 text-h3 text-primary mb-3">POS belum punya produk</h2>
-                <p class="text-body-sm text-on-surface-variant max-w-md mx-auto mb-6">Tambahkan produk terlebih dahulu agar kasir bisa digunakan untuk transaksi nyata.</p>
-                <a href="{{ route('products.create') }}" class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-xl font-bold">
+            <!-- Empty State -->
+            <div class="bg-white rounded-3xl border border-outline-variant p-12 text-center">
+                <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-5">
+                    <span class="material-symbols-outlined text-4xl text-primary">inventory_2</span>
+                </div>
+                <h2 class="font-h3 text-h3 text-on-surface mb-2">Belum Ada Produk</h2>
+                <p class="text-body-sm text-on-surface-variant max-w-sm mx-auto mb-6">Tambahkan produk pertama Anda agar bisa mulai berjualan di kasir.</p>
+                <a href="{{ route('products.create') }}" class="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-bold hover:bg-primary-dark transition-colors">
                     <span class="material-symbols-outlined">add</span>
-                    Isi Produk Sekarang
+                    Tambah Produk Sekarang
                 </a>
             </div>
         @else
-            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6">
+            <!-- Product Grid -->
+            <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-3">
                 @foreach ($products as $product)
                     @php
                         $statusClass = match ($product->status) {
-                            'kritis' => 'bg-error-container text-on-error-container',
-                            'menipis' => 'bg-amber-100 text-amber-800',
-                            default => 'bg-primary-fixed text-primary',
+                            'kritis' => 'bg-red-100 text-red-600',
+                            'menipis' => 'bg-amber-100 text-amber-700',
+                            default => 'bg-emerald-100 text-emerald-700',
+                        };
+                        $statusLabel = match ($product->status) {
+                            'kritis' => 'Kritis',
+                            'menipis' => 'Menipis',
+                            default => 'Aman',
                         };
                     @endphp
                     <article
-                        class="product-card bg-white rounded-3xl border border-outline-variant p-5 shadow-sm"
+                        class="product-card bg-white rounded-2xl border border-outline-variant p-4 cursor-pointer group relative overflow-hidden"
                         data-product-card
                         data-product-id="{{ $product->id }}"
                         data-product-name="{{ strtolower($product->name) }}"
@@ -111,26 +137,34 @@
                         data-stock="{{ $product->stock }}"
                         data-price="{{ $product->price }}"
                     >
-                        <div class="flex items-start justify-between gap-4 mb-4">
+                        <!-- Stock badge -->
+                        <div class="absolute top-3 right-3 z-10">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold {{ $statusClass }}">{{ $statusLabel }}</span>
+                        </div>
+
+                        <!-- Product Image -->
+                        <div class="aspect-square rounded-xl overflow-hidden mb-3 bg-gray-50 flex items-center justify-center">
                             @if ($product->image_url)
-                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-16 h-16 rounded-2xl object-cover border border-outline-variant">
+                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                             @else
-                                <div class="w-16 h-16 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
-                                    <span class="material-symbols-outlined">inventory_2</span>
+                                <div class="w-full h-full bg-gradient-to-br from-primary/5 to-primary/10 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-4xl text-primary/30">inventory_2</span>
                                 </div>
                             @endif
-                            <span class="px-3 py-1 rounded-full text-body-sm font-bold {{ $statusClass }}">{{ ucfirst($product->status) }}</span>
                         </div>
-                        <h3 class="font-bold text-body-lg text-on-surface">{{ $product->name }}</h3>
-                        <p class="text-body-sm text-on-surface-variant mt-1">{{ $product->category?->name ?? 'Tanpa kategori' }}</p>
-                        <div class="mt-5 flex items-end justify-between gap-4">
+
+                        <!-- Product Info -->
+                        <h3 class="font-bold text-on-surface text-sm truncate mb-1">{{ $product->name }}</h3>
+                        <p class="text-xs text-gray-400 mb-2">{{ $product->category?->name ?? 'Tanpa kategori' }}</p>
+
+                        <div class="flex items-end justify-between">
                             <div>
-                                <p class="font-bold text-primary text-body-lg">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                                <p class="text-body-sm text-on-surface-variant">Stok: {{ $product->stock }}</p>
+                                <p class="font-bold text-primary text-sm">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                                <p class="text-[11px] text-gray-400">Stok: {{ $product->stock }}</p>
                             </div>
                             <button
                                 type="button"
-                                class="add-to-cart px-4 py-3 rounded-xl bg-secondary-container text-on-secondary-container font-bold flex items-center gap-2 disabled:opacity-50"
+                                class="add-to-cart w-9 h-9 rounded-xl gradient-success text-white flex items-center justify-center shadow-lg shadow-success/20 hover:shadow-success/40 transition-all active:scale-90 {{ $product->stock < 1 ? 'opacity-40 cursor-not-allowed' : '' }}"
                                 data-add-product
                                 data-product-id="{{ $product->id }}"
                                 data-product-name="{{ $product->name }}"
@@ -138,8 +172,7 @@
                                 data-product-stock="{{ $product->stock }}"
                                 @disabled($product->stock < 1)
                             >
-                                <span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
-                                {{ $product->stock < 1 ? 'Habis' : 'Tambah' }}
+                                <span class="material-symbols-outlined text-[18px]">{{ $product->stock < 1 ? 'block' : 'add' }}</span>
                             </button>
                         </div>
                     </article>
@@ -148,68 +181,106 @@
         @endif
     </section>
 
-    <aside class="w-full xl:w-[26rem] shrink-0">
-        <div class="bg-white rounded-3xl border border-outline-variant shadow-lg overflow-hidden sticky top-8">
-            <div class="p-6 border-b border-outline-variant flex items-center justify-between">
-                <div>
-                    <h2 class="font-h3 text-h3 text-primary">Keranjang</h2>
-                    <p class="text-body-sm text-on-surface-variant">Transaksi nyata dari toko Anda.</p>
-                </div>
-                <button id="clear-cart" type="button" class="text-error font-bold text-body-sm">Hapus Semua</button>
-            </div>
-
-            <div id="checkout-message" class="hidden mx-6 mt-6 rounded-2xl px-4 py-3 text-body-sm"></div>
-
-            <div id="cart-items" class="max-h-[420px] overflow-y-auto px-6 py-6 space-y-4">
-                <div id="cart-empty" class="text-center text-on-surface-variant py-14">
-                    <span class="material-symbols-outlined text-[52px] mb-3 block">shopping_basket</span>
-                    <p>Keranjang masih kosong.</p>
-                </div>
-            </div>
-
-            <div class="p-6 border-t border-outline-variant bg-white space-y-5">
-                <div>
-                    <p class="font-label-caps text-secondary uppercase tracking-widest mb-3">Metode Pembayaran</p>
-                    <div class="grid grid-cols-3 gap-2">
-                        <button type="button" data-payment="tunai" class="payment-method px-3 py-3 rounded-xl border-2 border-primary bg-primary/5 text-primary font-bold">Tunai</button>
-                        <button type="button" data-payment="qris" class="payment-method px-3 py-3 rounded-xl border border-outline-variant font-bold">QRIS</button>
-                        <button type="button" data-payment="e-wallet" class="payment-method px-3 py-3 rounded-xl border border-outline-variant font-bold">E-Wallet</button>
+    <!-- Cart Sidebar -->
+    <aside class="w-full xl:w-[28rem] shrink-0">
+        <div class="bg-white rounded-2xl border border-outline-variant shadow-lg overflow-hidden sticky top-24">
+            <!-- Cart Header -->
+            <div class="p-4 border-b border-outline-variant bg-gradient-to-r from-primary to-emerald-600 text-white">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </div>
+                        <div>
+                            <h2 class="font-bold">Keranjang</h2>
+                            <p class="text-white/70 text-xs" id="cart-item-count">0 item</p>
+                        </div>
                     </div>
-                    <div id="ewallet-picker" class="hidden mt-4">
-                        <p class="block text-body-sm font-bold text-on-surface mb-2">Pilih E-Wallet Tujuan</p>
+                    <button id="clear-cart" type="button" class="text-white/70 hover:text-white text-xs font-bold flex items-center gap-1 transition-colors">
+                        <span class="material-symbols-outlined text-[16px]">delete_sweep</span>
+                        Hapus Semua
+                    </button>
+                </div>
+            </div>
+
+            <!-- Message -->
+            <div id="checkout-message" class="hidden mx-4 mt-4 rounded-xl px-4 py-3 text-sm"></div>
+
+            <!-- Cart Items -->
+            <div id="cart-items" class="max-h-[300px] xl:max-h-[400px] overflow-y-auto p-4 space-y-3 scrollbar-thin">
+                <div id="cart-empty" class="text-center py-10">
+                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <span class="material-symbols-outlined text-3xl text-gray-300">shopping_basket</span>
+                    </div>
+                    <p class="text-sm text-gray-400">Keranjang kosong</p>
+                    <p class="text-xs text-gray-300 mt-1">Tap produk untuk menambah</p>
+                </div>
+            </div>
+
+            <!-- Payment & Summary -->
+            <div class="p-4 border-t border-outline-variant bg-gray-50 space-y-4">
+                <!-- Payment Method -->
+                <div>
+                    <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Metode Pembayaran</p>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button type="button" data-payment="tunai" class="payment-btn payment-method px-3 py-2.5 rounded-xl border-2 border-primary bg-primary/5 text-primary font-bold text-xs flex flex-col items-center gap-1">
+                            <span class="material-symbols-outlined text-[18px]">payments</span>
+                            Tunai
+                        </button>
+                        <button type="button" data-payment="qris" class="payment-btn payment-method px-3 py-2.5 rounded-xl border border-gray-200 font-bold text-xs flex flex-col items-center gap-1 text-gray-600 hover:border-gray-300">
+                            <span class="material-symbols-outlined text-[18px]">qr_code</span>
+                            QRIS
+                        </button>
+                        <button type="button" data-payment="e-wallet" class="payment-btn payment-method px-3 py-2.5 rounded-xl border border-gray-200 font-bold text-xs flex flex-col items-center gap-1 text-gray-600 hover:border-gray-300">
+                            <span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+                            E-Wallet
+                        </button>
+                    </div>
+
+                    <!-- E-Wallet Picker -->
+                    <div id="ewallet-picker" class="hidden mt-3 p-3 bg-white rounded-xl border border-gray-200">
+                        <p class="text-xs font-bold text-gray-500 mb-2">Pilih E-Wallet</p>
                         <div class="space-y-2">
-                            <button type="button" data-ewallet-provider="dana" data-ewallet-number="085789910963" class="ewallet-option w-full rounded-xl border-2 border-primary bg-primary/5 px-4 py-3 text-left">
-                                <span class="block font-bold text-primary">DANA</span>
-                                <span class="block text-body-sm text-on-surface-variant">No. 085789910963</span>
+                            <button type="button" data-ewallet-provider="dana" data-ewallet-number="085789910963" class="ewallet-option w-full rounded-lg border-2 border-primary bg-primary/5 px-3 py-2.5 text-left flex items-center gap-3">
+                                <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center text-white text-xs font-bold">D</div>
+                                <div>
+                                    <span class="block font-bold text-primary text-xs">DANA</span>
+                                    <span class="block text-[10px] text-gray-400">085789910963</span>
+                                </div>
                             </button>
-                            <button type="button" data-ewallet-provider="gopay" data-ewallet-number="085789910963" class="ewallet-option w-full rounded-xl border border-outline-variant px-4 py-3 text-left">
-                                <span class="block font-bold text-on-surface">GoPay</span>
-                                <span class="block text-body-sm text-on-surface-variant">No. 085789910963</span>
+                            <button type="button" data-ewallet-provider="gopay" data-ewallet-number="085789910963" class="ewallet-option w-full rounded-lg border border-gray-200 px-3 py-2.5 text-left flex items-center gap-3">
+                                <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center text-white text-xs font-bold">G</div>
+                                <div>
+                                    <span class="block font-bold text-gray-700 text-xs">GoPay</span>
+                                    <span class="block text-[10px] text-gray-400">085789910963</span>
+                                </div>
                             </button>
-                            <button type="button" data-ewallet-provider="ovo" data-ewallet-number="085789910963" class="ewallet-option w-full rounded-xl border border-outline-variant px-4 py-3 text-left">
-                                <span class="block font-bold text-on-surface">OVO</span>
-                                <span class="block text-body-sm text-on-surface-variant">No. 085789910963</span>
+                            <button type="button" data-ewallet-provider="ovo" data-ewallet-number="085789910963" class="ewallet-option w-full rounded-lg border border-gray-200 px-3 py-2.5 text-left flex items-center gap-3">
+                                <div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center text-white text-xs font-bold">O</div>
+                                <div>
+                                    <span class="block font-bold text-gray-700 text-xs">OVO</span>
+                                    <span class="block text-[10px] text-gray-400">085789910963</span>
+                                </div>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="space-y-2">
-                    <div class="flex justify-between text-body-sm text-on-surface-variant">
-                        <span>Jumlah Item</span>
-                        <span id="summary-qty">0</span>
-                    </div>
-                    <div class="flex justify-between text-body-sm text-on-surface-variant">
+                <!-- Summary -->
+                <div class="space-y-2 pt-2 border-t border-gray-200">
+                    <div class="flex justify-between text-sm text-gray-500">
                         <span>Subtotal</span>
                         <span id="summary-subtotal">Rp 0</span>
                     </div>
                     <div class="flex justify-between items-end pt-2">
-                        <span class="font-bold text-body-lg text-on-surface">Total Bayar</span>
-                        <span id="summary-total" class="font-h3 text-h3 text-primary">Rp 0</span>
+                        <span class="font-bold text-on-surface">Total Bayar</span>
+                        <span id="summary-total" class="text-2xl font-extrabold text-primary">Rp 0</span>
                     </div>
                 </div>
 
-                <button id="checkout-button" type="button" class="w-full py-4 rounded-2xl bg-primary text-on-primary font-bold text-body-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                <!-- Checkout Button -->
+                <button id="checkout-button" type="button" class="w-full py-4 rounded-xl bg-gradient-to-r from-primary to-emerald-600 text-white font-bold text-base shadow-lg shadow-primary/25 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none hover:shadow-xl hover:shadow-primary/30 transition-all active:scale-[0.98] flex items-center justify-center gap-2" disabled>
+                    <span class="material-symbols-outlined">lock</span>
                     Selesaikan Transaksi
                 </button>
             </div>
@@ -219,52 +290,52 @@
 
 <!-- QRIS Modal -->
 <div id="qris-modal" class="hidden fixed inset-0 z-[80]">
-    <div id="qris-overlay" class="absolute inset-0 bg-[#191d13]/55 backdrop-blur-sm"></div>
+    <div id="qris-overlay" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
     <div class="relative min-h-full flex items-center justify-center p-6">
-        <div class="w-full max-w-md rounded-[28px] bg-white border border-outline-variant shadow-2xl overflow-hidden">
-            <div class="bg-primary text-on-primary px-6 py-5 flex items-center justify-between">
+        <div class="w-full max-w-sm rounded-3xl bg-white shadow-2xl overflow-hidden animate-bounce-in">
+            <div class="bg-gradient-to-r from-primary to-emerald-600 text-white px-6 py-5 flex items-center justify-between">
                 <div>
-                    <p class="text-label-caps uppercase tracking-widest opacity-80">Metode Pembayaran</p>
+                    <p class="text-xs uppercase tracking-widest opacity-80">Metode Pembayaran</p>
                     <h3 class="font-h3 text-h3 font-bold">QRIS</h3>
                 </div>
-                <button id="qris-close" type="button" class="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center">
-                    <span class="material-symbols-outlined">close</span>
+                <button id="qris-close" type="button" class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">close</span>
                 </button>
             </div>
-            <div class="p-6 space-y-6">
+            <div class="p-6 space-y-5">
                 <div class="text-center">
-                    <p class="text-body-sm text-on-surface-variant">Scan QRIS berikut untuk menyelesaikan pembayaran</p>
-                    <p id="qris-merchant" class="font-bold text-primary text-body-lg mt-2">{{ $user->shop?->name ?? 'Toko Anda' }}</p>
+                    <p class="text-sm text-gray-500">Scan QRIS berikut untuk menyelesaikan pembayaran</p>
+                    <p id="qris-merchant" class="font-bold text-primary mt-1">{{ $user->shop?->name ?? 'Toko Anda' }}</p>
                 </div>
 
-                <div class="mx-auto w-[240px] rounded-[28px] border border-outline-variant bg-white p-5 shadow-sm">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="font-bold text-primary text-body-lg">QRIS</span>
-                        <span class="text-body-sm text-on-surface-variant">TokoQ Pay</span>
+                <div class="mx-auto w-[200px] rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="font-bold text-primary text-sm">QRIS</span>
+                        <span class="text-xs text-gray-400">TokoQ Pay</span>
                     </div>
-                    <div class="grid grid-cols-7 gap-1.5 bg-[#f2f5e4] p-4 rounded-2xl">
+                    <div class="grid grid-cols-7 gap-1 bg-gray-50 p-3 rounded-xl">
                         @for ($i = 0; $i < 49; $i++)
-                            <span class="qris-pixel aspect-square rounded-[3px] bg-white"></span>
+                            <span class="qris-pixel aspect-square rounded-[2px] bg-white"></span>
                         @endfor
                     </div>
-                    <div class="mt-4 text-center">
-                        <p class="text-body-sm text-on-surface-variant">Total yang harus dibayar</p>
-                        <p id="qris-total" class="font-h3 text-h3 text-primary font-bold">Rp 0</p>
+                    <div class="mt-3 text-center">
+                        <p class="text-xs text-gray-400">Total bayar</p>
+                        <p id="qris-total" class="text-lg font-extrabold text-primary">Rp 0</p>
                     </div>
                 </div>
 
-                <div class="rounded-2xl bg-white p-4">
-                    <p class="font-bold text-on-surface mb-2">Langkah Pembayaran</p>
-                    <ol class="text-body-sm text-on-surface-variant space-y-1">
-                        <li>1. Buka aplikasi e-wallet atau mobile banking.</li>
-                        <li>2. Scan QRIS pada layar ini.</li>
-                        <li>3. Setelah pembayaran berhasil, klik tombol konfirmasi.</li>
+                <div class="bg-blue-50 rounded-xl p-3">
+                    <p class="font-bold text-blue-700 text-xs mb-1">📱 Langkah Pembayaran</p>
+                    <ol class="text-xs text-blue-600 space-y-0.5">
+                        <li>1. Buka aplikasi e-wallet / mobile banking</li>
+                        <li>2. Scan QRIS pada layar ini</li>
+                        <li>3. Setelah berhasil, klik konfirmasi</li>
                     </ol>
                 </div>
 
                 <div class="flex gap-3">
-                    <button id="qris-cancel" type="button" class="flex-1 px-4 py-3 rounded-xl border border-outline-variant font-bold text-on-surface">Batal</button>
-                    <button id="qris-confirm" type="button" class="flex-1 px-4 py-3 rounded-xl bg-primary text-on-primary font-bold">Sudah Dibayar</button>
+                    <button id="qris-cancel" type="button" class="flex-1 px-4 py-3 rounded-xl border border-gray-200 font-bold text-gray-600 text-sm hover:bg-gray-50 transition-colors">Batal</button>
+                    <button id="qris-confirm" type="button" class="flex-1 px-4 py-3 rounded-xl bg-primary text-white font-bold text-sm shadow-lg shadow-primary/20 hover:shadow-xl transition-all">Sudah Dibayar</button>
                 </div>
             </div>
         </div>
@@ -285,7 +356,7 @@ const cartItemsEl = document.getElementById('cart-items');
 const cartEmptyEl = document.getElementById('cart-empty');
 const subtotalEl = document.getElementById('summary-subtotal');
 const totalEl = document.getElementById('summary-total');
-const qtyEl = document.getElementById('summary-qty');
+const qtyEl = document.getElementById('cart-item-count');
 const checkoutBtn = document.getElementById('checkout-button');
 const messageEl = document.getElementById('checkout-message');
 const qrisModal = document.getElementById('qris-modal');
@@ -301,7 +372,7 @@ let ewalletProvider = 'dana';
 let ewalletNumber = '085789910963';
 
 function showMessage(type, text) {
-    messageEl.className = `mx-6 mt-6 rounded-2xl px-4 py-3 text-body-sm ${type === 'error' ? 'bg-error-container text-on-error-container' : 'bg-primary/10 text-primary'}`;
+    messageEl.className = `mx-4 mt-4 rounded-xl px-4 py-3 text-sm ${type === 'error' ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-emerald-50 text-emerald-600 border border-emerald-200'}`;
     messageEl.textContent = text;
     messageEl.classList.remove('hidden');
 }
@@ -353,26 +424,31 @@ function renderCart() {
 
         const row = document.createElement('div');
         row.dataset.cartItem = item.id;
-        row.className = 'flex items-center gap-4 rounded-2xl bg-surface px-4 py-4';
+        row.className = 'cart-item flex items-center gap-3 rounded-xl bg-gray-50 p-3';
         row.innerHTML = `
             ${item.image_url
-                ? `<img src="${item.image_url}" alt="${item.name}" class="w-12 h-12 rounded-xl object-cover border border-outline-variant shrink-0">`
-                : `<div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined">shopping_bag</span></div>`
+                ? `<img src="${item.image_url}" alt="${item.name}" class="w-11 h-11 rounded-lg object-cover border border-gray-200 shrink-0">`
+                : `<div class="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[20px]">shopping_bag</span></div>`
             }
             <div class="flex-1 min-w-0">
-                <p class="font-bold truncate">${item.name}</p>
-                <p class="text-body-sm text-on-surface-variant">${currency(item.price)} x ${item.quantity}</p>
+                <p class="font-bold text-sm truncate text-on-surface">${item.name}</p>
+                <p class="text-xs text-gray-400">${currency(item.price)} × ${item.quantity}</p>
             </div>
-            <div class="flex items-center gap-2">
-                <button type="button" class="cart-decrease w-8 h-8 rounded-lg border border-outline-variant" data-id="${item.id}">-</button>
-                <span class="w-6 text-center font-bold">${item.quantity}</span>
-                <button type="button" class="cart-increase w-8 h-8 rounded-lg border border-outline-variant" data-id="${item.id}">+</button>
+            <div class="flex items-center gap-1.5 shrink-0">
+                <button type="button" class="cart-decrease w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-red-50 hover:text-red-500 hover:border-red-200 transition-colors" data-id="${item.id}">
+                    <span class="material-symbols-outlined text-[14px]">remove</span>
+                </button>
+                <span class="w-6 text-center font-bold text-sm">${item.quantity}</span>
+                <button type="button" class="cart-increase w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-emerald-50 hover:text-emerald-500 hover:border-emerald-200 transition-colors" data-id="${item.id}">
+                    <span class="material-symbols-outlined text-[14px]">add</span>
+                </button>
             </div>
         `;
         cartItemsEl.appendChild(row);
     });
 
-    qtyEl.textContent = totalQty;
+    const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+    qtyEl.textContent = `${totalItems} item`;
     subtotalEl.textContent = currency(subtotal);
     totalEl.textContent = currency(subtotal);
     checkoutBtn.disabled = !items.length;
@@ -380,14 +456,13 @@ function renderCart() {
 
 async function submitCheckout() {
     const items = currentCartItems();
-
     if (!items.length) {
         showMessage('error', 'Keranjang masih kosong.');
         return;
     }
 
     checkoutBtn.disabled = true;
-    checkoutBtn.textContent = 'Menyimpan Transaksi...';
+    checkoutBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Memproses...';
     qrisConfirmBtn.disabled = true;
     qrisConfirmBtn.textContent = 'Memproses...';
 
@@ -415,13 +490,13 @@ async function submitCheckout() {
         closeQrisModal();
         cart.clear();
         renderCart();
-        showMessage('success', 'Transaksi berhasil disimpan. Stok dan penjualan sudah diperbarui.');
-        setTimeout(() => window.location.reload(), 900);
+        showMessage('success', '✅ Transaksi berhasil! Stok & penjualan diperbarui.');
+        setTimeout(() => window.location.reload(), 1200);
     } catch (error) {
         showMessage('error', error.message);
     } finally {
         checkoutBtn.disabled = false;
-        checkoutBtn.textContent = 'Selesaikan Transaksi';
+        checkoutBtn.innerHTML = '<span class="material-symbols-outlined">lock</span> Selesaikan Transaksi';
         qrisConfirmBtn.disabled = false;
         qrisConfirmBtn.textContent = 'Sudah Dibayar';
     }
@@ -445,39 +520,38 @@ function updateCart(productId, delta) {
     renderCart();
 }
 
+// Add to cart
 document.querySelectorAll('[data-add-product]').forEach((button) => {
-    button.addEventListener('click', () => {
+    button.addEventListener('click', (e) => {
+        e.stopPropagation();
         hideMessage();
         updateCart(Number(button.dataset.productId), 1);
     });
 });
 
+// Cart quantity controls
 cartItemsEl.addEventListener('click', (event) => {
     const decrease = event.target.closest('.cart-decrease');
     const increase = event.target.closest('.cart-increase');
-
-    if (decrease) {
-        updateCart(Number(decrease.dataset.id), -1);
-    }
-
-    if (increase) {
-        updateCart(Number(increase.dataset.id), 1);
-    }
+    if (decrease) updateCart(Number(decrease.dataset.id), -1);
+    if (increase) updateCart(Number(increase.dataset.id), 1);
 });
 
+// Clear cart
 document.getElementById('clear-cart').addEventListener('click', () => {
     cart.clear();
     hideMessage();
     renderCart();
 });
 
+// Payment methods
 document.querySelectorAll('.payment-method').forEach((button) => {
     button.addEventListener('click', () => {
         paymentMethod = button.dataset.payment;
         document.querySelectorAll('.payment-method').forEach((item) => {
-            item.className = 'payment-method px-3 py-3 rounded-xl border border-outline-variant font-bold';
+            item.className = 'payment-btn payment-method px-3 py-2.5 rounded-xl border border-gray-200 font-bold text-xs flex flex-col items-center gap-1 text-gray-600 hover:border-gray-300';
         });
-        button.className = 'payment-method px-3 py-3 rounded-xl border-2 border-primary bg-primary/5 text-primary font-bold';
+        button.className = 'payment-btn payment-method px-3 py-2.5 rounded-xl border-2 border-primary bg-primary/5 text-primary font-bold text-xs flex flex-col items-center gap-1';
 
         if (paymentMethod === 'e-wallet') {
             ewalletPicker.classList.remove('hidden');
@@ -490,7 +564,7 @@ document.querySelectorAll('.payment-method').forEach((button) => {
                 hideMessage();
                 openQrisModal();
             } else {
-                showMessage('error', 'Tambahkan produk ke keranjang terlebih dahulu sebelum membuka QRIS.');
+                showMessage('error', 'Tambahkan produk ke keranjang terlebih dahulu.');
             }
             return;
         }
@@ -499,23 +573,21 @@ document.querySelectorAll('.payment-method').forEach((button) => {
     });
 });
 
+// E-Wallet options
 ewalletOptions.forEach((button) => {
     button.addEventListener('click', () => {
         ewalletProvider = button.dataset.ewalletProvider;
         ewalletNumber = button.dataset.ewalletNumber;
-
         ewalletOptions.forEach((item) => {
-            item.className = 'ewallet-option w-full rounded-xl border border-outline-variant px-4 py-3 text-left';
-            item.querySelector('span:first-child').className = 'block font-bold text-on-surface';
-            item.querySelector('span:last-child').className = 'block text-body-sm text-on-surface-variant';
+            item.className = 'ewallet-option w-full rounded-lg border border-gray-200 px-3 py-2.5 text-left flex items-center gap-3';
+            item.querySelector('span:first-child').className = 'block font-bold text-gray-700 text-xs';
         });
-
-        button.className = 'ewallet-option w-full rounded-xl border-2 border-primary bg-primary/5 px-4 py-3 text-left';
-        button.querySelector('span:first-child').className = 'block font-bold text-primary';
-        button.querySelector('span:last-child').className = 'block text-body-sm text-on-surface-variant';
+        button.className = 'ewallet-option w-full rounded-lg border-2 border-primary bg-primary/5 px-3 py-2.5 text-left flex items-center gap-3';
+        button.querySelector('span:first-child').className = 'block font-bold text-primary text-xs';
     });
 });
 
+// Search
 document.getElementById('product-search').addEventListener('input', (event) => {
     const term = event.target.value.toLowerCase().trim();
     document.querySelectorAll('[data-product-card]').forEach((card) => {
@@ -526,31 +598,30 @@ document.getElementById('product-search').addEventListener('input', (event) => {
     });
 });
 
+// Category filter
 document.querySelectorAll('.category-filter').forEach((button) => {
     button.addEventListener('click', () => {
         activeCategory = button.dataset.categoryFilter;
         document.querySelectorAll('.category-filter').forEach((item) => {
-            item.className = 'category-filter px-4 py-2 rounded-full bg-secondary-container text-on-secondary-container font-medium';
+            item.className = 'category-filter px-4 py-1.5 rounded-full bg-gray-100 text-gray-600 text-xs font-medium hover:bg-gray-200 transition-all';
         });
-        button.className = 'category-filter px-4 py-2 rounded-full bg-primary text-on-primary font-bold';
+        button.className = 'category-filter px-4 py-1.5 rounded-full bg-primary text-white text-xs font-bold transition-all';
         document.getElementById('product-search').dispatchEvent(new Event('input'));
     });
 });
 
+// Checkout
 checkoutBtn.addEventListener('click', async () => {
     hideMessage();
     const items = currentCartItems();
-
     if (!items.length) {
         showMessage('error', 'Keranjang masih kosong.');
         return;
     }
-
     if (paymentMethod === 'qris') {
         openQrisModal();
         return;
     }
-
     await submitCheckout();
 });
 
