@@ -26,10 +26,9 @@
 @endphp
 
 <!-- Sidebar -->
-<aside id="sidebar" class="app-sidebar bg-white h-screen w-64 fixed left-0 top-0 shadow-lg flex flex-col py-8 px-4 z-50 border-r border-outline transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+<aside id="sidebar" class="app-sidebar bg-white h-screen w-64 fixed left-0 top-0 shadow-lg flex flex-col  px-4 z-50 border-r border-outline transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
     <div class="mb-10 px-4">
-        <h1 class="font-h2 text-h2 font-bold text-primary">TokoQ</h1>
-        <p class="text-body-sm text-text-light">{{ $shop?->name ?? 'Manajemen UMKM' }}</p>
+        <img src="/images/logo-tokoq.png" alt="TokoQ" style="width: 150px;" class=" mb-2">
     </div>
 
     <nav class="flex-1 space-y-2 overflow-y-auto">
