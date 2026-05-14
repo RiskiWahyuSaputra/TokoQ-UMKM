@@ -47,6 +47,12 @@
                     </div>
 
                     <div>
+                        <label for="cost_price" class="block mb-2 font-bold text-body-sm">Harga Pokok (Modal)</label>
+                        <input id="cost_price" name="cost_price" type="number" min="0" step="0.01" value="{{ old('cost_price', $product->cost_price) }}" class="w-full rounded-xl border border-outline-variant bg-surface px-4 py-3 focus:border-primary focus:ring-primary" placeholder="0">
+                        <p class="mt-1 text-xs text-on-surface-variant">Kosongkan jika tidak ingin menghitung keuntungan.</p>
+                    </div>
+
+                    <div>
                         <label for="stock" class="block mb-2 font-bold text-body-sm">Stok</label>
                         <input id="stock" name="stock" type="number" min="0" value="{{ old('stock', $product->stock) }}" class="w-full rounded-xl border border-outline-variant bg-surface px-4 py-3 focus:border-primary focus:ring-primary" required>
                     </div>

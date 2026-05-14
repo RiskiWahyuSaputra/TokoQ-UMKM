@@ -43,14 +43,12 @@
 
 @section('content')
 @php
-    $trendIcon = $trendPercent >= 0 ? 'trending_up' : 'trending_down';
-    $trendColor = $trendPercent >= 0 ? 'text-emerald-500' : 'text-red-500';
-    $trendBg = $trendPercent >= 0 ? 'bg-emerald-50' : 'bg-red-50';
+    $maxTotal = max($recentDays->max('total') ?? 0, 1);
 @endphp
 
 <div class="p-4 lg:p-6 space-y-5">
 
-    <!-- Hero: Prediksi Omzet -->
+    <!-- Hero: Prediksi Omzet & Laba -->
     <div class="bg-gradient-to-br from-purple-500 via-indigo-500 to-blue-600 rounded-3xl p-6 lg:p-8 text-white relative overflow-hidden animate-fade-in">
         <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32"></div>
         <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full -ml-24 -mb-24"></div>
@@ -59,21 +57,42 @@
         </div>
 
         <div class="relative z-10">
-            <div class="flex items-center gap-2 mb-2">
+            <div class="flex items-center gap-2 mb-4">
                 <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
                     <span class="material-symbols-outlined text-white text-[18px]">auto_awesome</span>
                 </div>
                 <span class="text-white/80 text-sm font-medium">Prediksi AI</span>
             </div>
-            <p class="text-white/70 text-sm mb-1">Estimasi Omzet Besok</p>
-            <h1 class="text-3xl lg:text-4xl font-extrabold mb-3">Rp {{ number_format($forecast, 0, ',', '.') }}</h1>
-            <div class="flex items-center gap-3 flex-wrap">
-                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold {{ $trendBg }} {{ $trendColor }}">
-                    <span class="material-symbols-outlined text-[14px]">{{ $trendIcon }}</span>
-                    {{ $trendPercent >= 0 ? '+' : '' }}{{ $trendPercent }}% vs kemarin
-                </span>
-                <span class="text-white/60 text-xs">Berdasarkan pola penjualan 7 hari terakhir</span>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- Omzet Forecast -->
+                <div>
+                    <p class="text-white/70 text-sm mb-1">Estimasi Omzet Besok</p>
+                    <h1 class="text-3xl lg:text-4xl font-extrabold mb-2">Rp {{ number_format($forecast, 0, ',', '.') }}</h1>
+                    <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold {{ $trendPercent >= 0 ? 'bg-emerald-400/20 text-emerald-200' : 'bg-red-400/20 text-red-200' }}">
+                        <span class="material-symbols-outlined text-[14px]">{{ $trendPercent >= 0 ? 'trending_up' : 'trending_down' }}</span>
+                        {{ $trendPercent >= 0 ? '+' : '' }}{{ $trendPercent }}% vs minggu lalu
+                    </span>
+                </div>
+
+                <!-- Profit Forecast -->
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-5">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="material-symbols-outlined text-emerald-300 text-[18px]">savings</span>
+                        <p class="text-white/70 text-sm">Estimasi Laba Bersih Besok</p>
+                    </div>
+                    <h2 class="text-2xl lg:text-3xl font-extrabold mb-2 {{ $profitForecast > 0 ? 'text-emerald-300' : '' }}">Rp {{ number_format($profitForecast, 0, ',', '.') }}</h2>
+                    <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold {{ $profitTrendPercent >= 0 ? 'bg-emerald-400/20 text-emerald-200' : 'bg-red-400/20 text-red-200' }}">
+                        <span class="material-symbols-outlined text-[14px]">{{ $profitTrendPercent >= 0 ? 'trending_up' : 'trending_down' }}</span>
+                        {{ $profitTrendPercent >= 0 ? '+' : '' }}{{ $profitTrendPercent }}% vs minggu lalu
+                    </span>
+                    @if($forecast > 0 && $profitForecast > 0)
+                    <p class="text-white/50 text-xs mt-2">Margin: {{ round(($profitForecast / $forecast) * 100, 1) }}%</p>
+                    @endif
+                </div>
             </div>
+
+            <p class="text-white/50 text-xs mt-4">Berdasarkan pola penjualan & harga pokok 7 hari terakhir</p>
         </div>
     </div>
 

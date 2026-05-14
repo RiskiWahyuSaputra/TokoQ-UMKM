@@ -124,6 +124,10 @@
                     <p class="text-xl font-bold">Rp {{ number_format($todayOmzet, 0, ',', '.') }}</p>
                 </div>
                 <div class="bg-white/15 backdrop-blur-sm rounded-2xl px-5 py-4 text-center min-w-[100px]">
+                    <p class="text-white/70 text-body-sm mb-1">Laba Hari Ini</p>
+                    <p class="text-xl font-bold {{ $todayProfit > 0 ? 'text-emerald-300' : ($todayProfit < 0 ? 'text-red-300' : '') }}">Rp {{ number_format($todayProfit, 0, ',', '.') }}</p>
+                </div>
+                <div class="bg-white/15 backdrop-blur-sm rounded-2xl px-5 py-4 text-center min-w-[100px]">
                     <p class="text-white/70 text-body-sm mb-1">Transaksi</p>
                     <p class="text-xl font-bold">{{ $todayTransactions }}</p>
                 </div>
@@ -239,6 +243,11 @@
                     </div>
                     <p class="text-body-sm text-on-surface-variant mb-1">Omzet Hari Ini</p>
                     <h3 class="text-2xl font-bold text-on-surface">Rp {{ number_format($todayOmzet, 0, ',', '.') }}</h3>
+                    @if($todayProfit != 0)
+                    <p class="text-xs mt-1 {{ $todayProfit > 0 ? 'text-emerald-500' : 'text-red-500' }} font-medium">
+                        {{ $todayProfit > 0 ? '▲' : '▼' }} Laba: Rp {{ number_format(abs($todayProfit), 0, ',', '.') }}
+                    </p>
+                    @endif
                     <div class="mt-3 flex items-end gap-1 h-8">
                         @foreach($dailyRevenue->take(7) as $i => $day)
                             @php $h = max(20, ($day['total'] / $maxRevenue) * 100); @endphp

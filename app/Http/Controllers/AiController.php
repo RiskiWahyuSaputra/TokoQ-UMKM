@@ -50,6 +50,36 @@ class AiController extends Controller
             ? round((($recentAverage - $previousAverage) / $previousAverage) * 100)
             : ($recentAverage > 0 ? 100 : 0);
 
+        // Profit-based forecast: calculate average profit margin from transaction items
+        $recentProfit = collect(range(6, 0))->map(function ($offset) use ($shop) {
+            $date = Carbon::today()->subDays($offset);
+            return (int) (DB::table('transaction_items')
+                ->join('transactions', 'transaction_items.transaction_id', '=', 'transactions.id')
+                ->join('products', 'transaction_items.product_id', '=', 'products.id')
+                ->where('transactions.shop_id', $shop->id)
+                ->whereBetween('transactions.created_at', [$date->copy()->startOfDay(), $date->copy()->endOfDay()])
+                ->select(DB::raw('SUM((transaction_items.price_at_sale - products.cost_price) * transaction_items.quantity) as profit'))
+                ->value('profit') ?? 0);
+        });
+
+        $previousProfit = collect(range(13, 7))->map(function ($offset) use ($shop) {
+            $date = Carbon::today()->subDays($offset);
+            return (int) (DB::table('transaction_items')
+                ->join('transactions', 'transaction_items.transaction_id', '=', 'transactions.id')
+                ->join('products', 'transaction_items.product_id', '=', 'products.id')
+                ->where('transactions.shop_id', $shop->id)
+                ->whereBetween('transactions.created_at', [$date->copy()->startOfDay(), $date->copy()->endOfDay()])
+                ->select(DB::raw('SUM((transaction_items.price_at_sale - products.cost_price) * transaction_items.quantity) as profit'))
+                ->value('profit') ?? 0);
+        });
+
+        $recentProfitAvg = $recentProfit->avg() ?? 0;
+        $previousProfitAvg = $previousProfit->avg() ?? 0;
+        $profitForecast = (int) max(0, round($recentProfitAvg + (($recentProfitAvg - $previousProfitAvg) * 0.5)));
+        $profitTrendPercent = $previousProfitAvg > 0
+            ? round((($recentProfitAvg - $previousProfitAvg) / $previousProfitAvg) * 100)
+            : ($recentProfitAvg > 0 ? 100 : 0);
+
         $criticalProducts = $shop
             ? Product::where('shop_id', $shop->id)->with('category')->where('stock', '<=', 10)->orderBy('stock')->get()
             : collect();
@@ -89,7 +119,9 @@ class AiController extends Controller
         return view('owner.ai.index', compact(
             'recentDays',
             'forecast',
+            'profitForecast',
             'trendPercent',
+            'profitTrendPercent',
             'criticalProducts',
             'topProducts',
             'shoppingSuggestions',

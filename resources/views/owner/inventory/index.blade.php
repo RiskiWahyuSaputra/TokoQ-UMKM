@@ -101,7 +101,11 @@
                 </div>
             </div>
             <p class="text-2xl font-extrabold text-on-surface">Rp {{ number_format($stockSummary['inventoryValue'] ?? 0, 0, ',', '.') }}</p>
-            <p class="text-xs text-gray-400 mt-1">Nilai Inventori</p>
+            <p class="text-xs text-gray-400 mt-1">Nilai Jual Inventori</p>
+            <div class="mt-2 pt-2 border-t border-gray-100 flex items-center justify-between">
+                <span class="text-xs text-gray-400">Modal: Rp {{ number_format($stockSummary['inventoryCost'] ?? 0, 0, ',', '.') }}</span>
+                <span class="text-xs font-bold text-emerald-600">Potensi Laba: Rp {{ number_format($stockSummary['potentialProfit'] ?? 0, 0, ',', '.') }}</span>
+            </div>
         </div>
     </div>
 
@@ -173,6 +177,8 @@
                                     <th class="px-5 py-3 hidden md:table-cell">SKU</th>
                                     <th class="px-5 py-3 text-center">Stok</th>
                                     <th class="px-5 py-3 text-right">Harga</th>
+                                    <th class="px-5 py-3 text-right hidden sm:table-cell">Modal</th>
+                                    <th class="px-5 py-3 text-right hidden sm:table-cell">Laba/unit</th>
                                     <th class="px-5 py-3 text-right">Aksi</th>
                                 </tr>
                             </thead>
@@ -209,6 +215,15 @@
                                             <span class="text-xs text-gray-400"> unit</span>
                                         </td>
                                         <td class="px-5 py-3 text-right font-bold text-sm text-primary">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
+                                        <td class="px-5 py-3 text-right text-sm text-gray-500 hidden sm:table-cell">Rp {{ number_format($product->cost_price, 0, ',', '.') }}</td>
+                                        <td class="px-5 py-3 text-right hidden sm:table-cell">
+                                            @if($product->cost_price > 0)
+                                                <span class="text-sm font-bold {{ $product->profitPerUnit > 0 ? 'text-emerald-600' : 'text-red-500' }}">Rp {{ number_format($product->profitPerUnit, 0, ',', '.') }}</span>
+                                                <span class="text-[10px] text-gray-400 block">{{ $product->profitMargin }}%</span>
+                                            @else
+                                                <span class="text-xs text-gray-300">-</span>
+                                            @endif
+                                        </td>
                                         <td class="px-5 py-3">
                                             <div class="flex items-center justify-end gap-1.5">
                                                 <a href="{{ route('products.edit', $product) }}" class="px-3 py-1.5 rounded-lg border border-gray-200 text-primary font-bold text-xs hover:bg-gray-50 transition-colors">Edit</a>

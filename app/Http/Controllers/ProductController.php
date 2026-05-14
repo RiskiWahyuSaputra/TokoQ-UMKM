@@ -26,6 +26,8 @@ class ProductController extends Controller
             'safe' => $products->where('stock', '>', 10)->count(),
             'totalStock' => $products->sum('stock'),
             'inventoryValue' => $products->sum(fn ($product) => $product->price * $product->stock),
+            'inventoryCost' => $products->sum(fn ($product) => $product->cost_price * $product->stock),
+            'potentialProfit' => $products->sum(fn ($product) => ($product->price - $product->cost_price) * $product->stock),
         ];
 
         return view('owner.inventory.index', compact('products', 'categories', 'stockSummary'));
@@ -111,6 +113,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'sku' => 'nullable|string|max:255',
             'price' => 'required|numeric|min:0',
+            'cost_price' => 'nullable|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);

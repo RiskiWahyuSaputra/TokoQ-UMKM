@@ -19,6 +19,15 @@ class DashboardController extends Controller
         $todayOmzet = Transaction::where('shop_id', $shop->id)
             ->where('created_at', '>=', Carbon::today())
             ->sum('net_amount');
+
+        // Today's profit: sum of (price_at_sale - cost_price) * quantity for each item
+        $todayProfit = DB::table('transaction_items')
+            ->join('transactions', 'transaction_items.transaction_id', '=', 'transactions.id')
+            ->join('products', 'transaction_items.product_id', '=', 'products.id')
+            ->where('transactions.shop_id', $shop->id)
+            ->where('transactions.created_at', '>=', Carbon::today())
+            ->select(DB::raw('SUM((transaction_items.price_at_sale - products.cost_price) * transaction_items.quantity) as total_profit'))
+            ->value('total_profit') ?? 0;
             
         $todayTransactions = Transaction::where('shop_id', $shop->id)
             ->where('created_at', '>=', Carbon::today())
@@ -81,7 +90,8 @@ class DashboardController extends Controller
         }
 
         return view('owner.dashboard', compact(
-            'todayOmzet', 
+            'todayOmzet',
+            'todayProfit',
             'todayTransactions', 
             'criticalStockCount', 
             'bestSellers', 

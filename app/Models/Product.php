@@ -18,6 +18,7 @@ class Product extends Model
         'name',
         'sku',
         'price',
+        'cost_price',
         'stock',
         'image_path',
     ];
@@ -29,6 +30,24 @@ class Product extends Model
             if ($this->stock >= 5) return 'menipis';
             return 'kritis';
         });
+    }
+
+    protected function profitPerUnit(): Attribute
+    {
+        return Attribute::get(fn () => $this->price - $this->cost_price);
+    }
+
+    protected function profitMargin(): Attribute
+    {
+        return Attribute::get(function () {
+            if ($this->price <= 0) return 0;
+            return round((($this->price - $this->cost_price) / $this->price) * 100, 1);
+        });
+    }
+
+    protected function totalProfit(): Attribute
+    {
+        return Attribute::get(fn () => ($this->price - $this->cost_price) * $this->stock);
     }
 
     public function shop(): BelongsTo
