@@ -386,7 +386,7 @@ body {
 <!-- ===== HERO SECTION ===== -->
 <section class="relative min-h-screen flex items-center hero-bg overflow-hidden pt-16">
     <!-- Overlay for better text readability -->
-    <div class="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-emerald-900/60 via-emerald-800/40 to-transparent"></div>
 
     <div class="max-w-7xl mx-auto px-6 py-20 lg:py-0 w-full relative z-10">
         <div class="max-w-2xl">
