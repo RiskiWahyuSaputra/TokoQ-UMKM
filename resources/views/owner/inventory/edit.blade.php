@@ -16,14 +16,14 @@
 <body class="app-shell bg-background text-on-surface font-body-md">
 @include('owner.layouts.sidebar', ['activeMenu' => 'inventory'])
 
-<main class="app-main ml-64 min-h-screen">
-    <header class="app-header h-20 w-full sticky top-0 z-40 bg-surface border-b border-outline-variant flex justify-between items-center px-container-padding">
+<main class="app-main lg:ml-64 min-h-screen">
+    <header class="app-header h-20 w-full sticky top-0 z-40 bg-white border-b border-outline-variant flex justify-between items-center px-container-padding">
         <div class="flex items-center gap-4">
-            <button aria-label="Buka menu" class="mobile-nav-trigger lg:hidden" data-sidebar-toggle type="button">
-                <span class="material-symbols-outlined">menu</span>
-            </button>
             <div>
-                <h1 class="font-h3 text-h3 font-bold text-primary">Edit Produk</h1>
+                <button data-hamburger-toggle class="lg:hidden text-primary p-2" type="button">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class=" font-h3 text-h3 font-bold text-primary">Edit Produk</h1>
                 <p class="text-body-sm text-on-surface-variant">Perbarui data produk yang sudah tersimpan di inventori.</p>
             </div>
         </div>

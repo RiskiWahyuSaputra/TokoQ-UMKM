@@ -16,42 +16,15 @@
 <body class="app-shell bg-background text-on-surface font-body-md">
 @include('owner.layouts.sidebar', ['activeMenu' => 'inventory'])
 
+@include('owner.layouts.header-simple', ['pageTitle' => 'Inventori'])
+
 @php
     $user = Auth::user();
     $initials = collect(explode(' ', trim($user->name)))->filter()->take(2)->map(fn ($part) => strtoupper(substr($part, 0, 1)))->implode('');
     $restockItems = $products->where('stock', '<=', 10)->sortBy('stock')->take(5);
 @endphp
 
-<main class="app-main ml-64 min-h-screen">
-    <header class="app-header h-20 w-full sticky top-0 z-40 bg-surface border-b border-outline-variant flex justify-between items-center px-container-padding">
-        <div class="flex items-center gap-5">
-            <button aria-label="Buka menu" class="mobile-nav-trigger lg:hidden" data-sidebar-toggle type="button">
-                <span class="material-symbols-outlined">menu</span>
-            </button>
-            <div>
-                <h1 class="font-h3 text-h3 font-bold text-primary">Inventori</h1>
-                <p class="text-body-sm text-on-surface-variant">Kelola semua produk toko Anda tanpa data dummy.</p>
-            </div>
-        </div>
-        <div class="flex items-center gap-4">
-            <a href="{{ route('products.create') }}" class="bg-primary text-on-primary px-6 py-3 rounded-xl font-bold flex items-center gap-2">
-                <span class="material-symbols-outlined">add</span>
-                Tambah Produk
-            </a>
-            <div class="flex items-center gap-3 border-l border-outline-variant pl-4">
-                <div class="hidden text-right lg:block">
-                    <p class="font-bold text-on-surface">{{ $user->name }}</p>
-                    <p class="text-body-sm text-on-surface-variant">{{ $user->shop?->name ?? 'Toko Anda' }}</p>
-                </div>
-                @if ($user->profile_photo_url)
-                    <img src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" class="w-11 h-11 rounded-full object-cover border-2 border-primary-fixed">
-                @else
-                    <div class="w-11 h-11 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold">{{ $initials }}</div>
-                @endif
-            </div>
-        </div>
-    </header>
-
+<main class="app-main lg:ml-64 min-h-screen pt-8">
     <section class="app-page p-container-padding space-y-card-gap">
         @if (session('success'))
             <div class="rounded-2xl border border-primary/20 bg-primary/10 px-5 py-4 text-primary font-medium">
@@ -86,10 +59,17 @@
             <div class="col-span-12 xl:col-span-8 bg-white rounded-2xl border border-outline-variant overflow-hidden">
                 <div class="p-6 border-b border-outline-variant flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                     <div>
-                        <h2 class="font-h3 text-h3 text-primary">Daftar Produk</h2>
+                        <button data-hamburger-toggle class="lg:hidden text-primary p-2" type="button">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class=" font-h3 text-h3 text-primary">Daftar Produk</h2>
                         <p class="text-body-sm text-on-surface-variant">Semua data pada tabel ini diambil langsung dari database toko Anda.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
+                        <a href="{{ route('products.create') }}" class="bg-primary text-on-primary px-4 py-2 rounded-xl font-bold flex items-center gap-2">
+                            <span class="material-symbols-outlined">add</span>
+                            Tambah Produk
+                        </a>
                         <span class="px-3 py-2 rounded-full bg-error-container text-on-error-container text-body-sm font-bold">Kritis: {{ $stockSummary['critical'] }}</span>
                         <span class="px-3 py-2 rounded-full bg-amber-100 text-amber-800 text-body-sm font-bold">Menipis: {{ $stockSummary['low'] }}</span>
                         <span class="px-3 py-2 rounded-full bg-primary-fixed text-primary text-body-sm font-bold">Aman: {{ $stockSummary['safe'] }}</span>
@@ -97,7 +77,7 @@
                 </div>
 
                 @if ($products->isEmpty())
-                    <div class="px-8 py-20 text-center text-on-surface-variant">
+                    <div class="px-4 lg:px-8 py-20 text-center text-on-surface-variant">
                         <span class="material-symbols-outlined text-[52px] mb-4 block">inventory_2</span>
                         <h3 class="font-h3 text-h3 text-primary mb-2">Belum ada produk</h3>
                         <p class="max-w-md mx-auto mb-6">Mulai isi data inventori nyata toko Anda dengan menambahkan produk pertama.</p>

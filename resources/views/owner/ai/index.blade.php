@@ -13,21 +13,12 @@
 .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
 </style>
 </head>
-<body class="app-shell bg-background text-on-surface font-body-md">
+<body class="app-shell bg-secondary text-text font-body-md">
 @include('owner.layouts.sidebar', ['activeMenu' => 'ai'])
 
-<main class="app-main ml-64 min-h-screen">
-    <header class="app-header h-20 w-full sticky top-0 z-40 bg-surface border-b border-outline-variant flex justify-between items-center px-container-padding">
-        <div class="flex items-center gap-4">
-            <button class="mobile-nav-trigger lg:hidden" data-sidebar-toggle type="button"><span class="material-symbols-outlined">menu</span></button>
-            <div>
-                <h2 class="font-h3 text-h3 font-bold text-primary">Prediksi AI</h2>
-                <p class="text-body-sm text-on-surface-variant">Ringkasan dihitung dari penjualan dan stok toko Anda yang tersimpan saat ini.</p>
-            </div>
-        </div>
-        <span class="font-bold text-primary">{{ Auth::user()->name }}</span>
-    </header>
+@include('owner.layouts.header-simple', ['pageTitle' => 'Prediksi AI'])
 
+<main class="app-main lg:ml-64 min-h-screen pt-8">
     <section class="app-page p-container-padding space-y-card-gap">
         <div class="grid grid-cols-12 gap-card-gap">
             <div class="col-span-12 lg:col-span-7 bg-white rounded-3xl border border-outline-variant p-8">

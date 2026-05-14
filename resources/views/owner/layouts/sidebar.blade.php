@@ -13,13 +13,14 @@
     ];
 @endphp
 
-<aside class="app-sidebar bg-white h-screen w-64 fixed left-0 top-0 shadow-lg flex flex-col py-8 px-4 z-50 border-r border-outline">
+<!-- Sidebar -->
+<aside id="sidebar" class="app-sidebar bg-white h-screen w-64 fixed left-0 top-0 shadow-lg flex flex-col py-8 px-4 z-50 border-r border-outline transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
     <div class="mb-10 px-4">
         <h1 class="font-h2 text-h2 font-bold text-primary">TokoQ</h1>
         <p class="text-body-sm text-text-light">{{ $shop?->name ?? 'Manajemen UMKM' }}</p>
     </div>
 
-    <nav class="flex-1 space-y-2">
+    <nav class="flex-1 space-y-2 overflow-y-auto">
         @foreach ($menuItems as $item)
             @php $isActive = $activeMenu === $item['key']; @endphp
             <a
@@ -50,4 +51,57 @@
     </div>
 </aside>
 
-<div class="app-sidebar-overlay lg:hidden" data-sidebar-overlay></div>
+<!-- Overlay -->
+<div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lg:hidden"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const hamburgerBtns = document.querySelectorAll('[data-hamburger-toggle]');
+
+    function toggleSidebar() {
+        const isOpen = !sidebar.classList.contains('-translate-x-full');
+        
+        if (isOpen) {
+            // Close sidebar
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+            document.body.style.overflow = '';
+            
+            // Change all hamburger icons back to menu
+            hamburgerBtns.forEach(btn => {
+                const icon = btn.querySelector('.material-symbols-outlined');
+                if (icon) icon.textContent = 'menu';
+            });
+        } else {
+            // Open sidebar
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            
+            // Change all hamburger icons to close
+            hamburgerBtns.forEach(btn => {
+                const icon = btn.querySelector('.material-symbols-outlined');
+                if (icon) icon.textContent = 'close';
+            });
+        }
+    }
+
+    hamburgerBtns.forEach(btn => {
+        btn.addEventListener('click', toggleSidebar);
+    });
+
+    overlay?.addEventListener('click', toggleSidebar);
+
+    // Close sidebar when clicking a link on mobile
+    const sidebarLinks = sidebar.querySelectorAll('a');
+    sidebarLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth < 1024) {
+                toggleSidebar();
+            }
+        });
+    });
+});
+</script>

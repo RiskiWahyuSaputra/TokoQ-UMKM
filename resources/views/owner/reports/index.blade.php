@@ -13,26 +13,14 @@
 .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
 </style>
 </head>
-<body class="app-shell bg-background text-on-surface font-body-md">
+<body class="app-shell bg-secondary text-text font-body-md">
 
 @include('owner.layouts.sidebar', ['activeMenu' => 'reports'])
 
-<main class="app-main ml-64 min-h-screen">
-    <header class="app-header h-20 w-full sticky top-0 z-40 bg-surface border-b border-outline-variant flex justify-between items-center px-container-padding">
-        <div class="flex items-center gap-4">
-            <button class="mobile-nav-trigger lg:hidden" data-sidebar-toggle="" type="button"><span class="material-symbols-outlined">menu</span></button>
-            <div>
-                <h2 class="font-h3 text-h3 font-bold text-primary">Laporan</h2>
-                <p class="text-body-sm text-on-surface-variant">Ringkasan performa usaha 7 hari terakhir</p>
-            </div>
-        </div>
-        <div class="flex items-center gap-4">
-            <a href="{{ route('sales.index') }}" class="bg-primary text-on-primary px-6 py-2 rounded-full font-bold">Lihat Penjualan</a>
-            <span class="font-bold text-primary">{{ Auth::user()->name }}</span>
-        </div>
-    </header>
+@include('owner.layouts.header-simple', ['pageTitle' => 'Laporan'])
 
-    <section class="app-page p-container-padding space-y-card-gap">
+<main class="app-main lg:ml-64 min-h-screen pt-8">
+    <section class="app-page p-4 lg:p-8 space-y-card-gap">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-card-gap">
             <div class="bg-white rounded-2xl border border-outline-variant p-6">
                 <p class="font-label-caps text-secondary uppercase tracking-widest">Total Omzet</p>

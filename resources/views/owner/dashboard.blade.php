@@ -37,41 +37,9 @@
     $maxRevenue = max($dailyRevenue->max('total') ?? 0, 1);
 @endphp
 <!-- Main Content Area -->
-<main class="app-main ml-64 min-h-screen">
+<main class="app-main lg:ml-64 min-h-screen">
 <!-- TopNavBar Shell -->
-<header class="app-header h-20 w-full sticky top-0 z-40 bg-surface flex justify-between items-center px-container-padding border-b border-outline-variant">
-<div class="app-header-left flex items-center gap-6">
-<button aria-label="Buka menu" class="mobile-nav-trigger lg:hidden" data-sidebar-toggle="" type="button">
-<span class="material-symbols-outlined">menu</span>
-</button>
-<h2 class="font-h3 text-h3 font-bold text-primary">Dashboard Utama</h2>
-<div class="app-header-tabs hidden md:flex gap-6">
-<a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">Dashboard</a>
-<a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="{{ route('reports.index') }}">Laporan</a>
-</div>
-</div>
-<div class="app-header-right flex items-center gap-6">
-<div class="relative group">
-<span class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-variant/20 rounded-full cursor-pointer" data-icon="notifications">notifications</span>
-<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
-</div>
-<a href="{{ route('pos.index') }}" class="app-header-cta flex items-center gap-2 bg-primary text-on-primary px-6 py-2.5 rounded-full font-bold active:opacity-80 transition-opacity">
-<span class="material-symbols-outlined text-[20px]" data-icon="point_of_sale">point_of_sale</span>
-                    Buka Kasir
-                </a>
-<div class="flex items-center gap-3 pl-4 border-l border-outline-variant">
-<div class="app-user-copy text-right hidden lg:block">
-<p class="font-bold text-on-surface leading-none">{{ $user->name }}</p>
-<p class="text-body-sm text-on-surface-variant">{{ $user->shop?->name ?? 'Toko Anda' }}</p>
-</div>
-@if ($user->profile_photo_url)
-<img src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" class="w-10 h-10 rounded-full object-cover border-2 border-primary-fixed shadow-sm"/>
-@else
-<div class="w-10 h-10 rounded-full border-2 border-primary-fixed shadow-sm bg-primary text-on-primary flex items-center justify-center font-bold">{{ $initials }}</div>
-@endif
-</div>
-</div>
-</header>
+@include('owner.layouts.header', ['pageTitle' => 'Dashboard Utama'])
 <section class="app-page p-container-padding">
 <!-- Welcome Header -->
 <div class="mb-8">
@@ -214,7 +182,7 @@
 <div class="grid grid-cols-12 gap-card-gap">
 <!-- Critical Stock Table -->
 <div class="col-span-12 lg:col-span-8 bg-white rounded-[24px] border border-outline-variant shadow-sm overflow-hidden">
-<div class="p-8 border-b border-outline-variant flex justify-between items-center">
+<div class="p-4 lg:p-8 pt-20 lg:pt-8 border-b border-outline-variant flex justify-between items-center">
 <div>
 <h3 class="text-h3 font-bold text-on-surface">Daftar Stok Kritis</h3>
 <p class="text-body-sm text-on-surface-variant">Barang-barang yang hampir habis</p>
@@ -228,29 +196,29 @@
 <table class="w-full text-left">
 <thead class="bg-white text-on-surface-variant font-label-caps uppercase">
 <tr>
-<th class="px-8 py-4">Produk</th>
-<th class="px-8 py-4">Sisa Stok</th>
-<th class="px-8 py-4">Status</th>
-<th class="px-8 py-4">Aksi</th>
+<th class="px-4 lg:px-8 py-4">Produk</th>
+<th class="px-4 lg:px-8 py-4">Sisa Stok</th>
+<th class="px-4 lg:px-8 py-4">Status</th>
+<th class="px-4 lg:px-8 py-4">Aksi</th>
 </tr>
 </thead>
 <tbody class="divide-y divide-outline-variant">
                     @forelse($criticalProducts as $product)
                     <tr>
-                        <td class="px-8 py-4 font-bold text-on-surface">{{ $product->name }}</td>
-                        <td class="px-8 py-4 text-on-surface-variant">{{ $product->stock }} Unit</td>
-                        <td class="px-8 py-4">
+                        <td class="px-4 lg:px-8 py-4 font-bold text-on-surface">{{ $product->name }}</td>
+                        <td class="px-4 lg:px-8 py-4 text-on-surface-variant">{{ $product->stock }} Unit</td>
+                        <td class="px-4 lg:px-8 py-4">
                             <span class="px-3 py-1 rounded-full {{ $product->status === 'kritis' ? 'bg-error-container text-on-error-container' : 'bg-[#ffdad6]/50 text-error' }} text-body-sm font-bold">
                                 {{ ucfirst($product->status) }}
                             </span>
                         </td>
-                        <td class="px-8 py-4">
+                        <td class="px-4 lg:px-8 py-4">
                             <button class="text-primary font-bold hover:underline">Detail</button>
                         </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="px-8 py-8 text-center text-gray-500 italic">Semua stok aman.</td>
+                        <td colspan="4" class="px-4 lg:px-8 py-8 text-center text-gray-500 italic">Semua stok aman.</td>
                     </tr>
                     @endforelse
                 </tbody>

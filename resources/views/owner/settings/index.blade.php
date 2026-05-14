@@ -13,27 +13,18 @@
 .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
 </style>
 </head>
-<body class="app-shell bg-background text-on-surface font-body-md">
+<body class="app-shell bg-secondary text-text font-body-md">
 
 @include('owner.layouts.sidebar', ['activeMenu' => 'settings'])
+
+@include('owner.layouts.header-simple', ['pageTitle' => 'Pengaturan Akun'])
 
 @php
     $initials = collect(explode(' ', trim($user->name)))->filter()->take(2)->map(fn ($part) => strtoupper(substr($part, 0, 1)))->implode('');
 @endphp
 
-<main class="app-main ml-64 min-h-screen">
-    <header class="app-header h-20 w-full sticky top-0 z-40 bg-surface border-b border-outline-variant flex justify-between items-center px-container-padding">
-        <div class="flex items-center gap-4">
-            <button class="mobile-nav-trigger lg:hidden" data-sidebar-toggle="" type="button"><span class="material-symbols-outlined">menu</span></button>
-            <div>
-                <h2 class="font-h3 text-h3 font-bold text-primary">Pengaturan Akun</h2>
-                <p class="text-body-sm text-on-surface-variant">Perbarui data akun UMKM Anda</p>
-            </div>
-        </div>
-        <span class="font-bold text-primary">{{ $user->name }}</span>
-    </header>
-
-    <section class="app-page p-container-padding">
+<main class="app-main lg:ml-64 min-h-screen pt-8">
+    <section class="app-page p-4 lg:p-8">
         <div class="max-w-3xl bg-white border border-outline-variant rounded-2xl p-8">
             @if (session('success'))
                 <div class="mb-6 rounded-xl border border-primary/20 bg-primary/10 px-4 py-3 text-primary">

@@ -20,20 +20,10 @@
 <!-- Sidebar -->
 @include('owner.layouts.sidebar', ['activeMenu' => 'sales'])
 
-<!-- Header -->
-<header class="app-header h-20 w-full sticky top-0 z-40 bg-surface border-b border-outline-variant flex justify-between items-center px-container-padding ml-64 max-w-[calc(100%-16rem)]">
-    <div class="flex items-center gap-6">
-        <button class="mobile-nav-trigger lg:hidden" data-sidebar-toggle="" type="button"><span class="material-symbols-outlined">menu</span></button>
-        <h2 class="font-h3 text-h3 font-bold text-primary">Penjualan</h2>
-    </div>
-    <div class="flex items-center gap-4">
-        <a href="{{ route('pos.index') }}" class="bg-primary text-on-primary px-6 py-2 rounded-full font-bold">Buka Kasir</a>
-        <span class="font-bold text-primary">{{ Auth::user()->name }}</span>
-    </div>
-</header>
+@include('owner.layouts.header-simple', ['pageTitle' => 'Penjualan'])
 
 <!-- Main Content -->
-<main class="app-main app-page ml-64 p-container-padding space-y-gutter">
+<main class="app-main app-page ml-64 p-container-padding space-y-gutter pt-8">
 
     <!-- Summary Cards -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-card-gap">

@@ -98,7 +98,7 @@
 <div class="landing-hero-card relative bg-white p-4 rounded-3xl paper-elevation border border-outline-variant rotate-2">
 <img alt="Dashboard Mockup" class="rounded-2xl w-full h-auto grayscale-[0.2] contrast-[1.1]" data-alt="A clean and professional digital dashboard mockup for a small retail business. The screen displays vibrant charts of sales growth, a grid of inventory items with photos of local Indonesian snacks, and a sidebar with elegant icons. The overall aesthetic is minimalist with a warm olive and matcha color palette, captured in soft morning light on a light wooden desk." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYU9VD48rS3kvGDQYNd9vXImbRCRJ3TCWeSba83rjjHkZLKQbwfl8tZHRlNjeTLnwH4sPnHK0XC89H_lGNDyKkpMldYRTCdrC1LwsG4HOeaJQjtxTrcGebCTprcsnLpUIViTstqlYn90O52s_GAQ1h7I13ISDr9vCQqD4XSGTQl38uQBTAltMUywJXnE2KwN99jA0Z6GGQULPRtek-pIkRxJoD_2kwO0gyT7S5B45p7Kw27GKE7d5E0NpLlN1Ga-XZPoJXULwFsvk"/>
 <!-- Floating Insight Card -->
-<div class="landing-insight-card absolute -bottom-8 -left-8 bg-surface-container-lowest p-6 rounded-2xl shadow-xl border-t-4 border-tertiary max-w-[240px]">
+<div class="landing-insight-card absolute -bottom-8 -left-8 bg-white p-6 rounded-2xl shadow-xl border-t-4 border-tertiary max-w-[240px]">
 <div class="flex items-center gap-3 mb-2">
 <span class="material-symbols-outlined text-tertiary">psychology</span>
 <span class="font-bold text-body-sm">AI Insight</span>
@@ -118,7 +118,7 @@
 </div>
 <div class="grid md:grid-cols-3 gap-8">
 <!-- Manual Record -->
-<div class="bg-surface p-8 rounded-3xl paper-border hover:translate-y-[-8px] transition-all duration-300">
+<div class="bg-white p-8 rounded-3xl shadow-lg shadow-black/5 border border-outline-variant/50 hover:translate-y-[-8px] hover:shadow-xl transition-all duration-300">
 <div class="w-14 h-14 bg-error-container text-on-error-container rounded-2xl flex items-center justify-center mb-6">
 <span class="material-symbols-outlined text-[32px]">edit_note</span>
 </div>
@@ -126,7 +126,7 @@
 <p class="text-on-surface-variant">Buku nota sering hilang, kotor, atau salah hitung. Memakan waktu lama saat rekap akhir bulan.</p>
 </div>
 <!-- Stock Out -->
-<div class="bg-surface p-8 rounded-3xl paper-border hover:translate-y-[-8px] transition-all duration-300">
+<div class="bg-white p-8 rounded-3xl shadow-lg shadow-black/5 border border-outline-variant/50 hover:translate-y-[-8px] hover:shadow-xl transition-all duration-300">
 <div class="w-14 h-14 bg-error-container text-on-error-container rounded-2xl flex items-center justify-center mb-6">
 <span class="material-symbols-outlined text-[32px]">inventory</span>
 </div>
@@ -134,7 +134,7 @@
 <p class="text-on-surface-variant">Barang habis tanpa diketahui, pelanggan kecewa, dan modal tertahan di barang yang tidak laku.</p>
 </div>
 <!-- Missing Profit -->
-<div class="bg-surface p-8 rounded-3xl paper-border hover:translate-y-[-8px] transition-all duration-300">
+<div class="bg-white p-8 rounded-3xl shadow-lg shadow-black/5 border border-outline-variant/50 hover:translate-y-[-8px] hover:shadow-xl transition-all duration-300">
 <div class="w-14 h-14 bg-error-container text-on-error-container rounded-2xl flex items-center justify-center mb-6">
 <span class="material-symbols-outlined text-[32px]">leak_remove</span>
 </div>
@@ -151,20 +151,20 @@
 <p class="text-on-surface-variant max-w-2xl mx-auto">Kami menggabungkan kemudahan penggunaan dengan kecanggihan prediksi AI.</p>
 </div>
 <div class="landing-bento grid md:grid-cols-4 md:grid-rows-2 gap-6 h-auto md:h-[600px]">
-<div class="md:col-span-2 md:row-span-2 bg-primary-container p-10 rounded-[32px] text-on-primary-container flex flex-col justify-between relative overflow-hidden group">
+<div class="md:col-span-2 md:row-span-2 bg-white p-10 rounded-[32px] text-on-surface flex flex-col justify-between relative overflow-hidden group shadow-lg shadow-black/5 border border-outline-variant">
 <div class="relative z-10">
-<span class="material-symbols-outlined text-[48px] mb-6">point_of_sale</span>
-<h3 class="font-h2 text-h2 mb-4">Kasir POS Cepat</h3>
-<p class="text-on-primary-container/80 text-body-lg">Transaksi lancar bahkan saat ramai. Mendukung pembayaran tunai dan QRIS otomatis.</p>
+<span class="material-symbols-outlined text-[48px] text-primary mb-6">point_of_sale</span>
+<h3 class="font-h2 text-h2 mb-4 text-primary">Kasir POS Cepat</h3>
+<p class="text-on-surface-variant text-body-lg">Transaksi lancar bahkan saat ramai. Mendukung pembayaran tunai dan QRIS otomatis.</p>
 </div>
 <div class="mt-8 relative z-10 flex gap-2">
-<span class="px-4 py-1.5 bg-white/10 rounded-full text-label-caps">RESPONSIF</span>
-<span class="px-4 py-1.5 bg-white/10 rounded-full text-label-caps">CETAK NOTA</span>
+<span class="px-4 py-1.5 bg-primary/10 rounded-full text-label-caps text-primary">RESPONSIF</span>
+<span class="px-4 py-1.5 bg-primary/10 rounded-full text-label-caps text-primary">CETAK NOTA</span>
 </div>
 <!-- Abstract Shape -->
-<div class="absolute -bottom-10 -right-10 w-64 h-64 bg-primary-fixed-dim/20 rounded-full blur-2xl group-hover:scale-110 transition-transform"></div>
+<div class="absolute -bottom-10 -right-10 w-64 h-64 bg-primary/5 rounded-full blur-2xl group-hover:scale-110 transition-transform"></div>
 </div>
-<div class="md:col-span-2 bg-surface-container-high p-8 rounded-[32px] flex items-center gap-6 border border-outline-variant">
+<div class="md:col-span-2 bg-white p-8 rounded-[32px] flex items-center gap-6 border border-outline-variant shadow-md shadow-black/5">
 <div class="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center shrink-0">
 <span class="material-symbols-outlined text-[40px] text-primary">inventory_2</span>
 </div>
@@ -173,14 +173,14 @@
 <p class="text-on-surface-variant">Stok berkurang otomatis setiap penjualan. Notifikasi stok menipis secara real-time.</p>
 </div>
 </div>
-<div class="md:col-span-1 bg-tertiary-container p-8 rounded-[32px] text-on-tertiary-container flex flex-col justify-between border-t-4 border-tertiary">
-<span class="material-symbols-outlined text-[32px]">psychology</span>
+<div class="md:col-span-1 bg-white p-8 rounded-[32px] flex flex-col justify-between border border-outline-variant shadow-md shadow-black/5">
+<span class="material-symbols-outlined text-[32px] text-primary">psychology</span>
 <div>
 <h3 class="font-bold text-body-lg mb-2">Prediksi AI</h3>
-<p class="text-body-sm opacity-80">Tahu kapan harus belanja barang lagi.</p>
+<p class="text-body-sm text-on-surface-variant">Tahu kapan harus belanja barang lagi.</p>
 </div>
 </div>
-<div class="md:col-span-1 bg-surface p-8 rounded-[32px] flex flex-col justify-between border border-outline-variant shadow-sm">
+<div class="md:col-span-1 bg-white p-8 rounded-[32px] flex flex-col justify-between border border-outline-variant shadow-md shadow-black/5">
 <span class="material-symbols-outlined text-[32px] text-primary">description</span>
 <div>
 <h3 class="font-bold text-body-lg mb-2">Laporan</h3>
@@ -190,21 +190,21 @@
 </div>
 </section>
 <!-- Process Section -->
-<section class="landing-section py-24 bg-white">
+<section class="landing-section py-24 bg-surface-dim">
 <div class="max-w-7xl mx-auto px-container-padding">
-<div class="grid md:grid-cols-3 gap-16">
-<div class="text-center">
-<div class="text-[80px] font-bold text-primary-fixed-dim/40 leading-none mb-4">01</div>
+<div class="grid md:grid-cols-3 gap-12">
+<div class="bg-white p-10 rounded-3xl shadow-lg shadow-black/5 border border-outline-variant/50 text-center">
+<div class="text-[64px] font-bold text-primary/15 leading-none mb-4">01</div>
 <h3 class="font-h3 text-h3 mb-4 text-primary">Tambah Produk</h3>
 <p class="text-on-surface-variant">Unggah foto dan atur harga produk Anda dengan mudah lewat HP atau Komputer.</p>
 </div>
-<div class="text-center">
-<div class="text-[80px] font-bold text-primary-fixed-dim/40 leading-none mb-4">02</div>
+<div class="bg-white p-10 rounded-3xl shadow-lg shadow-black/5 border border-outline-variant/50 text-center">
+<div class="text-[64px] font-bold text-primary/15 leading-none mb-4">02</div>
 <h3 class="font-h3 text-h3 mb-4 text-primary">Catat Transaksi</h3>
 <p class="text-on-surface-variant">Input pesanan pelanggan dengan cepat. Sistem akan otomatis memotong stok barang.</p>
 </div>
-<div class="text-center">
-<div class="text-[80px] font-bold text-primary-fixed-dim/40 leading-none mb-4">03</div>
+<div class="bg-white p-10 rounded-3xl shadow-lg shadow-black/5 border border-outline-variant/50 text-center">
+<div class="text-[64px] font-bold text-primary/15 leading-none mb-4">03</div>
 <h3 class="font-h3 text-h3 mb-4 text-primary">Pantau Insight</h3>
 <p class="text-on-surface-variant">Lihat grafik penjualan dan prediksi kebutuhan barang untuk hari esok.</p>
 </div>
@@ -213,7 +213,7 @@
 </section>
 <!-- Impact Section -->
 <section class="landing-section py-24 max-w-7xl mx-auto px-container-padding">
-<div class="landing-impact-panel bg-inverse-surface rounded-[40px] p-12 md:p-20 text-inverse-on-surface flex flex-col md:flex-row gap-12 items-center">
+<div class="landing-impact-panel bg-text-dark rounded-[40px] p-12 md:p-20 text-white flex flex-col md:flex-row gap-12 items-center shadow-2xl shadow-black/30 border border-gray-700">
 <div class="md:w-1/2">
 <h2 class="font-h2 text-[40px] leading-tight mb-8">Dampak Nyata untuk Pertumbuhan Bisnis Anda</h2>
 <ul class="space-y-6">
@@ -223,7 +223,7 @@
 </div>
 <div>
 <p class="font-bold">Kurangi Risiko Stok Kosong hingga 40%</p>
-<p class="text-body-sm opacity-70">Dengan peringatan dini berbasis kebiasaan belanja pelanggan.</p>
+<p class="text-body-sm text-gray-300">Dengan peringatan dini berbasis kebiasaan belanja pelanggan.</p>
 </div>
 </li>
 <li class="flex gap-4">
@@ -232,7 +232,7 @@
 </div>
 <div>
 <p class="font-bold">Keputusan Berbasis Data (Data-Driven)</p>
-<p class="text-body-sm opacity-70">Tentukan promosi yang tepat berdasarkan produk paling laris.</p>
+<p class="text-body-sm text-gray-300">Tentukan promosi yang tepat berdasarkan produk paling laris.</p>
 </div>
 </li>
 <li class="flex gap-4">
@@ -241,16 +241,16 @@
 </div>
 <div>
 <p class="font-bold">Efisiensi Waktu Rekapitulasi</p>
-<p class="text-body-sm opacity-70">Hemat 2 jam setiap hari yang biasanya digunakan untuk menghitung kasir manual.</p>
+<p class="text-body-sm text-gray-300">Hemat 2 jam setiap hari yang biasanya digunakan untuk menghitung kasir manual.</p>
 </div>
 </li>
 </ul>
 </div>
 <div class="landing-impact-grid md:w-1/2 grid grid-cols-2 gap-4">
-<img alt="UMKM Activity" class="rounded-3xl h-64 w-full object-cover grayscale" data-alt="A candid, artistic black and white photograph of an Indonesian traditional market stall owner smiling while looking at a smartphone. The background is a beautifully blurred array of fresh produce and wooden shelves, capturing the authentic spirit of small local businesses. The lighting is soft and natural, emphasizing a sense of hope and progress." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrWZwq7BYf8QJgFJm1WWEu_YBGzYxdSmjRyff-PJdSrOpzrfFT9xZDQhtgeGjlxneA4GHys4m7zYMFXxdHMNTrZ13rBdoVIezAfP7uPwpicjBNdFX-FbsMUxQdfPLnAe-lVrm24BEw2mIioyBrrQoyvAi7DZ7wsSqimVMtQJcz-VTKyNmq8_w2_IUTXsaBuS9H0e3fdWbYNz1QioXcBdFeESunM1cwJZmHrJt9sfvpX3093TQwpI_2XDMOT1Tj5BHIIsTCEWvLK4M"/>
-<div class="bg-primary-container p-6 rounded-3xl flex flex-col justify-end">
-<div class="text-[40px] font-bold text-on-primary-container">10k+</div>
-<div class="text-on-primary-container/80 font-medium">UMKM Bergabung</div>
+<img alt="UMKM Activity" class="rounded-3xl h-64 w-full object-cover shadow-lg" data-alt="A candid, artistic black and white photograph of an Indonesian traditional market stall owner smiling while looking at a smartphone. The background is a beautifully blurred array of fresh produce and wooden shelves, capturing the authentic spirit of small local businesses. The lighting is soft and natural, emphasizing a sense of hope and progress." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrWZwq7BYf8QJgFJm1WWEu_YBGzYxdSmjRyff-PJdSrOpzrfFT9xZDQhtgeGjlxneA4GHys4m7zYMFXxdHMNTrZ13rBdoVIezAfP7uPwpicjBNdFX-FbsMUxQdfPLnAe-lVrm24BEw2mIioyBrrQoyvAi7DZ7wsSqimVMtQJcz-VTKyNmq8_w2_IUTXsaBuS9H0e3fdWbYNz1QioXcBdFeESunM1cwJZmHrJt9sfvpX3093TQwpI_2XDMOT1Tj5BHIIsTCEWvLK4M"/>
+<div class="bg-primary p-6 rounded-3xl flex flex-col justify-end shadow-lg">
+<div class="text-[40px] font-bold text-on-primary">10k+</div>
+<div class="text-on-primary/80 font-medium">UMKM Bergabung</div>
 </div>
 </div>
 </div>
@@ -279,7 +279,7 @@
 </div>
 <span class="font-h3 text-h3 font-bold text-white">TokoQ</span>
 </div>
-<p class="max-w-sm mb-8 text-gray-300">Mendigitalisasi UMKM Indonesia melalui solusi kasir dan inventori berbasis AI yang intuitif dan mudah digunakan.</p>
+<p class="max-w-sm mb-8 text-gray-200">Mendigitalisasi UMKM Indonesia melalui solusi kasir dan inventori berbasis AI yang intuitif dan mudah digunakan.</p>
 <div class="flex gap-4">
 <a class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center hover:bg-primary hover:border-primary transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">language</span></a>
 <a class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center hover:bg-primary hover:border-primary transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">group</span></a>
@@ -287,28 +287,28 @@
 </div>
 <div>
 <h4 class="font-bold text-white mb-6">Produk</h4>
-<ul class="space-y-4 text-gray-300">
-<li><a class="hover:text-primary transition-colors" href="#">Sistem Kasir</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Manajemen Stok</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Laporan Keuangan</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Harga</a></li>
+<ul class="space-y-4 text-gray-200">
+<li><a class="hover:text-white transition-colors" href="#">Sistem Kasir</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Manajemen Stok</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Laporan Keuangan</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Harga</a></li>
 </ul>
 </div>
 <div>
 <h4 class="font-bold text-white mb-6">Dukungan</h4>
-<ul class="space-y-4 text-gray-300">
-<li><a class="hover:text-primary transition-colors" href="#">Pusat Bantuan</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Tutorial</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Komunitas</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Hubungi Kami</a></li>
+<ul class="space-y-4 text-gray-200">
+<li><a class="hover:text-white transition-colors" href="#">Pusat Bantuan</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Tutorial</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Komunitas</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Hubungi Kami</a></li>
 </ul>
 </div>
 </div>
-<div class="landing-footer-meta max-w-7xl mx-auto px-container-padding mt-20 pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between text-sm text-gray-400">
+<div class="landing-footer-meta max-w-7xl mx-auto px-container-padding mt-20 pt-8 border-t border-gray-600 flex flex-col md:flex-row justify-between text-sm text-gray-300">
 <p>© 2024 TokoQ Indonesia. Semua hak dilindungi undang-undang.</p>
-<div class="flex gap-8 mt-4 md:mt-0">
-<a class="hover:text-primary transition-colors" href="#">Kebijakan Privasi</a>
-<a class="hover:text-primary transition-colors" href="#">Syarat &amp; Ketentuan</a>
+<div class="flex gap-8 mt-4 md:md-0">
+<a class="hover:text-white transition-colors" href="#">Kebijakan Privasi</a>
+<a class="hover:text-white transition-colors" href="#">Syarat &amp; Ketentuan</a>
 </div>
 </div>
 </footer>

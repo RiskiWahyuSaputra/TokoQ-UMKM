@@ -16,14 +16,14 @@
 <body class="app-shell bg-background text-on-surface font-body-md">
 @include('owner.layouts.sidebar', ['activeMenu' => 'inventory'])
 
-<main class="app-main ml-64 min-h-screen">
-    <header class="app-header h-20 w-full sticky top-0 z-40 bg-surface border-b border-outline-variant flex justify-between items-center px-container-padding">
+<main class="app-main lg:ml-64 min-h-screen">
+    <header class="app-header h-20 w-full sticky top-0 z-40 bg-white border-b border-outline-variant flex justify-between items-center px-container-padding">
         <div class="flex items-center gap-4">
-            <button aria-label="Buka menu" class="mobile-nav-trigger lg:hidden" data-sidebar-toggle type="button">
-                <span class="material-symbols-outlined">menu</span>
-            </button>
             <div>
-                <h1 class="font-h3 text-h3 font-bold text-primary">Tambah Produk</h1>
+                <button data-hamburger-toggle class="lg:hidden text-primary p-2" type="button">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class=" font-h3 text-h3 font-bold text-primary">Tambah Produk</h1>
                 <p class="text-body-sm text-on-surface-variant">Masukkan data produk nyata yang akan tampil di inventori dan POS.</p>
             </div>
         </div>
@@ -93,7 +93,10 @@
 
             <aside class="col-span-12 xl:col-span-4 space-y-card-gap">
                 <div class="bg-white rounded-2xl border border-outline-variant p-6">
-                    <h2 class="font-h3 text-h3 text-primary mb-3">Kategori Cepat</h2>
+                    <button data-hamburger-toggle class="lg:hidden text-primary p-2" type="button">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class=" font-h3 text-h3 text-primary mb-3">Kategori Cepat</h2>
                     <p class="text-body-sm text-on-surface-variant mb-5">Kalau kategori belum ada, tambahkan di sini tanpa keluar dari halaman.</p>
                     <form action="{{ route('categories.store') }}" method="POST" class="space-y-4">
                         @csrf

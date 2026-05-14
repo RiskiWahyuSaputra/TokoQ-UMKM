@@ -51,6 +51,8 @@
 <body class="bg-secondary text-text font-body-md">
 @include('owner.layouts.sidebar', ['activeMenu' => 'pos'])
 
+@include('owner.layouts.header-simple', ['pageTitle' => 'Kasir POS'])
+
 @php
     $user = Auth::user();
     $initials = collect(explode(' ', trim($user->name)))->filter()->take(2)->map(fn ($part) => strtoupper(substr($part, 0, 1)))->implode('');
@@ -66,27 +68,15 @@
     })->values();
 @endphp
 
-<main class="ml-64 min-h-screen flex flex-col xl:flex-row gap-6 p-8">
+<main class="lg:ml-64 min-h-screen flex flex-col xl:flex-row gap-6 p-4 lg:p-8 pt-8">
     <section class="flex-1 space-y-6">
         <div class="bg-white rounded-3xl border border-outline-variant p-6 shadow-sm">
             <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
                 <div>
-                    <h1 class="font-h3 text-h3 text-primary font-bold">Kasir POS</h1>
                     <p class="text-body-sm text-on-surface-variant">Semua produk di bawah ini diambil dari inventori toko Anda secara real-time.</p>
                 </div>
                 <div class="flex items-center gap-4">
                     <a href="{{ route('products.create') }}" class="px-5 py-3 rounded-xl border border-outline-variant font-bold text-on-surface">Tambah Produk</a>
-                    <div class="flex items-center gap-3">
-                        <div class="text-right hidden md:block">
-                            <p class="font-bold text-primary">{{ $user->name }}</p>
-                            <p class="text-body-sm text-on-surface-variant">{{ $user->shop?->name ?? 'Toko Anda' }}</p>
-                        </div>
-                        @if ($user->profile_photo_url)
-                            <img src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" class="w-11 h-11 rounded-full object-cover border-2 border-primary-fixed">
-                        @else
-                            <div class="w-11 h-11 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold">{{ $initials }}</div>
-                        @endif
-                    </div>
                 </div>
             </div>
 
@@ -107,7 +97,10 @@
         @if ($products->isEmpty())
             <div class="bg-white rounded-3xl border border-outline-variant p-16 text-center">
                 <span class="material-symbols-outlined text-[56px] text-primary mb-4 block">point_of_sale</span>
-                <h2 class="font-h3 text-h3 text-primary mb-3">POS belum punya produk</h2>
+                <button data-hamburger-toggle class="lg:hidden text-primary p-2" type="button">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class=" font-h3 text-h3 text-primary mb-3">POS belum punya produk</h2>
                 <p class="text-body-sm text-on-surface-variant max-w-md mx-auto mb-6">Tambahkan produk terlebih dahulu agar kasir bisa digunakan untuk transaksi nyata.</p>
                 <a href="{{ route('products.create') }}" class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-xl font-bold">
                     <span class="material-symbols-outlined">add</span>
@@ -174,7 +167,10 @@
         <div class="bg-white rounded-3xl border border-outline-variant shadow-lg overflow-hidden sticky top-8">
             <div class="p-6 border-b border-outline-variant flex items-center justify-between">
                 <div>
-                    <h2 class="font-h3 text-h3 text-primary">Keranjang</h2>
+                    <button data-hamburger-toggle class="lg:hidden text-primary p-2" type="button">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class=" font-h3 text-h3 text-primary">Keranjang</h2>
                     <p class="text-body-sm text-on-surface-variant">Transaksi nyata dari toko Anda.</p>
                 </div>
                 <button id="clear-cart" type="button" class="text-error font-bold text-body-sm">Hapus Semua</button>
