@@ -84,4 +84,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [ValidationController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/validate', [ValidationController::class, 'index'])->name('admin.validate');
     Route::post('/admin/validate/{user}', [ValidationController::class, 'activate'])->name('admin.activate');
+
+    // Additional Admin Routes
+    Route::get('/admin/shops', [ValidationController::class, 'shops'])->name('admin.shops');
+    Route::get('/admin/users', [ValidationController::class, 'users'])->name('admin.users');
+    Route::get('/admin/transactions', [ValidationController::class, 'transactions'])->name('admin.transactions');
+    Route::get('/admin/reports', [ValidationController::class, 'reports'])->name('admin.reports');
+    Route::get('/admin/settings', [ValidationController::class, 'settings'])->name('admin.settings');
+    Route::get('/admin/logs', [ValidationController::class, 'logs'])->name('admin.logs');
 });

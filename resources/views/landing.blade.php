@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>TokoQ - Sistem Kasir & Digital Twin UMKM</title>
+<title>TokoQ - Sistem Kasir & Digital UMKM</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="/css/tokoq-colors.css" rel="stylesheet"/>
@@ -343,7 +343,7 @@ body {
 
                 <h1 class="animate-fade-in-up delay-100 text-4xl md:text-5xl lg:text-[56px] font-extrabold leading-[1.1]">
                     <span class="text-gray-800">Sistem Kasir &</span><br/>
-                    <span class="gradient-text">Digital Twin</span><br/>
+                    <span class="gradient-text">Digital</span><br/>
                     <span class="text-gray-800">untuk UMKM</span>
                 </h1>
 
