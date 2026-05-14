@@ -429,7 +429,7 @@ body {
                             <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-white/30"></div>
                         </div>
                         <div>
-                            <p class="text-sm font-bold text-white">10.000+</p>
+                            <p class="text-sm font-bold text-white">{{ number_format($totalShops) }}+</p>
                             <p class="text-[10px] text-white/60">UMKM Bergabung</p>
                         </div>
                     </div>
@@ -664,8 +664,8 @@ body {
                     <div class="rounded-3xl overflow-hidden shadow-2xl">
                         <img alt="UMKM Activity" class="w-full h-56 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrWZwq7BYf8QJgFJm1WWEu_YBGzYxdSmjRyff-PJdSrOpzrfFT9xZDQhtgeGjlxneA4GHys4m7zYMFXxdHMNTrZ13rBdoVIezAfP7uPwpicjBNdFX-FbsMUxQdfPLnAe-lVrm24BEw2mIioyBrrQoyvAi7DZ7wsSqimVMtQJcz-VTKyNmq8_w2_IUTXsaBuS9H0e3fdWbYNz1QioXcBdFeESunM1cwJZmHrJt9sfvpX3093TQwpI_2XDMOT1Tj5BHIIsTCEWvLK4M"/>
                     </div>
-                    <div class="bg-gradient-to-br from-primary to-emerald-600 p-6 rounded-3xl flex flex-col justify-center items-center text-center shadow-2xl shadow-primary/20">
-                        <div class="text-4xl font-extrabold text-white mb-1">10k+</div>
+                    <div class="bg-gradient-to-br from-primary to-emerald-600 p-6 rounded-3xl flex flex-col justify-center items-center text-center shadow-2xl shadow-primary/20 impact-stat">
+                        <div class="text-4xl font-extrabold text-white mb-1 counter-value" data-target="{{ $totalShops }}">{{ $totalShops }}+</div>
                         <div class="text-sm text-white/80 font-medium">UMKM Bergabung</div>
                     </div>
                 </div>
@@ -912,7 +912,8 @@ if (impactSection) {
                 const counter = entry.target.querySelector('.counter-value');
                 if (counter && !counter.dataset.animated) {
                     counter.dataset.animated = 'true';
-                    animateCounter(counter, 10000, '+');
+                    const targetCount = parseInt(counter.dataset.target) || {{ $totalShops }};
+                    animateCounter(counter, targetCount, '+');
                 }
             }
         });

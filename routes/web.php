@@ -2,12 +2,15 @@
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\ValidationController;
+use App\Models\Shop;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 // Landing Page
 Route::get('/', function () {
-    return view('landing');
+    return view('landing', [
+        'totalShops' => Shop::count(),
+    ]);
 })->name('landing');
 
 // Authentication
