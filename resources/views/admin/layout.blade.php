@@ -45,20 +45,29 @@
 </head>
 <body class="bg-gray-50 min-h-screen">
 
-<div class="flex h-screen overflow-hidden">
+<div class="flex h-screen overflow-hidden relative">
+
+    <!-- ===== MOBILE OVERLAY ===== -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden transition-opacity duration-300 opacity-0" onclick="closeSidebar()"></div>
 
     <!-- ===== SIDEBAR ===== -->
-    <aside class="w-64 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white flex flex-col shrink-0 transition-all duration-300" id="sidebar">
+    <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white flex flex-col shrink-0 transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0">
         <!-- Logo -->
         <div class="p-5 border-b border-white/10">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-primary to-emerald-400 rounded-xl flex items-center justify-center shadow-lg shadow-primary/30">
-                    <span class="material-symbols-outlined text-white text-[20px]">admin_panel_settings</span>
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-primary to-emerald-400 rounded-xl flex items-center justify-center shadow-lg shadow-primary/30">
+                        <span class="material-symbols-outlined text-white text-[20px]">admin_panel_settings</span>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-extrabold text-white">TokoQ</h1>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-wider">Admin Panel</p>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="text-lg font-extrabold text-white">TokoQ</h1>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-wider">Admin Panel</p>
-                </div>
+                <!-- Close button (mobile only) -->
+                <button onclick="closeSidebar()" class="lg:hidden w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">close</span>
+                </button>
             </div>
         </div>
 
@@ -136,20 +145,20 @@
     </aside>
 
     <!-- ===== MAIN CONTENT ===== -->
-    <main class="flex-1 overflow-y-auto">
+    <main class="flex-1 overflow-y-auto w-full min-w-0">
         <!-- Top Bar -->
-        <header class="sticky top-0 z-30 bg-white/80 backdrop-blur-xl border-b border-gray-100 px-6 py-3">
+        <header class="sticky top-0 z-30 bg-white/80 backdrop-blur-xl border-b border-gray-100 px-4 sm:px-6 py-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <button id="sidebar-toggle" class="lg:hidden w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors">
+                    <button id="sidebar-toggle" class="lg:hidden w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors" onclick="openSidebar()">
                         <span class="material-symbols-outlined">menu</span>
                     </button>
                     <div>
                         <h2 class="text-sm font-bold text-gray-800">@yield('title', 'Dashboard')</h2>
-                        <p class="text-[10px] text-gray-400">{{ now()->locale('id')->format('l, j F Y') }}</p>
+                        <p class="text-[10px] text-gray-400 hidden sm:block">{{ now()->locale('id')->format('l, j F Y') }}</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2 sm:gap-3">
                     <a href="/" target="_blank" class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-primary transition-all" title="Lihat Website">
                         <span class="material-symbols-outlined text-[18px]">open_in_new</span>
                     </a>
@@ -161,7 +170,7 @@
         </header>
 
         <!-- Page Content -->
-        <div class="p-6 animate-fade-in">
+        <div class="p-4 sm:p-6 animate-fade-in">
             @yield('content')
         </div>
     </main>
@@ -170,15 +179,43 @@
 <script>
 // Sidebar toggle for mobile
 const sidebar = document.getElementById('sidebar');
-const toggle = document.getElementById('sidebar-toggle');
-if (toggle) {
-    toggle.addEventListener('click', () => {
-        sidebar.classList.toggle('-translate-x-full');
-        sidebar.classList.toggle('absolute');
-        sidebar.classList.toggle('z-50');
-        sidebar.classList.toggle('h-full');
-    });
+const overlay = document.getElementById('sidebar-overlay');
+
+function openSidebar() {
+    sidebar.classList.remove('-translate-x-full');
+    overlay.classList.remove('hidden');
+    // Small delay to allow display:block to apply before opacity transition
+    setTimeout(() => {
+        overlay.classList.remove('opacity-0');
+    }, 10);
+    document.body.style.overflow = 'hidden';
 }
+
+function closeSidebar() {
+    sidebar.classList.add('-translate-x-full');
+    overlay.classList.add('opacity-0');
+    setTimeout(() => {
+        overlay.classList.add('hidden');
+    }, 300);
+    document.body.style.overflow = '';
+}
+
+// Close sidebar when clicking a nav link on mobile
+sidebar.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', () => {
+        if (window.innerWidth < 1024) {
+            closeSidebar();
+        }
+    });
+});
+
+// Handle resize: reset sidebar state when going to desktop
+window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1024) {
+        overlay.classList.add('hidden', 'opacity-0');
+        document.body.style.overflow = '';
+    }
+});
 </script>
 </body>
 </html>

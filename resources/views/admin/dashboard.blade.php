@@ -10,7 +10,7 @@
 @endphp
 
 <!-- Welcome Banner -->
-<div class="bg-gradient-to-r from-primary via-emerald-500 to-teal-500 rounded-2xl p-6 mb-6 text-white relative overflow-hidden">
+<div class="bg-gradient-to-r from-primary via-emerald-500 to-teal-500 rounded-2xl p-4 sm:p-6 mb-6 text-white relative overflow-hidden">
     <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
     <div class="absolute bottom-0 left-1/3 w-32 h-32 bg-white/5 rounded-full blur-xl"></div>
     <div class="relative z-10">
@@ -21,7 +21,7 @@
 </div>
 
 <!-- Stats Cards -->
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
     <!-- Pending -->
     <div class="bg-white rounded-2xl border border-gray-100 p-5 card-hover">
         <div class="flex items-center justify-between mb-3">

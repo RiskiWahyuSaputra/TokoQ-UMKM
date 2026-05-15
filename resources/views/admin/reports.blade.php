@@ -9,7 +9,7 @@
 </div>
 
 <!-- Overview Stats -->
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 mb-6">
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-6">
     <div class="bg-white rounded-2xl border border-gray-100 p-5 card-hover">
         <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center mb-3">
             <span class="material-symbols-outlined text-blue-500 text-[20px]">domain</span>
