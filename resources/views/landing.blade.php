@@ -521,7 +521,7 @@ body {
     </div>
 </section>
 
-<!-- ===== SOLUTION / BENTO GRID ===== -->
+<!-- ===== SOLUTION / FLUID EXPANDING GRID ===== -->
 <section id="fitur" class="py-24 relative overflow-hidden">
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -532,62 +532,208 @@ body {
                 SOLUSI LENGKAP
             </div>
             <h2 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">Satu Dashboard untuk<br/>Operasional Toko</h2>
-            <p class="text-gray-500 max-w-xl mx-auto">Kami menggabungkan kemudahan penggunaan dengan kecanggihan prediksi AI.</p>
+            <p class="text-gray-500 max-w-xl mx-auto">Klik fitur di bawah untuk melihat detail lengkap. Semua ada dalam satu platform.</p>
         </div>
 
-        <div class="grid md:grid-cols-4 md:grid-rows-2 gap-5 h-auto md:h-[550px]">
-            <!-- Kasir POS (large) -->
-            <div class="reveal-scale delay-100 md:col-span-2 md:row-span-2 bento-card bg-gradient-to-br from-primary to-emerald-600 p-8 rounded-3xl text-white flex flex-col justify-between relative overflow-hidden group">
-                <div class="absolute -top-20 -right-20 w-64 h-64 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-                <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full blur-xl"></div>
-                <div class="relative z-10">
-                    <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-6">
-                        <span class="material-symbols-outlined text-[32px] text-white">point_of_sale</span>
+        <!-- Fluid Expanding Grid -->
+        <div id="fluid-grid" class="w-full max-w-2xl mx-auto">
+            <div class="grid grid-cols-2 grid-rows-2 gap-5 w-full h-[340px] sm:h-[440px] md:h-[500px] transition-all duration-500 ease-in-out">
+                <!-- Card 1: Kasir POS (emerald) -->
+                <div class="fluid-card relative cursor-pointer group w-full h-full rounded-[32px] overflow-hidden bg-zinc-100"
+                     data-id="kasir" data-color="#10B981"
+                     onclick="expandGridItem(this)">
+                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&auto=format&fit=crop&q=60"
+                         alt="Kasir POS sistem modern"
+                         class="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out"/>
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-700"></div>
+                    <div class="absolute inset-0 pointer-events-none rounded-[32px] border border-white/10 group-hover:border-white/20 transition-colors duration-500"></div>
+                    <div class="absolute inset-0 pointer-events-none rounded-[32px]" style="background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);"></div>
+                    <div class="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end text-white z-10 select-none">
+                        <h3 class="text-xl sm:text-2xl md:text-3xl font-medium mb-1 tracking-tight">Kasir POS</h3>
+                        <p class="text-xs sm:text-sm text-white/80 font-normal">Transaksi cepat & QRIS otomatis</p>
                     </div>
-                    <h3 class="text-2xl font-extrabold mb-3">Kasir POS Cepat</h3>
-                    <p class="text-white/80 text-sm leading-relaxed max-w-xs">Transaksi lancar bahkan saat ramai. Mendukung pembayaran tunai dan QRIS otomatis.</p>
                 </div>
-                <div class="relative z-10 flex gap-2 mt-6">
-                    <span class="px-3 py-1 bg-white/15 rounded-full text-xs font-bold backdrop-blur-sm">RESPONSIF</span>
-                    <span class="px-3 py-1 bg-white/15 rounded-full text-xs font-bold backdrop-blur-sm">CETAK NOTA</span>
+
+                <!-- Card 2: Inventori (blue) -->
+                <div class="fluid-card relative cursor-pointer group w-full h-full rounded-[32px] overflow-hidden bg-zinc-100"
+                     data-id="inventori" data-color="#3B82F6"
+                     onclick="expandGridItem(this)">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&auto=format&fit=crop&q=60"
+                         alt="Manajemen inventori stok barang"
+                         class="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out"/>
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-700"></div>
+                    <div class="absolute inset-0 pointer-events-none rounded-[32px] border border-white/10 group-hover:border-white/20 transition-colors duration-500"></div>
+                    <div class="absolute inset-0 pointer-events-none rounded-[32px]" style="background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);"></div>
+                    <div class="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end text-white z-10 select-none">
+                        <h3 class="text-xl sm:text-2xl md:text-3xl font-medium mb-1 tracking-tight">Inventori</h3>
+                        <p class="text-xs sm:text-sm text-white/80 font-normal">Stok otomatis & notifikasi real-time</p>
+                    </div>
+                </div>
+
+                <!-- Card 3: Prediksi AI (purple) -->
+                <div class="fluid-card relative cursor-pointer group w-full h-full rounded-[32px] overflow-hidden bg-zinc-100"
+                     data-id="ai" data-color="#8B5CF6"
+                     onclick="expandGridItem(this)">
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&auto=format&fit=crop&q=60"
+                         alt="AI prediksi bisnis"
+                         class="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out"/>
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-700"></div>
+                    <div class="absolute inset-0 pointer-events-none rounded-[32px] border border-white/10 group-hover:border-white/20 transition-colors duration-500"></div>
+                    <div class="absolute inset-0 pointer-events-none rounded-[32px]" style="background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);"></div>
+                    <div class="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end text-white z-10 select-none">
+                        <h3 class="text-xl sm:text-2xl md:text-3xl font-medium mb-1 tracking-tight">Prediksi AI</h3>
+                        <p class="text-xs sm:text-sm text-white/80 font-normal">Tahu kapan harus restok barang</p>
+                    </div>
+                </div>
+
+                <!-- Card 4: Laporan (amber) -->
+                <div class="fluid-card relative cursor-pointer group w-full h-full rounded-[32px] overflow-hidden bg-zinc-100"
+                     data-id="laporan" data-color="#F59E0B"
+                     onclick="expandGridItem(this)">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=60"
+                         alt="Laporan keuangan dashboard"
+                         class="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out"/>
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-700"></div>
+                    <div class="absolute inset-0 pointer-events-none rounded-[32px] border border-white/10 group-hover:border-white/20 transition-colors duration-500"></div>
+                    <div class="absolute inset-0 pointer-events-none rounded-[32px]" style="background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);"></div>
+                    <div class="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end text-white z-10 select-none">
+                        <h3 class="text-xl sm:text-2xl md:text-3xl font-medium mb-1 tracking-tight">Laporan</h3>
+                        <p class="text-xs sm:text-sm text-white/80 font-normal">Laba rugi harian dalam satu klik</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Inventori -->
-            <div class="reveal-scale delay-200 md:col-span-2 bento-card bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-center gap-5">
-                <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center shrink-0">
-                    <span class="material-symbols-outlined text-[32px] text-blue-500">inventory_2</span>
-                </div>
-                <div>
-                    <h3 class="font-bold text-gray-800 mb-1">Inventori Otomatis</h3>
-                    <p class="text-sm text-gray-500">Stok berkurang otomatis setiap penjualan. Notifikasi stok menipis real-time.</p>
-                </div>
-            </div>
-
-            <!-- Prediksi AI -->
-            <div class="reveal-scale delay-300 md:col-span-1 bento-card bg-gradient-to-br from-purple-500 to-indigo-600 p-6 rounded-3xl text-white flex flex-col justify-between">
-                <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mb-4">
-                    <span class="material-symbols-outlined text-[24px]">psychology</span>
-                </div>
-                <div>
-                    <h3 class="font-bold mb-1">Prediksi AI</h3>
-                    <p className="text-xs text-white/70">Tahu kapan harus belanja barang lagi.</p>
-                </div>
-            </div>
-
-            <!-- Laporan -->
-            <div class="reveal-scale delay-400 md:col-span-1 bento-card bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between">
-                <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mb-4">
-                    <span class="material-symbols-outlined text-[24px] text-amber-500">description</span>
-                </div>
-                <div>
-                    <h3 class="font-bold text-gray-800 mb-1">Laporan</h3>
-                    <p class="text-xs text-gray-500">Laba rugi harian siap dalam satu klik.</p>
+            <!-- Expanded detail panel (shown when item is selected) -->
+            <div id="fluid-detail" class="hidden mt-6 rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 ease-in-out">
+                <div id="fluid-detail-content" class="p-8 md:p-10">
+                    <!-- Filled by JS -->
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+// ===== FLUID EXPANDING GRID =====
+const detailContent = {
+    kasir: {
+        title: 'Kasir POS Cepat',
+        desc: 'Transaksi lancar bahkan saat ramai. Mendukung pembayaran tunai, QRIS, dan transfer bank otomatis. Cetak nota thermal langsung dari browser.',
+        tags: ['RESPONSIF', 'CETAK NOTA', 'QRIS', 'MULTI PEMBAYARAN'],
+        color: '#10B981',
+        icon: 'point_of_sale'
+    },
+    inventori: {
+        title: 'Inventori Otomatis',
+        desc: 'Stok berkurang otomatis setiap penjualan. Notifikasi stok menipis real-time via WhatsApp. Riwayat mutasi barang lengkap.',
+        tags: ['AUTO STOK', 'NOTIFIKASI WA', 'RIWAYAT MUTASI'],
+        color: '#3B82F6',
+        icon: 'inventory_2'
+    },
+    ai: {
+        title: 'Prediksi AI',
+        desc: 'Machine learning menganalisis pola penjualan Anda. Rekomendasi jumlah pembelian optimal untuk mengurangi stok kosong hingga 40%.',
+        tags: ['MACHINE LEARNING', 'PREDIKSI PENJUALAN', 'REKOMENDASI BELANJA'],
+        color: '#8B5CF6',
+        icon: 'psychology'
+    },
+    laporan: {
+        title: 'Laporan Keuangan',
+        desc: 'Laba rugi harian, mingguan, dan bulanan siap dalam satu klik. Export ke PDF atau Excel. Grafik visual yang mudah dipahami.',
+        tags: ['EXPORT PDF/EXCEL', 'GRAFIK VISUAL', 'PERIODE FLEKSIBEL'],
+        color: '#F59E0B',
+        icon: 'description'
+    }
+};
+
+let expandedId = null;
+
+function expandGridItem(el) {
+    const id = el.getAttribute('data-id');
+    const grid = document.getElementById('fluid-grid').querySelector('.grid');
+    const detail = document.getElementById('fluid-detail');
+    const content = document.getElementById('fluid-detail-content');
+    const cards = grid.querySelectorAll('.fluid-card');
+
+    // If clicking the already-expanded item, collapse it
+    if (expandedId === id) {
+        expandedId = null;
+        detail.classList.add('hidden');
+        grid.classList.remove('grid-rows-3');
+        grid.classList.add('grid-rows-2');
+        cards.forEach(card => {
+            card.classList.remove('col-span-2', 'row-start-1', 'row-start-2', 'row-start-3', 'opacity-40', 'scale-95');
+            card.style.gridColumn = '';
+            card.style.gridRow = '';
+        });
+        return;
+    }
+
+    expandedId = id;
+    const info = detailContent[id];
+
+    // Build detail panel
+    content.innerHTML = `
+        <div class="flex flex-col md:flex-row gap-6 items-start">
+            <div class="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0" style="background: ${info.color}20;">
+                <span class="material-symbols-outlined text-3xl" style="color: ${info.color};">${info.icon}</span>
+            </div>
+            <div class="flex-1">
+                <h3 class="text-2xl font-extrabold text-gray-800 mb-3">${info.title}</h3>
+                <p class="text-gray-500 leading-relaxed mb-4">${info.desc}</p>
+                <div class="flex flex-wrap gap-2">
+                    ${info.tags.map(tag => `<span class="px-3 py-1 rounded-full text-xs font-bold" style="background: ${info.color}15; color: ${info.color};">${tag}</span>`).join('')}
+                </div>
+            </div>
+            <button onclick="closeDetail()" class="shrink-0 w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
+                <span class="material-symbols-outlined text-gray-500">close</span>
+            </button>
+        </div>
+    `;
+
+    // Rearrange grid: expanded item goes full-width in its row, others compress
+    grid.classList.remove('grid-rows-2');
+    grid.classList.add('grid-rows-3');
+
+    cards.forEach(card => {
+        card.classList.remove('col-span-2', 'row-start-1', 'row-start-2', 'row-start-3', 'opacity-40', 'scale-95');
+        card.style.gridColumn = '';
+        card.style.gridRow = '';
+
+        if (card.getAttribute('data-id') === id) {
+            // Find which row the card is in
+            const allCards = Array.from(cards);
+            const idx = allCards.indexOf(card);
+            const row = idx < 2 ? 1 : 2;
+            card.style.gridColumn = '1 / span 2';
+            card.style.gridRow = row;
+        } else {
+            // Dim non-selected cards slightly
+            card.classList.add('opacity-60', 'scale-[0.97]');
+        }
+    });
+
+    detail.classList.remove('hidden');
+    detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function closeDetail() {
+    expandedId = null;
+    const grid = document.getElementById('fluid-grid').querySelector('.grid');
+    const detail = document.getElementById('fluid-detail');
+    const cards = grid.querySelectorAll('.fluid-card');
+
+    detail.classList.add('hidden');
+    grid.classList.remove('grid-rows-3');
+    grid.classList.add('grid-rows-2');
+
+    cards.forEach(card => {
+        card.classList.remove('col-span-2', 'row-start-1', 'row-start-2', 'row-start-3', 'opacity-40', 'scale-95', 'opacity-60', 'scale-[0.97]');
+        card.style.gridColumn = '';
+        card.style.gridRow = '';
+    });
+}
+</script>
 
 <!-- ===== HOW IT WORKS ===== -->
 <section id="cara-kerja" class="py-24 bg-white relative">
