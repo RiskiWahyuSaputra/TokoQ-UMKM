@@ -348,6 +348,130 @@ body {
 /* Custom transition duration */
 .duration-400 { transition-duration: 400ms; }
 
+/* ===== SCROLL PROGRESS ===== */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #10B981, #34D399, #059669);
+  z-index: 9999;
+  transition: width 0.1s linear;
+}
+
+/* ===== GSAP SCROLL ANIMATIONS ===== */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(60px);
+}
+.scroll-animate-left {
+  opacity: 0;
+  transform: translateX(-80px);
+}
+.scroll-animate-right {
+  opacity: 0;
+  transform: translateX(80px);
+}
+.scroll-animate-scale {
+  opacity: 0;
+  transform: scale(0.8);
+}
+.scroll-animate-rotate {
+  opacity: 0;
+  transform: rotate(-10deg) translateY(40px);
+}
+
+/* Parallax layers */
+.parallax-bg {
+  will-change: transform;
+}
+.parallax-slow {
+  will-change: transform;
+}
+.parallax-fast {
+  will-change: transform;
+}
+
+/* Section reveal overlay */
+.section-reveal {
+  position: relative;
+  overflow: hidden;
+}
+.section-reveal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #10B981;
+  transform: translateX(0);
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+  z-index: 10;
+}
+.section-reveal.revealed::after {
+  transform: translateX(100%);
+}
+
+/* Floating particles */
+@keyframes float-particle {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+  25% { transform: translateY(-30px) rotate(90deg); opacity: 0.6; }
+  50% { transform: translateY(-15px) rotate(180deg); opacity: 0.4; }
+  75% { transform: translateY(-40px) rotate(270deg); opacity: 0.5; }
+}
+.scroll-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: float-particle 6s ease-in-out infinite;
+}
+
+/* Text reveal animation */
+.text-reveal {
+  overflow: hidden;
+}
+.text-reveal span {
+  display: inline-block;
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+/* Counter scroll */
+.counter-scroll {
+  display: inline-block;
+}
+
+/* Smooth section separators */
+.section-separator {
+  position: relative;
+}
+.section-separator::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, #10B981, transparent);
+}
+
+/* Magnetic hover effect */
+.magnetic-hover {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Glow line animation */
+@keyframes glow-line {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.glow-line {
+  background: linear-gradient(90deg, #10B981, #34D399, #059669, #10B981);
+  background-size: 200% 100%;
+  animation: glow-line 3s ease infinite;
+}
+
 /* ===== STORY SCROLL ===== */
 .story-scroll-container {
   position: relative;
@@ -423,6 +547,13 @@ body {
 </style>
 </head>
 <body class="font-body-md">
+
+<!-- Scroll Progress Bar -->
+<div class="scroll-progress" id="scroll-progress"></div>
+
+<!-- Floating Particles -->
+<div id="particles" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
+
 
 <!-- ===== NAVIGATION ===== -->
 <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-transparent border-b border-transparent">
@@ -523,12 +654,18 @@ body {
     </div>
 
     <!-- Scroll indicator -->
-   
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
+        <div class="flex flex-col items-center gap-2">
+            <p class="text-white/50 text-[10px] uppercase tracking-[0.3em]">Scroll</p>
+            <div class="w-5 h-8 rounded-full border-2 border-white/30 flex items-start justify-center p-1">
+                <div class="w-1 h-2 bg-white/60 rounded-full animate-bounce-subtle"></div>
+            </div>
+        </div>
     </div>
 </section>
 
 <!-- ===== PROBLEM SECTION ===== -->
-<section class="py-24 bg-white relative overflow-hidden">
+<section class="py-24 bg-white relative overflow-hidden section-separator">
     <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#ECFDF5] to-transparent"></div>
 
     <div class="max-w-7xl mx-auto px-6">
@@ -1063,7 +1200,7 @@ function closeDetail() {
             <div class="absolute bottom-0 left-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-2xl -ml-32 -mb-32"></div>
 
             <div class="grid md:grid-cols-2 gap-12 items-center relative z-10">
-                <div class="reveal-left">
+                <div class="impact-left">
                     <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/20 rounded-full text-xs font-bold text-emerald-400 mb-6">
                         <span class="material-symbols-outlined text-[14px]">trending_up</span>
                         DAMPAK NYATA
@@ -1101,13 +1238,36 @@ function closeDetail() {
                     </ul>
                 </div>
 
-                <div class="reveal-right grid grid-cols-2 gap-4">
-                    <div class="rounded-3xl overflow-hidden shadow-2xl">
-                        <img alt="UMKM Activity" class="w-full h-56 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrWZwq7BYf8QJgFJm1WWEu_YBGzYxdSmjRyff-PJdSrOpzrfFT9xZDQhtgeGjlxneA4GHys4m7zYMFXxdHMNTrZ13rBdoVIezAfP7uPwpicjBNdFX-FbsMUxQdfPLnAe-lVrm24BEw2mIioyBrrQoyvAi7DZ7wsSqimVMtQJcz-VTKyNmq8_w2_IUTXsaBuS9H0e3fdWbYNz1QioXcBdFeESunM1cwJZmHrJt9sfvpX3093TQwpI_2XDMOT1Tj5BHIIsTCEWvLK4M"/>
+                <div class="impact-right grid grid-cols-2 gap-4">
+                    <div class="rounded-3xl overflow-hidden shadow-2xl bg-gray-800 relative group">
+                        <img alt="UMKM Activity" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
+                            <p class="text-white text-xs font-medium">UMKM di seluruh Indonesia</p>
+                        </div>
                     </div>
                     <div class="bg-gradient-to-br from-primary to-emerald-600 p-6 rounded-3xl flex flex-col justify-center items-center text-center shadow-2xl shadow-primary/20 impact-stat">
-                        <div class="text-4xl font-extrabold text-white mb-1 counter-value" data-target="{{ $totalShops }}">{{ $totalShops }}+</div>
+                        <div class="text-4xl font-extrabold text-white mb-1 counter-value" data-target="{{ $totalShops }}">{{ number_format($totalShops) }}+</div>
                         <div class="text-sm text-white/80 font-medium">UMKM Bergabung</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm p-5 rounded-3xl border border-white/10">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center">
+                                <span class="material-symbols-outlined text-emerald-400 text-[16px]">trending_up</span>
+                            </div>
+                            <p class="text-white font-bold text-sm">Pertumbuhan</p>
+                        </div>
+                        <p class="text-2xl font-extrabold text-white">+150%</p>
+                        <p class="text-[10px] text-gray-400 mt-1">Peningkatan efisiensi rata-rata</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm p-5 rounded-3xl border border-white/10">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-8 h-8 bg-amber-500/20 rounded-lg flex items-center justify-center">
+                                <span class="material-symbols-outlined text-amber-400 text-[16px]">schedule</span>
+                            </div>
+                            <p class="text-white font-bold text-sm">Waktu Hemat</p>
+                        </div>
+                        <p class="text-2xl font-extrabold text-white">2 Jam</p>
+                        <p class="text-[10px] text-gray-400 mt-1">Per hari dari rekap manual</p>
                     </div>
                 </div>
             </div>
@@ -1116,7 +1276,7 @@ function closeDetail() {
 </section>
 
 <!-- ===== TESTIMONIAL / SOCIAL PROOF ===== -->
-<section class="py-24 bg-white">
+<section id="testimoni" class="py-24 bg-white">
     <div class="max-w-7xl mx-auto px-6">
         <div class="text-center mb-16 reveal">
             <div class="inline-flex items-center gap-2 px-4 py-2 bg-amber-50 rounded-full text-xs font-bold text-amber-600 mb-4">
@@ -1179,7 +1339,7 @@ function closeDetail() {
 </section>
 
 <!-- ===== FINAL CTA ===== -->
-<section class="py-24 relative overflow-hidden">
+<section id="mulai" class="py-24 relative overflow-hidden">
     <div class="absolute inset-0 hero-gradient"></div>
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -1194,7 +1354,7 @@ function closeDetail() {
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="/register" class="btn-glow group px-10 py-5 bg-gradient-to-r from-primary to-emerald-600 text-white font-bold text-lg rounded-2xl shadow-2xl shadow-primary/30 hover:shadow-3xl hover:scale-105 transition-all flex items-center justify-center gap-2">
-                    Mulai Sekarang — Gratis 14 Hari
+                    Mulai Sekarang - Gratis 14 Hari
                     <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
                 </a>
                 <a href="/register" class="px-10 py-5 bg-white text-primary font-bold text-lg rounded-2xl border-2 border-primary/10 hover:border-primary/30 hover:bg-primary/5 transition-all flex items-center justify-center gap-2">
@@ -1203,7 +1363,7 @@ function closeDetail() {
                 </a>
             </div>
 
-            <p class="text-sm text-gray-400 mt-6">✓ Gratis 14 hari &nbsp; ✓ Tanpa kartu kredit &nbsp; ✓ Batal kapan saja</p>
+            <p class="text-sm text-gray-400 mt-6">Gratis 14 hari &nbsp; Tanpa kartu kredit &nbsp; Batal kapan saja</p>
         </div>
     </div>
 </section>
@@ -1259,109 +1419,453 @@ function closeDetail() {
 </footer>
 
 <script>
+// ===== SCROLL PROGRESS BAR =====
+const progressBar = document.getElementById('scroll-progress');
+window.addEventListener('scroll', () => {
+  if (!progressBar) return;
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  progressBar.style.width = progress + '%';
+});
+
+// ===== FLOATING PARTICLES =====
+const particlesContainer = document.getElementById('particles');
+if (particlesContainer) {
+  for (let i = 0; i < 15; i++) {
+    const p = document.createElement('div');
+    p.className = 'scroll-particle';
+    p.style.cssText = `
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      width: ${4 + Math.random() * 8}px;
+      height: ${4 + Math.random() * 8}px;
+      background: rgba(16, 185, 129, ${0.1 + Math.random() * 0.2});
+      animation-delay: ${Math.random() * 6}s;
+      animation-duration: ${5 + Math.random() * 5}s;
+    `;
+    particlesContainer.appendChild(p);
+  }
+}
+
 // ===== NAVBAR SCROLL EFFECT =====
 const navbar = document.getElementById('navbar');
 let lastScroll = 0;
 let isNavbarVisible = true;
 
 window.addEventListener('scroll', () => {
-    const currentScroll = window.scrollY;
-
-    if (currentScroll > 50) {
-        navbar.classList.add('nav-scrolled');
-        navbar.classList.remove('bg-transparent', 'border-transparent');
-    } else {
-        navbar.classList.remove('nav-scrolled');
-        navbar.classList.add('bg-transparent', 'border-transparent');
-    }
-
-    // Animate navbar drop when scrolling down from top
-    if (currentScroll > 100 && lastScroll <= 100 && isNavbarVisible) {
-        navbar.classList.remove('nav-drop');
-        void navbar.offsetWidth; // trigger reflow
-        navbar.classList.add('nav-drop');
-    }
-
-    lastScroll = currentScroll;
+  const currentScroll = window.scrollY;
+  if (currentScroll > 50) {
+    navbar.classList.add('nav-scrolled');
+    navbar.classList.remove('bg-transparent', 'border-transparent');
+  } else {
+    navbar.classList.remove('nav-scrolled');
+    navbar.classList.add('bg-transparent', 'border-transparent');
+  }
+  if (currentScroll > 100 && lastScroll <= 100 && isNavbarVisible) {
+    navbar.classList.remove('nav-drop');
+    void navbar.offsetWidth;
+    navbar.classList.add('nav-drop');
+  }
+  lastScroll = currentScroll;
 });
 
 // ===== MOBILE MENU =====
 const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 const mobileMenu = document.getElementById('mobile-menu');
 if (mobileMenuBtn && mobileMenu) {
-    mobileMenuBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('open');
-        const icon = mobileMenuBtn.querySelector('.material-symbols-outlined');
-        icon.textContent = mobileMenu.classList.contains('open') ? 'close' : 'menu';
+  mobileMenuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    const icon = mobileMenuBtn.querySelector('.material-symbols-outlined');
+    icon.textContent = mobileMenu.classList.contains('open') ? 'close' : 'menu';
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      mobileMenuBtn.querySelector('.material-symbols-outlined').textContent = 'menu';
     });
-
-    mobileMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.classList.remove('open');
-            mobileMenuBtn.querySelector('.material-symbols-outlined').textContent = 'menu';
-        });
-    });
+  });
 }
-
-// ===== SCROLL REVEAL =====
-const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
-
-const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
-}, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-});
-
-revealElements.forEach(el => revealObserver.observe(el));
 
 // ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    });
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
 });
+
+// ===== REVEAL FALLBACK =====
+const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+});
+revealElements.forEach(el => revealObserver.observe(el));
 
 // ===== COUNTER ANIMATION =====
 function animateCounter(element, target, suffix = '', duration = 2000) {
-    let start = 0;
-    const increment = target / (duration / 16);
-    const timer = setInterval(() => {
-        start += increment;
-        if (start >= target) {
-            start = target;
-            clearInterval(timer);
-        }
-        element.textContent = Math.floor(start).toLocaleString('id-ID') + suffix;
-    }, 16);
+  let start = 0;
+  const increment = target / (duration / 16);
+  const timer = setInterval(() => {
+    start += increment;
+    if (start >= target) { start = target; clearInterval(timer); }
+    element.textContent = Math.floor(start).toLocaleString('id-ID') + suffix;
+  }, 16);
 }
-
-// Trigger counter when impact section is visible
 const impactSection = document.querySelector('#dampak');
 if (impactSection) {
-    const counterObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const counter = entry.target.querySelector('.counter-value');
-                if (counter && !counter.dataset.animated) {
-                    counter.dataset.animated = 'true';
-                    const targetCount = parseInt(counter.dataset.target) || {{ $totalShops }};
-                    animateCounter(counter, targetCount, '+');
-                }
-            }
-        });
-    }, { threshold: 0.5 });
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const counter = entry.target.querySelector('.counter-value');
+        if (counter && !counter.dataset.animated) {
+          counter.dataset.animated = 'true';
+          const targetCount = parseInt(counter.dataset.target) || {{ $totalShops }};
+          animateCounter(counter, targetCount, '+');
+        }
+      }
+    });
+  }, { threshold: 0.5 });
+  const statElement = document.querySelector('#dampak .impact-stat');
+  if (statElement) counterObserver.observe(statElement.parentElement);
+}
 
-    const statElement = document.querySelector('#dampak .impact-stat');
-    if (statElement) counterObserver.observe(statElement.parentElement);
+// ===== GSAP SCROLL ANIMATIONS (Hero to Footer) =====
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+
+  // --- HERO SECTION: Parallax layers ---
+  const heroSection = document.querySelector('.hero-bg');
+  if (heroSection) {
+    const heroOverlay = heroSection.querySelector('.absolute.inset-0.bg-gradient-to-r');
+    const heroContent = heroSection.querySelector('.max-w-2xl');
+    const heroBadge = heroSection.querySelector('.animate-fade-in-up');
+    const heroTitle = heroSection.querySelector('h1');
+    const heroDesc = heroSection.querySelector('p.animate-fade-in-up');
+    const heroBtns = heroSection.querySelector('.flex.flex-wrap.gap-4');
+    const heroTrust = heroSection.querySelector('.flex.items-center.gap-6');
+
+    // Parallax on hero background
+    if (heroOverlay) {
+      gsap.to(heroOverlay, {
+        yPercent: 20,
+        ease: 'none',
+        scrollTrigger: { trigger: heroSection, start: 'top top', end: 'bottom top', scrub: true }
+      });
+    }
+    // Fade out hero content on scroll
+    if (heroContent) {
+      gsap.to(heroContent, {
+        y: 100,
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: { trigger: heroSection, start: 'top top', end: 'center top', scrub: true }
+      });
+    }
+    // Staggered entrance for hero elements (only on load)
+    const heroElements = [heroBadge, heroTitle, heroDesc, heroBtns, heroTrust].filter(Boolean);
+    heroElements.forEach((el, i) => {
+      gsap.fromTo(el,
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, delay: 0.2 + i * 0.15, ease: 'power3.out' }
+      );
+    });
+  }
+
+  // --- PROBLEM SECTION: Cards stagger in ---
+  const problemCards = document.querySelectorAll('#problem-section .group, [class*="Pencatatan Manual"]').length > 0
+    ? document.querySelectorAll('.grid.md\\:grid-cols-3.gap-6 .group')
+    : [];
+  if (problemCards.length === 0) {
+    // Fallback: target the 3 problem cards by their container
+    const problemSection = document.querySelector('section.py-24.bg-white');
+    if (problemSection) {
+      const cards = problemSection.querySelectorAll('.group.relative');
+      cards.forEach((card, i) => {
+        gsap.fromTo(card,
+          { y: 80, opacity: 0, rotation: -3 },
+          {
+            y: 0, opacity: 1, rotation: 0, duration: 0.8, delay: i * 0.2,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: card, start: 'top 85%', toggleActions: 'play none none reverse' }
+          }
+        );
+      });
+      // Section title
+      const probTitle = problemSection.querySelector('h2');
+      if (probTitle) {
+        gsap.fromTo(probTitle, { y: 40, opacity: 0 }, {
+          y: 0, opacity: 1, duration: 0.7, ease: 'power3.out',
+          scrollTrigger: { trigger: probTitle, start: 'top 85%' }
+        });
+      }
+    }
+  }
+
+  // --- STORY SCROLL: Already handled by its own script above ---
+  // (Story scroll GSAP is in the dedicated story-scroll script)
+
+  // --- SOLUTION / FLUID GRID SECTION ---
+  const solutionSection = document.querySelector('#fitur');
+  if (solutionSection) {
+    // Title reveal
+    const solTitle = solutionSection.querySelector('h2');
+    if (solTitle) {
+      gsap.fromTo(solTitle, { y: 50, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: solTitle, start: 'top 85%' }
+      });
+    }
+    // Grid cards stagger
+    const fluidCards = solutionSection.querySelectorAll('.fluid-card');
+    fluidCards.forEach((card, i) => {
+      gsap.fromTo(card,
+        { y: 60, opacity: 0, scale: 0.9 },
+        {
+          y: 0, opacity: 1, scale: 1, duration: 0.6, delay: i * 0.12,
+          ease: 'back.out(1.2)',
+          scrollTrigger: { trigger: card, start: 'top 88%' }
+        }
+      );
+    });
+  }
+
+  // --- HOW IT WORKS SECTION ---
+  const howSection = document.querySelector('#cara-kerja');
+  if (howSection) {
+    // Title
+    const howTitle = howSection.querySelector('h2');
+    if (howTitle) {
+      gsap.fromTo(howTitle, { y: 40, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 0.7, ease: 'power3.out',
+        scrollTrigger: { trigger: howTitle, start: 'top 85%' }
+      });
+    }
+    // Steps with horizontal slide
+    const steps = howSection.querySelectorAll('.text-center.relative');
+    steps.forEach((step, i) => {
+      gsap.fromTo(step,
+        { y: 80, opacity: 0 },
+        {
+          y: 0, opacity: 1, duration: 0.7, delay: i * 0.2,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: step, start: 'top 88%' }
+        }
+      );
+      // Icon circle bounce
+      const icon = step.querySelector('.w-28.h-28');
+      if (icon) {
+        gsap.fromTo(icon,
+          { scale: 0.5, opacity: 0, rotation: -15 },
+          {
+            scale: 1, opacity: 1, rotation: 0, duration: 0.6, delay: 0.1 + i * 0.2,
+            ease: 'back.out(2)',
+            scrollTrigger: { trigger: icon, start: 'top 88%' }
+          }
+        );
+      }
+    });
+    // Connector line draw
+    const connector = howSection.querySelector('.absolute.top-14');
+    if (connector) {
+      gsap.fromTo(connector, { scaleX: 0, transformOrigin: 'left' }, {
+        scaleX: 1, duration: 1, ease: 'power2.out',
+        scrollTrigger: { trigger: connector, start: 'top 80%' }
+      });
+    }
+  }
+
+  // --- IMPACT SECTION ---
+  const impactSec = document.querySelector('#dampak');
+  if (impactSec) {
+    // Main container
+    const impactBox = impactSec.querySelector('.bg-gradient-to-br');
+    if (impactBox) {
+      gsap.set(impactBox, { y: 60, opacity: 0, scale: 0.95 });
+      gsap.to(impactBox, {
+        y: 0, opacity: 1, scale: 1, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: impactBox, start: 'top 80%', toggleActions: 'play none none reverse' }
+      });
+    }
+    // Left content slide
+    const impactLeft = impactSec.querySelector('.impact-left');
+    if (impactLeft) {
+      gsap.set(impactLeft, { x: -60, opacity: 0 });
+      gsap.to(impactLeft, {
+        x: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: impactLeft, start: 'top 82%', toggleActions: 'play none none reverse' }
+      });
+    }
+    // Right content slide
+    const impactRight = impactSec.querySelector('.impact-right');
+    if (impactRight) {
+      gsap.set(impactRight, { x: 60, opacity: 0 });
+      gsap.to(impactRight, {
+        x: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: impactRight, start: 'top 82%', toggleActions: 'play none none reverse' }
+      });
+    }
+    // Checklist items stagger
+    const checklistItems = impactSec.querySelectorAll('ul.space-y-5 li');
+    checklistItems.forEach((item, i) => {
+      gsap.fromTo(item,
+        { x: -30, opacity: 0 },
+        {
+          x: 0, opacity: 1, duration: 0.5, delay: i * 0.15,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: item, start: 'top 88%' }
+        }
+      );
+    });
+    // Decorative orbs parallax
+    const orbs = impactSec.querySelectorAll('.absolute.w-96, .absolute.w-64');
+    orbs.forEach((orb, i) => {
+      gsap.to(orb, {
+        y: i === 0 ? -40 : 30,
+        ease: 'none',
+        scrollTrigger: { trigger: impactSec, start: 'top bottom', end: 'bottom top', scrub: true }
+      });
+    });
+  }
+
+  // --- TESTIMONIAL SECTION ---
+  const testimonialSection = document.querySelector('#testimoni');
+  if (testimonialSection) {
+    const testTitle = testimonialSection.querySelector('h2');
+    if (testTitle) {
+      gsap.fromTo(testTitle, { y: 40, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 0.7, ease: 'power3.out',
+        scrollTrigger: { trigger: testTitle, start: 'top 85%' }
+      });
+    }
+    const testCards = testimonialSection.querySelectorAll('.card-lift');
+    testCards.forEach((card, i) => {
+      gsap.fromTo(card,
+        { y: 60, opacity: 0, rotation: i % 2 === 0 ? -2 : 2 },
+        {
+          y: 0, opacity: 1, rotation: 0, duration: 0.7, delay: i * 0.15,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: card, start: 'top 88%' }
+        }
+      );
+    });
+  }
+
+  // --- FINAL CTA SECTION ---
+  const ctaSection = document.querySelector('#mulai');
+  if (ctaSection) {
+    // Icon bounce in
+    const ctaIcon = ctaSection.querySelector('.w-20.h-20');
+    if (ctaIcon) {
+      gsap.fromTo(ctaIcon,
+        { scale: 0, rotation: -30, opacity: 0 },
+        {
+          scale: 1, rotation: 0, opacity: 1, duration: 0.8,
+          ease: 'back.out(2)',
+          scrollTrigger: { trigger: ctaIcon, start: 'top 85%' }
+        }
+      );
+    }
+    // Title reveal
+    const ctaTitle = ctaSection.querySelector('h2');
+    if (ctaTitle) {
+      gsap.fromTo(ctaTitle, { y: 50, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: ctaTitle, start: 'top 85%' }
+      });
+    }
+    // Text
+    const ctaText = ctaSection.querySelector('p.text-lg');
+    if (ctaText) {
+      gsap.fromTo(ctaText, { y: 30, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 0.6, delay: 0.2, ease: 'power3.out',
+        scrollTrigger: { trigger: ctaText, start: 'top 85%' }
+      });
+    }
+    // Buttons stagger
+    const ctaBtns = ctaSection.querySelectorAll('.flex.flex-col.sm\\:flex-row a');
+    ctaBtns.forEach((btn, i) => {
+      gsap.fromTo(btn,
+        { y: 30, opacity: 0, scale: 0.9 },
+        {
+          y: 0, opacity: 1, scale: 1, duration: 0.5, delay: 0.3 + i * 0.1,
+          ease: 'back.out(1.5)',
+          scrollTrigger: { trigger: btn, start: 'top 88%' }
+        }
+      );
+    });
+    // Parallax on gradient background
+    const ctaGradient = ctaSection.querySelector('.absolute.inset-0.hero-gradient');
+    if (ctaGradient) {
+      gsap.to(ctaGradient, {
+        yPercent: 15,
+        ease: 'none',
+        scrollTrigger: { trigger: ctaSection, start: 'top bottom', end: 'bottom top', scrub: true }
+      });
+    }
+  }
+
+  // --- FOOTER ---
+  const footer = document.querySelector('footer');
+  if (footer) {
+    // Fade up entire footer
+    gsap.fromTo(footer,
+      { y: 40, opacity: 0 },
+      {
+        y: 0, opacity: 1, duration: 0.8,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: footer, start: 'top 90%' }
+      }
+    );
+    // Stagger footer columns
+    const footerCols = footer.querySelectorAll('.md\\:col-span-2, .space-y-3');
+    footerCols.forEach((col, i) => {
+      gsap.fromTo(col,
+        { y: 20, opacity: 0 },
+        {
+          y: 0, opacity: 1, duration: 0.5, delay: i * 0.1,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: col, start: 'top 92%' }
+        }
+      );
+    });
+  }
+
+  // --- GLOBAL: Section separator lines draw ---
+  const separators = document.querySelectorAll('.section-separator::before');
+  // CSS handles this, but let's add a subtle scale animation
+  document.querySelectorAll('.section-separator').forEach(sep => {
+    gsap.fromTo(sep, { opacity: 0 }, {
+      opacity: 1, duration: 0.5,
+      scrollTrigger: { trigger: sep, start: 'top 90%' }
+    });
+  });
+
+  // --- GLOBAL: Parallax on all section backgrounds ---
+  document.querySelectorAll('.absolute').forEach(el => {
+    if (el.classList.contains('blur-3xl') || el.classList.contains('blur-2xl') || el.classList.contains('blur-xl')) {
+      const parent = el.closest('section');
+      if (parent) {
+        gsap.to(el, {
+          y: 30,
+          ease: 'none',
+          scrollTrigger: { trigger: parent, start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+      }
+    }
+  });
+
+  ScrollTrigger.refresh();
 }
 </script>
 </body>
