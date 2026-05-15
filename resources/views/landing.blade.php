@@ -5,6 +5,8 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>TokoQ - Sistem Kasir & Digital UMKM</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="/css/tokoq-colors.css" rel="stylesheet"/>
 <script src="/js/tailwind-config.js"></script>
@@ -345,6 +347,79 @@ body {
 
 /* Custom transition duration */
 .duration-400 { transition-duration: 400ms; }
+
+/* ===== STORY SCROLL ===== */
+.story-scroll-container {
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+}
+.story-section {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+.story-section-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding: clamp(2rem, 8vw, 4rem) clamp(2rem, 5vw, 4rem);
+  will-change: transform;
+  transform-origin: bottom left;
+}
+.story-section-title {
+  font-size: clamp(2.5rem, 10vw, 9rem);
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.story-section-text {
+  font-size: clamp(0.9rem, 2vw, 1.5rem);
+  line-height: 1.6;
+  max-width: 50ch;
+}
+.story-section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.story-hr {
+  border: none;
+  border-top: 1px solid currentColor;
+  opacity: 0.15;
+  margin: clamp(1rem, 3vw, 2rem) 0;
+}
+.story-grid-3 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1rem, 3vw, 2rem);
+}
+.story-grid-3 > div {
+  flex: 1;
+  min-width: 180px;
+}
+.story-grid-3 p:first-child {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+.story-grid-3 p:last-child {
+  font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+  line-height: 1.6;
+  opacity: 0.7;
+}
+@media (max-width: 640px) {
+  .story-grid-3 > div {
+    min-width: 100%;
+  }
+}
 </style>
 </head>
 <body class="font-body-md">
@@ -520,6 +595,205 @@ body {
         </div>
     </div>
 </section>
+
+<!-- ===== STORY SCROLL ===== -->
+<div class="story-scroll-container" id="story-scroll">
+  <!-- Section 1: TokoQ itu apa? (Emerald) -->
+  <section class="story-section" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: #fff;">
+    <div class="story-section-inner">
+      <div>
+        <p class="story-section-label">01 — TokoQ itu apa?</p>
+        <hr class="story-hr"/>
+        <h2 class="story-section-title">
+          Bangun<br/>
+          Toko Tanpa<br/>
+          Batas
+        </h2>
+      </div>
+      <hr class="story-hr"/>
+      <p class="story-section-text" style="opacity: 0.85;">
+        TokoQ adalah sistem kasir dan manajemen toko berbasis AI yang dirancang khusus untuk UMKM Indonesia. Satu dashboard untuk semua kebutuhan operasional Anda.
+      </p>
+    </div>
+  </section>
+
+  <!-- Section 2: Misi Kami (Dark) -->
+  <section class="story-section" style="background: #111827; color: #fff;">
+    <div class="story-section-inner">
+      <div>
+        <p class="story-section-label">02 — Misi Kami</p>
+        <hr class="story-hr"/>
+        <h2 class="story-section-title">
+          UMKM<br/>
+          Naik<br/>
+          Kelas
+        </h2>
+      </div>
+      <hr class="story-hr"/>
+      <p class="story-section-text" style="opacity: 0.8;">
+        Kami percaya setiap pelaku UMKM layak mendapat akses teknologi canggih. Bukan hanya soal digitalisasi — tapi tentang memberdayakan ekonomi dari bawah.
+      </p>
+      <hr class="story-hr"/>
+      <div class="story-grid-3">
+        <div>
+          <p>Akses Mudah</p>
+          <p>Buka dari HP, tablet, atau komputer. Tidak perlu instalasi ribet, cukup browser.</p>
+        </div>
+        <div>
+          <p>Harga Terjangkau</p>
+          <p>Gratis untuk memulai. Bayar hanya saat bisnis Anda berkembang dan butuh fitur lebih.</p>
+        </div>
+        <div>
+          <p>Support Lokal</p>
+          <p>Tim support yang paham konteks UMKM Indonesia, siap membantu kapan saja.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Cara Kerja (Cream) -->
+  <section class="story-section" style="background: #F5F0E8; color: #1F2937;">
+    <div class="story-section-inner">
+      <div>
+        <p class="story-section-label">03 — Cara Kerja</p>
+        <hr class="story-hr"/>
+        <h2 class="story-section-title">
+          Daftar.<br/>
+          Tambah.<br/>
+          Jual.
+        </h2>
+      </div>
+      <hr class="story-hr"/>
+      <p class="story-section-text" style="opacity: 0.75;">
+        Tiga langkah sederhana untuk membawa toko Anda ke era digital. Tidak perlu teknis, tidak perlu lama.
+      </p>
+      <hr class="story-hr"/>
+      <div class="story-grid-3">
+        <div>
+          <p>01 — Daftar Gratis</p>
+          <p>Buat akun dalam 30 detik. Masukkan nama toko dan data dasar Anda.</p>
+        </div>
+        <div>
+          <p>02 — Tambah Produk</p>
+          <p>Foto barang, atur harga, masukkan stok. Bisa juga import dari Excel.</p>
+        </div>
+        <div>
+          <p>03 — Mulai Jual</p>
+          <p>Buka kasir, catat transaksi, dan pantau penjualan real-time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Dampak Nyata (Blue) -->
+  <section class="story-section" style="background: linear-gradient(135deg, #1E40AF 0%, #7C3AED 100%); color: #fff;">
+    <div class="story-section-inner">
+      <div>
+        <p class="story-section-label">04 — Dampak Nyata</p>
+        <hr class="story-hr"/>
+        <h2 class="story-section-title">
+          Angka<br/>
+          yang<br/>
+          Bicara
+        </h2>
+      </div>
+      <hr class="story-hr"/>
+      <p class="story-section-text" style="opacity: 0.85;">
+        Bukan janji kosong. Ini adalah hasil nyata dari UMKM yang sudah bergabung dengan TokoQ.
+      </p>
+      <hr class="story-hr"/>
+      <div class="story-grid-3">
+        <div>
+          <p>40%</p>
+          <p>Pengurangan stok kosong berkat prediksi AI yang menganalisis pola penjualan.</p>
+        </div>
+        <div>
+          <p>2 Jam</p>
+          <p>Waktu yang dihemat setiap hari dari rekap manual menjadi otomatis.</p>
+        </div>
+        <div>
+          <p>99.9%</p>
+          <p>Uptime sistem. Toko Anda selalu siap beroperasi kapan saja.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Bergabung (Dark) -->
+  <section class="story-section" style="background: #0f172a; color: #fff;">
+    <div class="story-section-inner">
+      <div>
+        <p class="story-section-label">05 — Bergabung Sekarang</p>
+        <hr class="story-hr"/>
+        <h2 class="story-section-title">
+          Siap<br/>
+          Mulai<br/>
+          Hari Ini?
+        </h2>
+      </div>
+      <hr class="story-hr"/>
+      <p class="story-section-text" style="opacity: 0.8;">
+        Bergabunglah dengan ribuan pelaku UMKM yang sudah merasakan bedanya. Gratis 14 hari, tanpa kartu kredit.
+      </p>
+      <hr class="story-hr"/>
+      <div>
+        <a href="/register" class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary to-emerald-500 text-white font-bold text-lg rounded-2xl shadow-2xl shadow-primary/30 hover:shadow-primary/50 hover:scale-105 transition-all">
+          Daftar Gratis
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+// ===== STORY SCROLL - GSAP ScrollTrigger =====
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const storyContainer = document.querySelector('#story-scroll');
+  if (storyContainer) {
+    const sections = storyContainer.querySelectorAll('.story-section');
+
+    sections.forEach((section, i) => {
+      const inner = section.querySelector('.story-section-inner');
+      if (!inner) return;
+
+      // Set z-index so later sections stack on top
+      gsap.set(section, { zIndex: i + 1 });
+
+      // First section: no rotation
+      if (i > 0) {
+        gsap.set(inner, { rotation: 30, transformOrigin: 'bottom left' });
+
+        gsap.to(inner, {
+          rotation: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top bottom',
+            end: 'top 25%',
+            scrub: true,
+          }
+        });
+      }
+
+      // Pin all sections except the last one
+      if (i < sections.length - 1) {
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'bottom bottom',
+          end: 'bottom top',
+          pin: true,
+          pinSpacing: false,
+        });
+      }
+    });
+
+    ScrollTrigger.refresh();
+  }
+}
+</script>
 
 <!-- ===== SOLUTION / FLUID EXPANDING GRID ===== -->
 <section id="fitur" class="py-24 relative overflow-hidden">
