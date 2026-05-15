@@ -53,7 +53,7 @@ class ValidationController extends Controller
 
     public function transactions()
     {
-        $transactions = Transaction::with(['user', 'shop'])->latest()->paginate(20);
+        $transactions = Transaction::with(['shop.owner'])->latest()->paginate(20);
         return view('admin.transactions', compact('transactions'));
     }
 

@@ -28,7 +28,7 @@
                     <td class="px-5 py-3 text-sm text-gray-400 font-mono">#{{ $tx->id }}</td>
                     <td class="px-5 py-3">
                         <p class="text-sm font-bold text-gray-800">{{ $tx->shop?->name ?? '-' }}</p>
-                        <p class="text-[10px] text-gray-400">{{ $tx->user?->name ?? '' }}</p>
+                        <p class="text-[10px] text-gray-400">{{ $tx->shop?->owner?->name ?? '' }}</p>
                     </td>
                     <td class="px-5 py-3 font-bold text-sm text-primary">Rp {{ number_format($tx->total_amount, 0, ',', '.') }}</td>
                     <td class="px-5 py-3">
