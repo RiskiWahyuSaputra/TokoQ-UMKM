@@ -342,6 +342,9 @@ body {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #ECFDF5; }
 ::-webkit-scrollbar-thumb { background: #10B981; border-radius: 10px; }
+
+/* Custom transition duration */
+.duration-400 { transition-duration: 400ms; }
 </style>
 </head>
 <body class="font-body-md">
@@ -467,31 +470,52 @@ body {
         </div>
 
         <div class="grid md:grid-cols-3 gap-6">
-            <!-- Card 1 -->
-            <div class="reveal delay-100 card-lift bg-gradient-to-br from-red-50 to-orange-50 p-8 rounded-3xl border border-red-100">
-                <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm animate-wiggle">
-                    <span class="material-symbols-outlined text-3xl text-red-400">edit_note</span>
+            <!-- Card 1: Pencatatan Manual (Red) -->
+            <div class="reveal delay-100 group relative flex flex-col justify-between w-full p-6 overflow-hidden rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-[1.02] min-h-[220px] bg-red-500/90 text-white">
+                <div class="relative z-10 flex flex-col h-full">
+                    <div class="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-3xl text-white">edit_note</span>
+                    </div>
+                    <h3 class="text-2xl font-bold tracking-tight">Pencatatan Manual</h3>
+                    <p class="text-sm text-white/80 mt-2 leading-relaxed">Buku nota sering hilang, kotor, atau salah hitung.</p>
+                    <a href="#fitur" aria-label="Learn more about Pencatatan Manual" class="mt-auto pt-4 flex items-center text-sm font-semibold group-hover:underline">
+                        PELAJARI SOLUSI
+                        <span class="material-symbols-outlined ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
                 </div>
-                <h3 class="text-lg font-bold text-gray-800 mb-3">Pencatatan Manual</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Buku nota sering hilang, kotor, atau salah hitung. Memakan waktu lama saat rekap akhir bulan.</p>
+                <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=200&h=200&fit=crop" alt="Messy notebook and pen" class="absolute -right-6 -bottom-6 w-36 h-36 object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 group-hover:rotate-6 transition-all duration-400 ease-in-out rounded-2xl" loading="lazy"/>
             </div>
 
-            <!-- Card 2 -->
-            <div class="reveal delay-200 card-lift bg-gradient-to-br from-amber-50 to-yellow-50 p-8 rounded-3xl border border-amber-100">
-                <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm animate-wiggle" style="animation-delay: 0.5s;">
-                    <span class="material-symbols-outlined text-3xl text-amber-400">inventory</span>
+            <!-- Card 2: Stok Tidak Terkontrol (Amber/Gray) -->
+            <div class="reveal delay-200 group relative flex flex-col justify-between w-full p-6 overflow-hidden rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-[1.02] min-h-[220px] bg-gray-600 text-white">
+                <div class="relative z-10 flex flex-col h-full">
+                    <div class="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-3xl text-white">inventory</span>
+                    </div>
+                    <h3 class="text-2xl font-bold tracking-tight">Stok Tidak Terkontrol</h3>
+                    <p class="text-sm text-white/80 mt-2 leading-relaxed">Barang habis tanpa diketahui, pelanggan kecewa.</p>
+                    <a href="#fitur" aria-label="Learn more about Stok Tidak Terkontrol" class="mt-auto pt-4 flex items-center text-sm font-semibold group-hover:underline">
+                        PELAJARI SOLUSI
+                        <span class="material-symbols-outlined ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
                 </div>
-                <h3 class="text-lg font-bold text-gray-800 mb-3">Stok Tidak Terkontrol</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Barang habis tanpa diketahui, pelanggan kecewa, dan modal tertahan di barang yang tidak laku.</p>
+                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=200&h=200&fit=crop" alt="Empty warehouse shelf" class="absolute -right-6 -bottom-6 w-36 h-36 object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 group-hover:rotate-6 transition-all duration-400 ease-in-out rounded-2xl" loading="lazy"/>
             </div>
 
-            <!-- Card 3 -->
-            <div class="reveal delay-300 card-lift bg-gradient-to-br from-purple-50 to-indigo-50 p-8 rounded-3xl border border-purple-100">
-                <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm animate-wiggle" style="animation-delay: 1s;">
-                    <span class="material-symbols-outlined text-3xl text-purple-400">leak_remove</span>
+            <!-- Card 3: Laba Tidak Jelas (Blue) -->
+            <div class="reveal delay-300 group relative flex flex-col justify-between w-full p-6 overflow-hidden rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-[1.02] min-h-[220px] bg-blue-500/90 text-white">
+                <div class="relative z-10 flex flex-col h-full">
+                    <div class="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-3xl text-white">account_balance_wallet</span>
+                    </div>
+                    <h3 class="text-2xl font-bold tracking-tight">Laba Tidak Jelas</h3>
+                    <p class="text-sm text-white/80 mt-2 leading-relaxed">Uang toko dan pribadi sering tercampur.</p>
+                    <a href="#fitur" aria-label="Learn more about Laba Tidak Jelas" class="mt-auto pt-4 flex items-center text-sm font-semibold group-hover:underline">
+                        PELAJARI SOLUSI
+                        <span class="material-symbols-outlined ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
                 </div>
-                <h3 class="text-lg font-bold text-gray-800 mb-3">Laba Tidak Jelas</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Uang toko dan uang pribadi sering tercampur. Sulit menentukan apakah bisnis untung atug.</p>
+                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=200&h=200&fit=crop" alt="Calculator and money" class="absolute -right-6 -bottom-6 w-36 h-36 object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 group-hover:rotate-6 transition-all duration-400 ease-in-out rounded-2xl" loading="lazy"/>
             </div>
         </div>
     </div>
