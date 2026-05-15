@@ -523,10 +523,7 @@ body {
     </div>
 
     <!-- Scroll indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-subtle">
-        <div class="w-6 h-10 rounded-full border-2 border-white/30 flex items-start justify-center p-1.5">
-            <div class="w-1.5 h-3 bg-white/60 rounded-full"></div>
-        </div>
+   
     </div>
 </section>
 
