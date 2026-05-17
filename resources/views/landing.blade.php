@@ -9,6 +9,7 @@
 <meta property="og:description" content="Kelola stok barang, catat penjualan otomatis, dan pantau performa toko Anda melalui satu dashboard cerdas. Gratis 14 hari."/>
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://tokoq.id"/>
+<link rel="canonical" href="https://tokoq.id"/>
 <meta property="og:image" content="/images/og-tokoq.png"/>
 <meta property="og:locale" content="id_ID"/>
 <meta name="twitter:card" content="summary_large_image"/>
@@ -31,6 +32,7 @@ body {
     color: #374151;
     overflow-x: hidden;
 }
+section[id] { scroll-margin-top: 96px; }
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(40px); }
     to { opacity: 1; transform: translateY(0); }
@@ -62,21 +64,27 @@ body {
 .animate-bounce-subtle { animation: bounce-subtle 2s ease-in-out infinite; }
 .reveal {
     opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(30px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .reveal.visible {
     opacity: 1;
     transform: translateY(0);
 }
+@media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+}
 .reveal-scale {
     opacity: 0;
-    transform: scale(0.85);
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(0.92);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .reveal-scale.visible {
     opacity: 1;
     transform: scale(1);
+}
+@media (prefers-reduced-motion: reduce) {
+    .reveal-scale { opacity: 1; transform: none; transition: none; }
 }
 .delay-100 { transition-delay: 0.1s; }
 .delay-200 { transition-delay: 0.2s; }
@@ -281,9 +289,8 @@ body {
                     </div>
                     <div class="h-8 w-px bg-white/20"></div>
                     <div class="flex items-center gap-1">
-                        <span class="material-symbols-outlined text-amber-400 text-[18px]">star</span>
-                        <span class="text-sm font-bold text-white">4.9</span>
-                        <span class="text-xs text-white/60">Rating</span>
+                        <span class="material-symbols-outlined text-emerald-400 text-[18px]">verified</span>
+                        <span class="text-sm font-bold text-white">Feedback beta positif</span>
                     </div>
                 </div>
             </div>
@@ -633,7 +640,7 @@ function switchDemo(tab, btn) {
             <div class="reveal delay-200 bg-white rounded-3xl p-8 border-2 border-primary shadow-lg card-lift pricing-popular relative">
                 <div class="mb-6"><h3 class="text-lg font-bold text-gray-800 mb-1">Pro</h3><p class="text-sm text-gray-500">Untuk toko yang berkembang</p></div>
                 <div class="mb-6"><span class="text-4xl font-extrabold text-gray-800">Rp 99.000</span><span class="text-sm text-gray-400">/bulan</span></div>
-                <a href="/register" class="block w-full text-center py-3 bg-gradient-to-r from-primary to-emerald-600 text-white font-bold rounded-xl hover:shadow-lg transition-all mb-6">Pilih Pro</a>
+                <a href="/register?plan=pro" class="block w-full text-center py-3 bg-gradient-to-r from-primary to-emerald-600 text-white font-bold rounded-xl hover:shadow-lg transition-all mb-6">Pilih Pro</a>
                 <ul class="space-y-3 text-sm">
                     <li class="flex items-center gap-2 text-gray-600"><span class="material-symbols-outlined text-emerald-500 text-[18px]">check</span>500 produk</li>
                     <li class="flex items-center gap-2 text-gray-600"><span class="material-symbols-outlined text-emerald-500 text-[18px]">check</span>Transaksi unlimited</li>
@@ -647,7 +654,7 @@ function switchDemo(tab, btn) {
             <div class="reveal delay-300 bg-white rounded-3xl p-8 border border-gray-200 shadow-sm card-lift">
                 <div class="mb-6"><h3 class="text-lg font-bold text-gray-800 mb-1">Bisnis</h3><p class="text-sm text-gray-500">Untuk toko dengan kebutuhan penuh</p></div>
                 <div class="mb-6"><span class="text-4xl font-extrabold text-gray-800">Rp 249.000</span><span class="text-sm text-gray-400">/bulan</span></div>
-                <a href="/register" class="block w-full text-center py-3 bg-gray-100 text-gray-700 font-bold rounded-xl hover:bg-gray-200 transition-colors mb-6">Pilih Bisnis</a>
+                <a href="/register?plan=bisnis" class="block w-full text-center py-3 bg-gray-100 text-gray-700 font-bold rounded-xl hover:bg-gray-200 transition-colors mb-6">Pilih Bisnis</a>
                 <ul class="space-y-3 text-sm">
                     <li class="flex items-center gap-2 text-gray-600"><span class="material-symbols-outlined text-emerald-500 text-[18px]">check</span>Produk unlimited</li>
                     <li class="flex items-center gap-2 text-gray-600"><span class="material-symbols-outlined text-emerald-500 text-[18px]">check</span>Transaksi unlimited</li>
@@ -660,6 +667,7 @@ function switchDemo(tab, btn) {
         </div>
         <div class="text-center mt-10 reveal">
             <p class="text-sm text-gray-500">Semua paket termasuk: QRIS, printer struk, barcode scanner, import/export Excel, backup data harian.</p>
+            <p class="text-xs text-gray-400 mt-2">Biaya transaksi QRIS mengikuti ketentuan provider pembayaran.</p>
         </div>
     </div>
 </section>
@@ -673,46 +681,46 @@ function switchDemo(tab, btn) {
         </div>
         <div class="space-y-4 reveal">
             <div class="faq-item bg-gray-50 rounded-2xl border border-gray-100 overflow-hidden">
-                <button class="w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)">
+                <button class="w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-1">
                     <span class="font-bold text-gray-800 text-sm">Apakah TokoQ bisa dipakai di HP?</span>
-                    <span class="material-symbols-outlined faq-icon text-gray-400">expand_more</span>
+                    <span class="material-symbols-outlined faq-icon text-gray-400" aria-hidden="true">expand_more</span>
                 </button>
-                <div class="faq-answer px-5 pb-0"><p class="text-sm text-gray-600 pb-5 leading-relaxed">Ya! TokoQ berbasis web yang responsif, bisa dibuka dari HP, tablet, atau komputer melalui browser. Tidak perlu instal aplikasi.</p></div>
+                <div class="faq-answer px-5 pb-0" id="faq-1" role="region"><p class="text-sm text-gray-600 pb-5 leading-relaxed">Ya! TokoQ berbasis web yang responsif, bisa dibuka dari HP, tablet, atau komputer melalui browser. Tidak perlu instal aplikasi.</p></div>
             </div>
             <div class="faq-item bg-gray-50 rounded-2xl border border-gray-100 overflow-hidden">
-                <button class="w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)">
+                <button class="w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-2">
                     <span class="font-bold text-gray-800 text-sm">Apakah butuh internet?</span>
-                    <span class="material-symbols-outlined faq-icon text-gray-400">expand_more</span>
+                    <span class="material-symbols-outlined faq-icon text-gray-400" aria-hidden="true">expand_more</span>
                 </button>
-                <div class="faq-answer px-5 pb-0"><p class="text-sm text-gray-600 pb-5 leading-relaxed">Ya, TokoQ membutuhkan koneksi internet karena berbasis cloud. Data Anda tersimpan aman di server dan bisa diakses dari mana saja.</p></div>
+                <div class="faq-answer px-5 pb-0" id="faq-2" role="region"><p class="text-sm text-gray-600 pb-5 leading-relaxed">Ya, TokoQ membutuhkan koneksi internet karena berbasis cloud. Data Anda tersimpan aman di server dan bisa diakses dari mana saja.</p></div>
             </div>
             <div class="faq-item bg-gray-50 rounded-2xl border border-gray-100 overflow-hidden">
-                <button class="w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)">
+                <button class="w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-3">
                     <span class="font-bold text-gray-800 text-sm">Apakah bisa pakai printer struk?</span>
-                    <span class="material-symbols-outlined faq-icon text-gray-400">expand_more</span>
+                    <span class="material-symbols-outlined faq-icon text-gray-400" aria-hidden="true">expand_more</span>
                 </button>
-                <div class="faq-answer px-5 pb-0"><p class="text-sm text-gray-600 pb-5 leading-relaxed">Bisa! TokoQ mendukung cetak nota thermal langsung dari browser. Kompatibel dengan berbagai merek printer struk USB dan network.</p></div>
+                <div class="faq-answer px-5 pb-0" id="faq-3" role="region"><p class="text-sm text-gray-600 pb-5 leading-relaxed">Bisa! TokoQ mendukung cetak nota thermal langsung dari browser. Kompatibel dengan berbagai merek printer struk USB dan network.</p></div>
             </div>
             <div class="faq-item bg-gray-50 rounded-2xl border border-gray-100 overflow-hidden">
-                <button class="w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)">
+                <button class="w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-4">
                     <span class="font-bold text-gray-800 text-sm">Apakah support QRIS?</span>
-                    <span class="material-symbols-outlined faq-icon text-gray-400">expand_more</span>
+                    <span class="material-symbols-outlined faq-icon text-gray-400" aria-hidden="true">expand_more</span>
                 </button>
-                <div class="faq-answer px-5 pb-0"><p class="text-sm text-gray-600 pb-5 leading-relaxed">Ya, TokoQ mendukung pembayaran QRIS. Pelanggan cukup scan QR code dan pembayaran tercatat otomatis di sistem.</p></div>
+                <div class="faq-answer px-5 pb-0" id="faq-4" role="region"><p class="text-sm text-gray-600 pb-5 leading-relaxed">Ya, TokoQ mendukung pembayaran QRIS. Pelanggan cukup scan QR code dan pembayaran tercatat otomatis di sistem.</p></div>
             </div>
             <div class="faq-item bg-gray-50 rounded-2xl border border-gray-100 overflow-hidden">
-                <button class="w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)">
+                <button class="w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-5">
                     <span class="font-bold text-gray-800 text-sm">Apakah data saya aman?</span>
-                    <span class="material-symbols-outlined faq-icon text-gray-400">expand_more</span>
+                    <span class="material-symbols-outlined faq-icon text-gray-400" aria-hidden="true">expand_more</span>
                 </button>
-                <div class="faq-answer px-5 pb-0"><p class="text-sm text-gray-600 pb-5 leading-relaxed">Data Anda dienkripsi dan disimpan di server cloud yang aman dengan backup harian. Anda juga bisa export data kapan saja.</p></div>
+                <div class="faq-answer px-5 pb-0" id="faq-5" role="region"><p class="text-sm text-gray-600 pb-5 leading-relaxed">Data Anda dienkripsi dan disimpan di server cloud yang aman dengan backup harian. Anda juga bisa export data kapan saja.</p></div>
             </div>
             <div class="faq-item bg-gray-50 rounded-2xl border border-gray-100 overflow-hidden">
-                <button class="w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)">
+                <button class="w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-6">
                     <span class="font-bold text-gray-800 text-sm">Bisa import data dari Excel?</span>
-                    <span class="material-symbols-outlined faq-icon text-gray-400">expand_more</span>
+                    <span class="material-symbols-outlined faq-icon text-gray-400" aria-hidden="true">expand_more</span>
                 </button>
-                <div class="faq-answer px-5 pb-0"><p class="text-sm text-gray-600 pb-5 leading-relaxed">Bisa! Anda bisa import data produk dari file Excel/CSV. Juga bisa export laporan ke Excel atau PDF kapan saja.</p></div>
+                <div class="faq-answer px-5 pb-0" id="faq-6" role="region"><p class="text-sm text-gray-600 pb-5 leading-relaxed">Bisa! Anda bisa import data produk dari file Excel/CSV. Juga bisa export laporan ke Excel atau PDF kapan saja.</p></div>
             </div>
         </div>
     </div>
@@ -734,6 +742,7 @@ function switchDemo(tab, btn) {
                     Coba Gratis 14 Hari
                     <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
                 </a>
+                <!-- GANTI NOMOR WA ASLI SEBELUM PUBLISH -->
                 <a href="https://wa.me/6281234567890?text=Halo%20saya%20ingin%20tanya%20tentang%20TokoQ" target="_blank" class="px-10 py-5 bg-white text-primary font-bold text-lg rounded-2xl border-2 border-primary/10 hover:border-primary/30 hover:bg-primary/5 transition-all flex items-center justify-center gap-2">
                     <span class="material-symbols-outlined text-[20px]">chat</span>
                     Hubungi via WhatsApp
@@ -758,8 +767,8 @@ function switchDemo(tab, btn) {
                 </div>
                 <p class="text-gray-400 text-sm max-w-sm mb-6 leading-relaxed">Mendigitalisasi UMKM Indonesia melalui solusi kasir dan inventori berbasis AI yang intuitif dan mudah digunakan.</p>
                 <div class="flex gap-3">
-                    <a class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-primary transition-colors" href="#"><span class="material-symbols-outlined text-[18px]">language</span></a>
-                    <a class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-primary transition-colors" href="#"><span class="material-symbols-outlined text-[18px]">group</span></a>
+                    <span class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-gray-400" title="Bahasa Indonesia"><span class="material-symbols-outlined text-[18px]">language</span></span>
+                    <a class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-primary transition-colors" href="#testimoni" title="Testimoni"><span class="material-symbols-outlined text-[18px]">group</span></a>
                 </div>
             </div>
             <div>
@@ -783,8 +792,8 @@ function switchDemo(tab, btn) {
         <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p class="text-sm text-gray-500">&copy; 2025 TokoQ Indonesia. Semua hak dilindungi.</p>
             <div class="flex gap-6 text-sm text-gray-500">
-                <a class="hover:text-white transition-colors" href="#">Kebijakan Privasi</a>
-                <a class="hover:text-white transition-colors" href="#">Syarat &amp; Ketentuan</a>
+                <span class="text-gray-600 cursor-default" title="Segera hadir">Kebijakan Privasi</span>
+                <span class="text-gray-600 cursor-default" title="Segera hadir">Syarat &amp; Ketentuan</span>
             </div>
         </div>
     </div>
@@ -857,11 +866,16 @@ function toggleFaq(btn) {
     const answer = item.querySelector('.faq-answer');
     const isOpen = item.classList.contains('open');
     // Close all
-    document.querySelectorAll('.faq-item').forEach(fi => { fi.classList.remove('open'); fi.querySelector('.faq-answer').style.maxHeight = null; });
+    document.querySelectorAll('.faq-item').forEach(fi => {
+        fi.classList.remove('open');
+        fi.querySelector('.faq-answer').style.maxHeight = null;
+        fi.querySelector('button').setAttribute('aria-expanded', 'false');
+    });
     // Open clicked if it was closed
     if (!isOpen) {
         item.classList.add('open');
         answer.style.maxHeight = answer.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded', 'true');
     }
 }
 
