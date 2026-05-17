@@ -45,13 +45,14 @@
     </nav>
 
     <div class="mt-auto space-y-2 border-t border-outline pt-6">
-        <button class="w-full bg-action text-white py-3 rounded-xl font-bold mb-4 hover:bg-action-dark active:scale-95 transition-all" type="button">
+        <a href="{{ route('upgrade') }}" class="w-full bg-action text-white py-3 rounded-xl font-bold mb-4 hover:bg-action-dark active:scale-95 transition-all flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">workspace_premium</span>
             Upgrade Plan
-        </button>
-        <button class="flex w-full items-center gap-3 px-4 py-2 text-left text-text hover:text-primary hover:bg-secondary rounded-lg transition-colors" type="button">
+        </a>
+        <a href="{{ route('help') }}" class="flex w-full items-center gap-3 px-4 py-2 text-left text-text hover:text-primary hover:bg-secondary rounded-lg transition-colors">
             <span class="material-symbols-outlined">help</span>
             <span class="font-body-md">Bantuan</span>
-        </button>
+        </a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="flex items-center gap-3 px-4 py-2 text-error hover:bg-red-50 w-full text-left rounded-lg transition-colors">

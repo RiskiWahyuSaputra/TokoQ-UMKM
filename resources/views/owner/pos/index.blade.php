@@ -18,6 +18,79 @@
     background-color: #374151;
 }
 
+/* Mobile sticky cart */
+.mobile-cart-bar {
+    display: none;
+}
+@media (max-width: 1279px) {
+    .mobile-cart-bar {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 60;
+        background: white;
+        border-top: 1px solid #E5E7EB;
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+        padding: 12px 16px;
+        align-items: center;
+        gap: 12px;
+    }
+    .mobile-cart-bar + .xl\:flex-row {
+        padding-bottom: 80px;
+    }
+    /* Hide desktop cart on mobile */
+    .xl\:w-\[28rem\] {
+        display: none !important;
+    }
+    /* Show mobile product grid full width */
+    .xl\:flex-row {
+        flex-direction: column !important;
+    }
+}
+
+/* Confirmation modal */
+.confirm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+@media (min-width: 640px) {
+    .confirm-overlay {
+        align-items: center;
+    }
+}
+.confirm-modal {
+    background: white;
+    width: 100%;
+    max-width: 480px;
+    border-radius: 24px 24px 0 0;
+    padding: 24px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+@media (min-width: 640px) {
+    .confirm-modal {
+        border-radius: 24px;
+    }
+}
+
+/* Discount input */
+.discount-input::-webkit-inner-spin-button,
+.discount-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.discount-input {
+    -moz-appearance: textfield;
+}
+
 @keyframes slideInRight {
     from { opacity: 0; transform: translateX(20px); }
     to { opacity: 1; transform: translateX(0); }
@@ -288,6 +361,92 @@
     </aside>
 </div>
 
+<!-- Mobile Sticky Cart Bar -->
+<div id="mobile-cart-bar" class="mobile-cart-bar cursor-pointer" onclick="openMobileCart()">
+    <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shrink-0 relative">
+        <span class="material-symbols-outlined text-white">shopping_cart</span>
+        <span id="mobile-cart-count" class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">0</span>
+    </div>
+    <div class="flex-1 min-w-0">
+        <p class="text-xs text-gray-500 truncate" id="mobile-cart-items-label">Keranjang kosong</p>
+        <p class="font-bold text-gray-800" id="mobile-cart-total">Rp 0</p>
+    </div>
+    <button type="button" class="px-4 py-2 bg-gradient-to-r from-primary to-emerald-600 text-white text-sm font-bold rounded-xl disabled:opacity-40" id="mobile-checkout-btn" disabled>
+        Bayar
+    </button>
+</div>
+
+<!-- Confirmation Modal -->
+<div id="confirm-modal" class="confirm-overlay hidden">
+    <div class="confirm-modal">
+        <div class="flex items-center justify-between mb-5">
+            <h3 class="text-lg font-bold text-gray-800">Konfirmasi Transaksi</h3>
+            <button type="button" onclick="closeConfirmModal()" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+                <span class="material-symbols-outlined text-gray-500 text-[18px]">close</span>
+            </button>
+        </div>
+
+        <!-- Customer (optional) -->
+        <div class="mb-4">
+            <label class="text-xs font-bold text-gray-500 mb-1 block">Nama Pelanggan (opsional)</label>
+            <input type="text" id="customer-name" placeholder="Masukkan nama..." class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none"/>
+        </div>
+
+        <!-- Discount -->
+        <div class="mb-4">
+            <label class="text-xs font-bold text-gray-500 mb-1 block">Diskon (Rp)</label>
+            <input type="number" id="discount-amount" placeholder="0" min="0" class="discount-input w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none"/>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="mb-4">
+            <label class="text-xs font-bold text-gray-500 mb-2 block">Metode Pembayaran</label>
+            <div class="grid grid-cols-3 gap-2">
+                <button type="button" data-confirm-payment="tunai" class="confirm-pay-btn px-3 py-2.5 rounded-xl border-2 border-primary bg-primary/5 text-primary font-bold text-xs flex flex-col items-center gap-1">
+                    <span class="material-symbols-outlined text-[18px]">payments</span> Tunai
+                </button>
+                <button type="button" data-confirm-payment="qris" class="confirm-pay-btn px-3 py-2.5 rounded-xl border border-gray-200 font-bold text-xs flex flex-col items-center gap-1 text-gray-600">
+                    <span class="material-symbols-outlined text-[18px]">qr_code</span> QRIS
+                </button>
+                <button type="button" data-confirm-payment="e-wallet" class="confirm-pay-btn px-3 py-2.5 rounded-xl border border-gray-200 font-bold text-xs flex flex-col items-center gap-1 text-gray-600">
+                    <span class="material-symbols-outlined text-[18px]">account_balance_wallet</span> E-Wallet
+                </button>
+            </div>
+        </div>
+
+        <!-- Cash received (for tunai) -->
+        <div id="cash-received-section" class="mb-4">
+            <label class="text-xs font-bold text-gray-500 mb-1 block">Uang Diterima</label>
+            <input type="number" id="cash-received" placeholder="0" min="0" class="discount-input w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none"/>
+            <p id="change-amount" class="text-sm font-bold text-emerald-600 mt-2 hidden">Kembalian: <span id="change-value">Rp 0</span></p>
+        </div>
+
+        <!-- Summary -->
+        <div class="bg-gray-50 rounded-xl p-4 space-y-2 mb-5">
+            <div class="flex justify-between text-sm text-gray-500">
+                <span>Subtotal</span>
+                <span id="confirm-subtotal">Rp 0</span>
+            </div>
+            <div class="flex justify-between text-sm text-gray-500" id="confirm-discount-row" style="display:none">
+                <span>Diskon</span>
+                <span id="confirm-discount" class="text-red-500">- Rp 0</span>
+            </div>
+            <div class="flex justify-between items-center pt-2 border-t border-gray-200">
+                <span class="font-bold text-gray-800">Total Bayar</span>
+                <span id="confirm-total" class="text-xl font-extrabold text-primary">Rp 0</span>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex gap-3">
+            <button type="button" onclick="closeConfirmModal()" class="flex-1 px-4 py-3 rounded-xl border border-gray-200 font-bold text-gray-600 text-sm hover:bg-gray-50 transition-colors">Batal</button>
+            <button type="button" id="confirm-pay-btn" class="flex-1 px-4 py-3 rounded-xl bg-gradient-to-r from-primary to-emerald-600 text-white font-bold text-sm shadow-lg shadow-primary/25 hover:shadow-xl transition-all flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">check</span> Selesaikan
+            </button>
+        </div>
+    </div>
+</div>
+
 <!-- QRIS Modal -->
 <div id="qris-modal" class="hidden fixed inset-0 z-[80]">
     <div id="qris-overlay" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
@@ -454,15 +613,17 @@ function renderCart() {
     checkoutBtn.disabled = !items.length;
 }
 
-async function submitCheckout() {
+async function submitCheckout(discountAmount = 0, customerName = '') {
     const items = currentCartItems();
     if (!items.length) {
         showMessage('error', 'Keranjang masih kosong.');
         return;
     }
 
+    closeConfirmModal();
     checkoutBtn.disabled = true;
     checkoutBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Memproses...';
+    document.getElementById('mobile-checkout-btn').disabled = true;
     qrisConfirmBtn.disabled = true;
     qrisConfirmBtn.textContent = 'Memproses...';
 
@@ -475,8 +636,9 @@ async function submitCheckout() {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
             },
             body: JSON.stringify({
-                payment_method: paymentMethod === 'e-wallet' ? `e-wallet:${ewalletProvider}:${ewalletNumber}` : paymentMethod,
-                discount_amount: 0,
+                payment_method: (confirmPaymentMethod || paymentMethod) === 'e-wallet' ? `e-wallet:${ewalletProvider}:${ewalletNumber}` : (confirmPaymentMethod || paymentMethod),
+                discount_amount: discountAmount || 0,
+                customer_name: customerName || '',
                 items,
             }),
         });
@@ -491,7 +653,7 @@ async function submitCheckout() {
         cart.clear();
         renderCart();
         showMessage('success', '✅ Transaksi berhasil! Stok & penjualan diperbarui.');
-        setTimeout(() => window.location.reload(), 1200);
+        setTimeout(() => window.location.reload(), 1500);
     } catch (error) {
         showMessage('error', error.message);
     } finally {
@@ -618,16 +780,25 @@ checkoutBtn.addEventListener('click', async () => {
         showMessage('error', 'Keranjang masih kosong.');
         return;
     }
-    if (paymentMethod === 'qris') {
-        openQrisModal();
+    openConfirmModal();
+});
+
+// Mobile checkout
+document.getElementById('mobile-checkout-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    hideMessage();
+    const items = currentCartItems();
+    if (!items.length) {
+        showMessage('error', 'Keranjang masih kosong.');
         return;
     }
-    await submitCheckout();
+    openConfirmModal();
 });
 
 qrisConfirmBtn.addEventListener('click', async () => {
     hideMessage();
-    await submitCheckout();
+    const discount = Math.min(parseFloat(document.getElementById('discount-amount').value) || 0, currentSubtotal());
+    await submitCheckout(discount, document.getElementById('customer-name').value);
 });
 
 [qrisCloseBtn, qrisCancelBtn, qrisOverlay].forEach((element) => {

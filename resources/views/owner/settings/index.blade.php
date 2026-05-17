@@ -4,13 +4,6 @@
 
 @section('styles')
 <style>
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-.animate-fade-in { animation: fadeInUp 0.5s ease-out forwards; }
-.animate-fade-in-delay-1 { animation: fadeInUp 0.5s ease-out 0.1s forwards; opacity: 0; }
-
 .gradient-success { background: linear-gradient(135deg, #10B981 0%, #34D399 100%); }
 
 .input-focus {
@@ -54,7 +47,7 @@
 <div class="p-4 lg:p-6 max-w-3xl mx-auto">
 
     <!-- Profile Card -->
-    <div class="bg-white rounded-2xl border border-outline-variant overflow-hidden mb-5 animate-fade-in">
+    <div class="bg-white rounded-2xl border border-outline-variant overflow-hidden mb-5">
         <!-- Cover -->
         <div class="h-28 bg-gradient-to-r from-primary via-emerald-500 to-teal-500 relative">
             <div class="absolute inset-0 opacity-20">
@@ -94,7 +87,7 @@
     </div>
 
     <!-- ===== SHOP PROFILE SECTION ===== -->
-    <div class="bg-white rounded-2xl border border-outline-variant overflow-hidden mb-5 animate-fade-in-delay-1">
+    <div class="bg-white rounded-2xl border border-outline-variant overflow-hidden mb-5">
         <!-- Section Header -->
         <div class="p-5 border-b border-outline-variant flex items-center gap-3">
             <div class="w-9 h-9 bg-emerald-100 rounded-lg flex items-center justify-center">
@@ -200,7 +193,7 @@
     </div>
 
     <!-- Settings Form (Account) -->
-    <div class="bg-white rounded-2xl border border-outline-variant overflow-hidden animate-fade-in-delay-1">
+    <div class="bg-white rounded-2xl border border-outline-variant overflow-hidden">
         <!-- Form Header -->
         <div class="p-5 border-b border-outline-variant flex items-center gap-3">
             <div class="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center">
@@ -325,8 +318,8 @@
     </div>
 
     <!-- Footer -->
-    <footer class="py-4 flex flex-col sm:flex-row justify-between items-center gap-2 opacity-40">
-        <p class="text-xs">&copy; 2025 TokoQ. All rights reserved.</p>
+    <footer class="py-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+        <p class="text-xs text-gray-500">&copy; 2025 TokoQ. All rights reserved.</p>
     </footer>
 </div>
 

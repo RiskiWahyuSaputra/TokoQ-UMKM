@@ -77,9 +77,19 @@ Route::middleware(['auth', 'active'])->group(function () {
     // Reports
     Route::get('/reports', [\App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
 
-    // Settings
+// Settings
     Route::get('/settings', [\App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
     Route::post('/settings', [\App\Http\Controllers\SettingsController::class, 'update'])->name('settings.update');
+});
+
+// Upgrade Plan (owner only)
+Route::middleware(['auth', 'active'])->group(function () {
+    Route::get('/upgrade', function () {
+        return view('owner.upgrade');
+    })->name('upgrade');
+    Route::get('/help', function () {
+        return view('owner.help');
+    })->name('help');
 });
 
 // Admin Routes

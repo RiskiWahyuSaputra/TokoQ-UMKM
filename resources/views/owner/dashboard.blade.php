@@ -180,19 +180,84 @@
 
     <!-- Alert Banner (if critical stock) -->
     @if($criticalStockCount > 0)
-    <div class="bg-gradient-to-r from-red-50 to-orange-50 border border-red-200 rounded-2xl p-4 flex items-center gap-4 animate-fade-in-up-delay-1">
-        <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center shrink-0">
-            <span class="material-symbols-outlined text-red-500">error</span>
+    <div class="bg-gradient-to-r from-red-50 to-orange-50 border border-red-200 rounded-2xl p-4 animate-fade-in-up-delay-1">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-red-500">error</span>
+            </div>
+            <div class="flex-1 min-w-0">
+                <p class="font-bold text-red-700 text-sm">Stok Kritis!</p>
+                <p class="text-body-sm text-red-600">{{ $criticalStockCount }} produk hampir habis dan perlu segera direstock.</p>
+                @if($criticalProducts->isNotEmpty())
+                <div class="mt-2 space-y-1">
+                    @foreach($criticalProducts->take(3) as $cp)
+                    <p class="text-xs text-red-500">
+                        <span class="font-bold">{{ $cp->name }}</span> — sisa {{ $cp->stock }} unit
+                        @if($cp->stock <= 3) • Restok {{ max(10 - $cp->stock, 5) }} unit @endif
+                    </p>
+                    @endforeach
+                </div>
+                @endif
+            </div>
+            <div class="flex gap-2 shrink-0">
+                <a href="{{ route('products.index') }}?filter=critical" class="px-4 py-2 bg-red-500 text-white rounded-xl font-bold text-sm hover:bg-red-600 transition-colors">
+                    Restock Sekarang
+                </a>
+            </div>
         </div>
-        <div class="flex-1 min-w-0">
-            <p class="font-bold text-red-700 text-sm">Stok Kritis!</p>
-            <p class="text-body-sm text-red-600">{{ $criticalStockCount }} produk hampir habis dan perlu segera direstock.</p>
-        </div>
-        <a href="{{ route('products.index') }}" class="shrink-0 px-4 py-2 bg-red-500 text-white rounded-xl font-bold text-sm hover:bg-red-600 transition-colors">
-            Lihat
-        </a>
     </div>
     @endif
+
+    <!-- Onboarding Checklist (show if new user) -->
+    @php
+        $onboardingSteps = [
+            ['label' => 'Tambah produk pertama', 'done' => ($totalProducts ?? 0) > 0, 'url' => route('products.create'), 'icon' => 'add_box'],
+            ['label' => 'Atur stok minimum', 'done' => ($lowStockProducts ?? 0) < ($totalProducts ?? 0), 'url' => route('products.index'), 'icon' => 'inventory_2'],
+            ['label' => 'Coba transaksi pertama', 'done' => ($todayTransactions ?? 0) > 0, 'url' => route('pos.index'), 'icon' => 'point_of_sale'],
+            ['label' => 'Aktifkan QRIS/printer', 'done' => false, 'url' => route('settings.index'), 'icon' => 'settings'],
+        ];
+        $completedSteps = collect($onboardingSteps)->where('done')->count();
+        $showOnboarding = $completedSteps < 4 && ($totalProducts ?? 0) < 10;
+    @endphp
+    @if($showOnboarding)
+    <div class="bg-white rounded-2xl border border-gray-200 p-5 animate-fade-in-up-delay-1">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-emerald-100 rounded-lg flex items-center justify-center">
+                    <span class="material-symbols-outlined text-emerald-600 text-[20px]">task_alt</span>
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-800 text-sm">Checklist Onboarding</h3>
+                    <p class="text-xs text-gray-500">{{ $completedSteps }}/4 langkah selesai</p>
+                </div>
+            </div>
+            <div class="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-primary to-emerald-500 rounded-full transition-all" style="width: {{ ($completedSteps / 4) * 100 }}%"></div>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+            @foreach($onboardingSteps as $step)
+            <a href="{{ $step['url'] }}" class="flex items-center gap-2 p-3 rounded-xl border {{ $step['done'] ? 'border-emerald-200 bg-emerald-50' : 'border-gray-200 bg-gray-50 hover:border-primary/30 hover:bg-primary/5' }} transition-all">
+                <span class="material-symbols-outlined text-[18px] {{ $step['done'] ? 'text-emerald-500' : 'text-gray-400' }}">{{ $step['done'] ? 'check_circle' : $step['icon'] }}</span>
+                <span class="text-xs font-medium {{ $step['done'] ? 'text-emerald-700' : 'text-gray-600' }}">{{ $step['label'] }}</span>
+            </a>
+            @endforeach
+        </div>
+    </div>
+    @endif
+
+    <!-- Quick Action Buttons -->
+    <div class="flex flex-wrap gap-2 animate-fade-in-up-delay-1">
+        <a href="{{ route('products.index') }}?action=import" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:border-primary hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-[16px]">upload_file</span> Import Excel
+        </a>
+        <a href="{{ route('reports.index') }}?period=today" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:border-primary hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-[16px]">print</span> Cetak Laporan Hari Ini
+        </a>
+        <a href="{{ route('ai.index') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:border-primary hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-[16px]">auto_awesome</span> Lihat Prediksi
+        </a>
+    </div>
 
     <!-- Main Metrics Row -->
     <div class="grid grid-cols-12 gap-4">
