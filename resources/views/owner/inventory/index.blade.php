@@ -8,10 +8,10 @@
     from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
 }
-.animate-fade-in { animation: fadeInUp 0.5s ease-out forwards; }
-.animate-fade-in-delay-1 { animation: fadeInUp 0.5s ease-out 0.1s forwards; opacity: 0; }
-.animate-fade-in-delay-2 { animation: fadeInUp 0.5s ease-out 0.2s forwards; opacity: 0; }
-.animate-fade-in-delay-3 { animation: fadeInUp 0.5s ease-out 0.3s forwards; opacity: 0; }
+. { animation: fadeInUp 0.5s ease-out forwards; }
+. { animation: fadeInUp 0.5s ease-out 0.1s forwards; opacity: 0; }
+. { animation: fadeInUp 0.5s ease-out 0.2s forwards; opacity: 0; }
+. { animation: fadeInUp 0.5s ease-out 0.3s forwards; opacity: 0; }
 
 .gradient-success { background: linear-gradient(135deg, #10B981 0%, #34D399 100%); }
 .gradient-danger { background: linear-gradient(135deg, #EF4444 0%, #F87171 100%); }
@@ -47,7 +47,7 @@
 
     <!-- Success Message -->
     @if (session('success'))
-    <div class="bg-emerald-50 border border-emerald-200 rounded-2xl px-5 py-4 flex items-center gap-3 animate-fade-in">
+    <div class="bg-emerald-50 border border-emerald-200 rounded-2xl px-5 py-4 flex items-center gap-3 ">
         <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center shrink-0">
             <span class="material-symbols-outlined text-emerald-500 text-[18px]">check</span>
         </div>
@@ -58,7 +58,7 @@
     <!-- Summary Cards -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <!-- Total Produk -->
-        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover animate-fade-in">
+        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover ">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-10 h-10 gradient-info rounded-xl flex items-center justify-center shadow-lg shadow-info/20">
                     <span class="material-symbols-outlined text-white text-[20px]">inventory_2</span>
@@ -69,7 +69,7 @@
         </div>
 
         <!-- Stok Kritis -->
-        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover animate-fade-in-delay-1">
+        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover ">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-10 h-10 gradient-danger rounded-xl flex items-center justify-center shadow-lg shadow-danger/20 relative">
                     <span class="material-symbols-outlined text-white text-[20px]">warning</span>
@@ -83,7 +83,7 @@
         </div>
 
         <!-- Stok Menipis -->
-        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover animate-fade-in-delay-2">
+        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover ">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-10 h-10 gradient-warning rounded-xl flex items-center justify-center shadow-lg shadow-warning/20">
                     <span class="material-symbols-outlined text-white text-[20px]">trending_down</span>
@@ -94,7 +94,7 @@
         </div>
 
         <!-- Nilai Inventori -->
-        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover animate-fade-in-delay-3">
+        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover ">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-10 h-10 gradient-success rounded-xl flex items-center justify-center shadow-lg shadow-success/20">
                     <span class="material-symbols-outlined text-white text-[20px]">account_balance</span>
@@ -111,7 +111,7 @@
 
     <!-- Alert Banner -->
     @if($criticalCount > 0)
-    <div class="bg-gradient-to-r from-red-50 to-orange-50 border border-red-200 rounded-2xl p-4 flex items-center gap-4 animate-fade-in">
+    <div class="bg-gradient-to-r from-red-50 to-orange-50 border border-red-200 rounded-2xl p-4 flex items-center gap-4 ">
         <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center shrink-0">
             <span class="material-symbols-outlined text-red-500">error</span>
         </div>
@@ -124,6 +124,30 @@
         </a>
     </div>
     @endif
+
+    <!-- Search & Filter Bar -->
+    <div class="bg-white rounded-2xl border border-outline-variant p-4">
+        <div class="flex flex-col sm:flex-row gap-3">
+            <div class="relative flex-1">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[18px]">search</span>
+                <input type="text" id="inventory-search" placeholder="Cari nama produk atau SKU..." class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none" oninput="filterInventory()"/>
+            </div>
+            <div class="flex items-center gap-2">
+                <select id="stock-filter" onchange="filterInventory()" class="px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:ring-2 focus:ring-primary outline-none">
+                    <option value="all">Semua Stok</option>
+                    <option value="critical">Kritis</option>
+                    <option value="low">Menipis</option>
+                    <option value="safe">Aman</option>
+                </select>
+                <button onclick="exportInventoryExcel()" class="inline-flex items-center gap-1.5 px-3 py-2.5 bg-emerald-50 text-emerald-600 rounded-xl text-xs font-bold hover:bg-emerald-100">
+                    <span class="material-symbols-outlined text-[14px]">download</span> Excel
+                </button>
+                <button onclick="importInventoryExcel()" class="inline-flex items-center gap-1.5 px-3 py-2.5 bg-blue-50 text-blue-600 rounded-xl text-xs font-bold hover:bg-blue-100">
+                    <span class="material-symbols-outlined text-[14px]">upload_file</span> Import
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Main Content Grid -->
     <div class="grid grid-cols-12 gap-4">
@@ -176,6 +200,7 @@
                                     <th class="px-5 py-3 hidden sm:table-cell">Kategori</th>
                                     <th class="px-5 py-3 hidden md:table-cell">SKU</th>
                                     <th class="px-5 py-3 text-center">Stok</th>
+                                    <th class="px-5 py-3 text-center hidden md:table-cell">Min</th>
                                     <th class="px-5 py-3 text-right">Harga</th>
                                     <th class="px-5 py-3 text-right hidden sm:table-cell">Modal</th>
                                     <th class="px-5 py-3 text-right hidden sm:table-cell">Laba/unit</th>
@@ -192,7 +217,7 @@
                                             default => 'bg-emerald-100 text-emerald-700',
                                         };
                                     @endphp
-                                    <tr class="hover:bg-gray-50 transition-colors">
+                                    <tr class="hover:bg-gray-50 transition-colors inventory-row" data-name="{{ strtolower($product->name) }}" data-sku="{{ strtolower($product->sku ?? '') }}" data-status="{{ $status }}" data-stock="{{ $product->stock }}">
                                         <td class="px-5 py-3">
                                             <div class="flex items-center gap-3">
                                                 @if ($product->image_url)
@@ -213,6 +238,9 @@
                                         <td class="px-5 py-3 text-center">
                                             <span class="font-bold text-sm {{ $status === 'kritis' ? 'text-red-500' : ($status === 'menipis' ? 'text-amber-500' : 'text-emerald-500') }}">{{ $product->stock }}</span>
                                             <span class="text-xs text-gray-400"> unit</span>
+                                        </td>
+                                        <td class="px-5 py-3 text-center hidden md:table-cell">
+                                            <span class="text-xs text-gray-500">{{ $product->min_stock ?? 10 }}</span>
                                         </td>
                                         <td class="px-5 py-3 text-right font-bold text-sm text-primary">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
                                         <td class="px-5 py-3 text-right text-sm text-gray-500 hidden sm:table-cell">Rp {{ number_format($product->cost_price, 0, ',', '.') }}</td>
@@ -351,8 +379,29 @@
     </div>
 
     <!-- Footer -->
-    <footer class="pb-4 flex flex-col sm:flex-row justify-between items-center gap-2 opacity-40">
-        <p class="text-xs">&copy; 2025 TokoQ. All rights reserved.</p>
+    <footer class="pb-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+        <p class="text-xs text-gray-500">&copy; 2025 TokoQ. All rights reserved.</p>
     </footer>
 </div>
+
+<script>
+function filterInventory() {
+    const search = document.getElementById('inventory-search').value.toLowerCase();
+    const statusFilter = document.getElementById('stock-filter').value;
+    document.querySelectorAll('.inventory-row').forEach(row => {
+        const name = row.dataset.name;
+        const sku = row.dataset.sku;
+        const status = row.dataset.status;
+        const matchSearch = !search || name.includes(search) || sku.includes(search);
+        const matchStatus = statusFilter === 'all' || status === statusFilter;
+        row.style.display = (matchSearch && matchStatus) ? '' : 'none';
+    });
+}
+function exportInventoryExcel() {
+    alert('Export Excel inventori akan segera tersedia.');
+}
+function importInventoryExcel() {
+    alert('Import Excel inventori akan segera tersedia. Format: Nama, Harga, Stok, Kategori, SKU, Stok Minimum.');
+}
+</script>
 @endsection

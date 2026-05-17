@@ -15,10 +15,10 @@
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-6px); }
 }
-.animate-fade-in { animation: fadeInUp 0.5s ease-out forwards; }
-.animate-fade-in-delay-1 { animation: fadeInUp 0.5s ease-out 0.1s forwards; opacity: 0; }
-.animate-fade-in-delay-2 { animation: fadeInUp 0.5s ease-out 0.2s forwards; opacity: 0; }
-.animate-fade-in-delay-3 { animation: fadeInUp 0.5s ease-out 0.3s forwards; opacity: 0; }
+. { animation: fadeInUp 0.5s ease-out forwards; }
+. { animation: fadeInUp 0.5s ease-out 0.1s forwards; opacity: 0; }
+. { animation: fadeInUp 0.5s ease-out 0.2s forwards; opacity: 0; }
+. { animation: fadeInUp 0.5s ease-out 0.3s forwards; opacity: 0; }
 .animate-bar-grow { animation: barGrow 0.8s ease-out forwards; }
 .animate-float { animation: float 3s ease-in-out infinite; }
 
@@ -49,7 +49,7 @@
 <div class="p-4 lg:p-6 space-y-5">
 
     <!-- Hero: Prediksi Omzet & Laba -->
-    <div class="bg-gradient-to-br from-purple-500 via-indigo-500 to-blue-600 rounded-3xl p-6 lg:p-8 text-white relative overflow-hidden animate-fade-in">
+    <div class="bg-gradient-to-br from-purple-500 via-indigo-500 to-blue-600 rounded-3xl p-6 lg:p-8 text-white relative overflow-hidden ">
         <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32"></div>
         <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full -ml-24 -mb-24"></div>
         <div class="absolute top-6 right-6 animate-float">
@@ -96,11 +96,52 @@
         </div>
     </div>
 
+    <!-- Explainability & Confidence -->
+    <div class="bg-white rounded-2xl border border-gray-200 p-5">
+        <div class="flex items-center gap-3 mb-4">
+            <div class="w-9 h-9 bg-blue-100 rounded-lg flex items-center justify-center">
+                <span class="material-symbols-outlined text-blue-600 text-[20px]">info</span>
+            </div>
+            <div>
+                <h3 class="font-bold text-gray-800">Tentang Prediksi Ini</h3>
+                <p class="text-xs text-gray-500">Bagaimana AI TokoQ menghasilkan prediksi</p>
+            </div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4">
+            <div class="p-4 bg-blue-50 rounded-xl">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="material-symbols-outlined text-blue-500 text-[18px]">dataset</span>
+                    <span class="font-bold text-blue-800 text-sm">Data Dasar</span>
+                </div>
+                <p class="text-xs text-blue-700">Berdasarkan polak penjualan & harga pokok <strong>7 hari terakhir</strong>.</p>
+            </div>
+            <div class="p-4 bg-purple-50 rounded-xl">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="material-symbols-outlined text-purple-500 text-[18px]">speed</span>
+                    <span class="font-bold text-purple-800 text-sm">Confidence</span>
+                </div>
+                @php
+                    $dataPoints = $recentDays->count();
+                    $confidence = $dataPoints >= 7 ? 'Tinggi' : ($dataPoints >= 3 ? 'Sedang' : 'Rendah');
+                    $confColor = $dataPoints >= 7 ? 'text-emerald-600' : ($dataPoints >= 3 ? 'text-amber-600' : 'text-red-600');
+                @endphp>
+                <p class="text-xs text-purple-700">Akurasi: <strong class="{{ $confColor }}">{{ $confidence }}</strong> ({{ $dataPoints }} hari data)</p>
+            </div>
+            <div class="p-4 bg-emerald-50 rounded-xl">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="material-symbols-outlined text-emerald-500 text-[18px]">lightbulb</span>
+                    <span class="font-bold text-emerald-800 text-sm">Catatan</span>
+                </div>
+                <p class="text-xs text-emerald-700">Prediksi akan semakin akurat seiring bertambahnya data transaksi.</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Chart & Risk Products -->
     <div class="grid grid-cols-12 gap-4">
         <!-- Chart -->
         <div class="col-span-12 lg:col-span-7">
-            <div class="bg-white rounded-2xl border border-outline-variant p-6 h-full card-hover animate-fade-in-delay-1">
+            <div class="bg-white rounded-2xl border border-outline-variant p-6 h-full card-hover ">
                 <div class="flex items-center justify-between mb-6">
                     <div>
                         <h3 class="font-bold text-on-surface">Tren Penjualan</h3>
@@ -134,7 +175,7 @@
 
         <!-- Risk Products -->
         <div class="col-span-12 lg:col-span-5 space-y-4">
-            <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover animate-fade-in-delay-2 h-full">
+            <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover  h-full">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="w-9 h-9 bg-red-100 rounded-lg flex items-center justify-center">
                         <span class="material-symbols-outlined text-red-500 text-[20px]">warning</span>
@@ -176,7 +217,7 @@
     <div class="grid grid-cols-12 gap-4">
         <!-- Top Products -->
         <div class="col-span-12 lg:col-span-5">
-            <div class="bg-white rounded-2xl border border-outline-variant p-5 h-full card-hover animate-fade-in-delay-3">
+            <div class="bg-white rounded-2xl border border-outline-variant p-5 h-full card-hover ">
                 <div class="flex items-center gap-3 mb-5">
                     <div class="w-9 h-9 bg-amber-100 rounded-lg flex items-center justify-center">
                         <span class="material-symbols-outlined text-amber-500 text-[20px]">emoji_events</span>
@@ -215,7 +256,7 @@
 
         <!-- Restock Recommendations -->
         <div class="col-span-12 lg:col-span-7">
-            <div class="bg-white rounded-2xl border border-outline-variant p-5 h-full card-hover animate-fade-in-delay-3">
+            <div class="bg-white rounded-2xl border border-outline-variant p-5 h-full card-hover ">
                 <div class="flex items-center justify-between mb-5">
                     <div class="flex items-center gap-3">
                         <div class="w-9 h-9 bg-emerald-100 rounded-lg flex items-center justify-center">
@@ -243,6 +284,11 @@
                                 <div class="min-w-0 flex-1">
                                     <p class="font-bold text-sm text-on-surface">{{ $suggestion['name'] }}</p>
                                     <p class="text-xs text-gray-400">{{ $suggestion['category'] }} • Stok saat ini {{ $suggestion['stock'] }}</p>
+                                    @if(isset($suggestion['urgency']))
+                                    <p class="text-[10px] {{ $suggestion['urgency'] === 'high' ? 'text-red-500' : 'text-amber-500' }} font-medium">
+                                        @if($suggestion['urgency'] === 'high') ⚡ Segera restok — habis dalam ~2 hari @else 📅 Restok sebelum minggu depan @endif
+                                    </p>
+                                    @endif
                                 </div>
                                 <div class="flex items-center gap-3 shrink-0">
                                     <div class="text-right">
@@ -253,6 +299,10 @@
                             </div>
                         @endforeach
                     </div>
+                    <button onclick="alert('Fitur Buat Daftar Belanja akan segera tersedia')" class="w-full mt-3 py-2.5 bg-gradient-to-r from-primary to-emerald-600 text-white font-bold text-sm rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-[16px]">shopping_cart</span>
+                        Buat Daftar Belanja
+                    </button>
                 @endif
             </div>
         </div>
@@ -278,8 +328,8 @@
     </div>
 
     <!-- Footer -->
-    <footer class="pb-4 flex flex-col sm:flex-row justify-between items-center gap-2 opacity-40">
-        <p class="text-xs">&copy; 2025 TokoQ. All rights reserved.</p>
+    <footer class="pb-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+        <p class="text-xs text-gray-500">&copy; 2025 TokoQ. All rights reserved.</p>
     </footer>
 </div>
 @endsection

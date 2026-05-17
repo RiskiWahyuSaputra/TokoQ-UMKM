@@ -192,6 +192,86 @@
         </form>
     </div>
 
+    <!-- Store Settings: Pajak, Printer, Pembayaran -->
+    <div class="bg-white rounded-2xl border border-outline-variant overflow-hidden mb-5">
+        <div class="p-5 border-b border-outline-variant flex items-center gap-3">
+            <div class="w-9 h-9 bg-blue-100 rounded-lg flex items-center justify-center">
+                <span class="material-symbols-outlined text-blue-600 text-[20px]">store</span>
+            </div>
+            <div>
+                <h3 class="font-bold text-on-surface">Pengaturan Toko</h3>
+                <p class="text-xs text-gray-400">Pajak, printer, metode pembayaran</p>
+            </div>
+        </div>
+        <div class="p-5 space-y-5">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="text-xs font-bold text-gray-500 mb-1.5 block">Pajak (%)</label>
+                    <input type="number" name="tax_rate" value="0" min="0" max="100" step="0.1"
+                        class="input-focus w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:bg-white outline-none"
+                        placeholder="Contoh: 11"/>
+                    <p class="text-[10px] text-gray-400 mt-1">Biaya pajak yang ditambahkan ke transaksi</p>
+                </div>
+                <div>
+                    <label class="text-xs font-bold text-gray-500 mb-1.5 block">Biaya Layanan (Rp)</label>
+                    <input type="number" name="service_fee" value="0" min="0"
+                        class="input-focus w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:bg-white outline-none"
+                        placeholder="Contoh: 2000"/>
+                </div>
+            </div>
+            <div>
+                <label class="text-xs font-bold text-gray-500 mb-1.5 block">Printer Struk</label>
+                <select name="printer_type" class="input-focus w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:bg-white outline-none">
+                    <option value="">Pilih printer...</option>
+                    <option value="thermal_usb">Thermal USB</option>
+                    <option value="thermal_network">Thermal Network</option>
+                    <option value="bluetooth">Bluetooth</option>
+                </select>
+            </div>
+            <div>
+                <label class="text-xs font-bold text-gray-500 mb-2 block">Metode Pembayaran Aktif</label>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                    <label class="flex items-center gap-2 p-3 bg-gray-50 rounded-xl border border-gray-200 cursor-pointer"><input type="checkbox" name="payment_methods[]" value="tunai" checked class="rounded text-primary"/><span class="text-xs font-medium">Tunai</span></label>
+                    <label class="flex items-center gap-2 p-3 bg-gray-50 rounded-xl border border-gray-200 cursor-pointer"><input type="checkbox" name="payment_methods[]" value="qris" checked class="rounded text-primary"/><span class="text-xs font-medium">QRIS</span></label>
+                    <label class="flex items-center gap-2 p-3 bg-gray-50 rounded-xl border border-gray-200 cursor-pointer"><input type="checkbox" name="payment_methods[]" value="dana" class="rounded text-primary"/><span class="text-xs font-medium">DANA</span></label>
+                    <label class="flex items-center gap-2 p-3 bg-gray-50 rounded-xl border border-gray-200 cursor-pointer"><input type="checkbox" name="payment_methods[]" value="gopay" class="rounded text-primary"/><span class="text-xs font-medium">GoPay</span></label>
+                </div>
+            </div>
+            <div class="flex justify-end pt-3 border-t border-gray-100">
+                <button type="submit" class="px-6 py-3 bg-gradient-to-r from-primary to-emerald-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:shadow-xl transition-all flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">save</span> Simpan Pengaturan Toko
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Keamanan & Backup -->
+    <div class="bg-white rounded-2xl border border-outline-variant overflow-hidden mb-5">
+        <div class="p-5 border-b border-outline-variant flex items-center gap-3">
+            <div class="w-9 h-9 bg-amber-100 rounded-lg flex items-center justify-center">
+                <span class="material-symbols-outlined text-amber-600 text-[20px]">security</span>
+            </div>
+            <div>
+                <h3 class="font-bold text-on-surface">Keamanan & Backup</h3>
+                <p class="text-xs text-gray-400">Backup data dan keamanan akun</p>
+            </div>
+        </div>
+        <div class="p-5 space-y-4">
+            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                <div><p class="font-bold text-sm text-gray-800">Backup Data</p><p class="text-xs text-gray-500">Download semua data produk, transaksi, dan laporan</p></div>
+                <button type="button" onclick="alert('Backup data akan segera tersedia')" class="px-4 py-2 bg-primary text-white rounded-xl text-xs font-bold">Backup</button>
+            </div>
+            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                <div><p class="font-bold text-sm text-gray-800">Export Semua Data</p><p class="text-xs text-gray-500">Download dalam format Excel</p></div>
+                <button type="button" onclick="alert('Export data akan segera tersedia')" class="px-4 py-2 bg-emerald-500 text-white rounded-xl text-xs font-bold">Export</button>
+            </div>
+            <div class="flex items-center justify-between p-4 bg-blue-50 rounded-xl border border-blue-100">
+                <div><p class="font-bold text-sm text-blue-800">Backup Otomatis</p><p class="text-xs text-blue-600">Data di-backup secara otomatis setiap hari</p></div>
+                <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold">Aktif</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Settings Form (Account) -->
     <div class="bg-white rounded-2xl border border-outline-variant overflow-hidden">
         <!-- Form Header -->

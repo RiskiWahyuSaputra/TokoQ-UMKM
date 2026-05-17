@@ -11,10 +11,10 @@
 @keyframes barGrow {
     from { height: 0; }
 }
-.animate-fade-in { animation: fadeInUp 0.5s ease-out forwards; }
-.animate-fade-in-delay-1 { animation: fadeInUp 0.5s ease-out 0.1s forwards; opacity: 0; }
-.animate-fade-in-delay-2 { animation: fadeInUp 0.5s ease-out 0.2s forwards; opacity: 0; }
-.animate-fade-in-delay-3 { animation: fadeInUp 0.5s ease-out 0.3s forwards; opacity: 0; }
+. { animation: fadeInUp 0.5s ease-out forwards; }
+. { animation: fadeInUp 0.5s ease-out 0.1s forwards; opacity: 0; }
+. { animation: fadeInUp 0.5s ease-out 0.2s forwards; opacity: 0; }
+. { animation: fadeInUp 0.5s ease-out 0.3s forwards; opacity: 0; }
 .animate-bar-grow { animation: barGrow 0.8s ease-out forwards; }
 
 .gradient-success { background: linear-gradient(135deg, #10B981 0%, #34D399 100%); }
@@ -49,7 +49,7 @@
 
     <!-- Summary Cards -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover animate-fade-in">
+        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover ">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-10 h-10 gradient-success rounded-xl flex items-center justify-center shadow-lg shadow-success/20">
                     <span class="material-symbols-outlined text-white text-[20px]">account_balance_wallet</span>
@@ -59,7 +59,7 @@
             <p class="text-2xl font-extrabold text-on-surface">Rp {{ number_format($totalOmzet, 0, ',', '.') }}</p>
             <p class="text-xs text-gray-400 mt-1">Total Omzet</p>
         </div>
-        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover animate-fade-in-delay-1">
+        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover ">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-10 h-10 gradient-info rounded-xl flex items-center justify-center shadow-lg shadow-info/20">
                     <span class="material-symbols-outlined text-white text-[20px]">receipt_long</span>
@@ -69,7 +69,7 @@
             <p class="text-2xl font-extrabold text-on-surface">{{ $totalTx }}</p>
             <p class="text-xs text-gray-400 mt-1">Total Transaksi</p>
         </div>
-        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover animate-fade-in-delay-2">
+        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover ">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-10 h-10 gradient-purple rounded-xl flex items-center justify-center shadow-lg shadow-purple/20">
                     <span class="material-symbols-outlined text-white text-[20px]">analytics</span>
@@ -79,7 +79,7 @@
             <p class="text-2xl font-extrabold text-on-surface">Rp {{ number_format($avgTx, 0, ',', '.') }}</p>
             <p class="text-xs text-gray-400 mt-1">Rata-rata</p>
         </div>
-        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover animate-fade-in-delay-3">
+        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover ">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-10 h-10 gradient-warning rounded-xl flex items-center justify-center shadow-lg shadow-warning/20">
                     <span class="material-symbols-outlined text-white text-[20px]">today</span>
@@ -89,6 +89,54 @@
             <p class="text-2xl font-extrabold text-on-surface">{{ $todayTx }}</p>
             <p class="text-xs text-gray-400 mt-1">Transaksi Hari Ini</p>
             <p class="text-xs text-emerald-500 font-medium mt-1">Rp {{ number_format($todayOmzet, 0, ',', '.') }}</p>
+        </div>
+    </div>
+
+    <!-- Period Filter & Export -->
+    <div class="bg-white rounded-2xl border border-gray-200 p-4">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+            <div class="flex items-center gap-2 flex-1">
+                <span class="material-symbols-outlined text-gray-400 text-[18px]">date_range</span>
+                <select id="report-period" onchange="filterReport()" class="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:ring-2 focus:ring-primary outline-none">
+                    <option value="today">Hari Ini</option>
+                    <option value="week" selected>Minggu Ini</option>
+                    <option value="month">Bulan Ini</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <input type="date" id="report-date-from" class="hidden px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:ring-2 focus:ring-primary outline-none"/>
+                <input type="date" id="report-date-to" class="hidden px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:ring-2 focus:ring-primary outline-none"/>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="exportReportPDF()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-red-50 text-red-600 rounded-lg text-xs font-bold hover:bg-red-100">
+                    <span class="material-symbols-outlined text-[14px]">picture_as_pdf</span> PDF
+                </button>
+                <button onclick="exportReportExcel()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-bold hover:bg-emerald-100">
+                    <span class="material-symbols-outlined text-[14px]">download</span> Excel
+                </button>
+                <button onclick="printDailyCash()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold hover:bg-blue-100">
+                    <span class="material-symbols-outlined text-[14px]">print</span> Kas Harian
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profit Summary -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+            <p class="text-xs text-gray-500 mb-1">Omzet (Kotor)</p>
+            <p class="font-bold text-gray-800">Rp {{ number_format($totalOmzet, 0, ',', '.') }}</p>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+            <p class="text-xs text-gray-500 mb-1">HPP / Modal</p>
+            <p class="font-bold text-gray-800">Rp {{ number_format($totalHPP ?? 0, 0, ',', '.') }}</p>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+            <p class="text-xs text-gray-500 mb-1">Laba Kotor</p>
+            <p class="font-bold {{ ($totalOmzet - ($totalHPP ?? 0)) > 0 ? 'text-emerald-600' : 'text-red-600' }}">Rp {{ number_format($totalOmzet - ($totalHPP ?? 0), 0, ',', '.') }}</p>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+            <p class="text-xs text-gray-500 mb-1">Margin</p>
+            <p class="font-bold text-gray-800">{{ $totalOmzet > 0 ? round((($totalOmzet - ($totalHPP ?? 0)) / $totalOmzet) * 100, 1) : 0 }}%</p>
         </div>
     </div>
 
@@ -182,11 +230,17 @@
         <!-- Top Products -->
         <div class="col-span-12 lg:col-span-5">
             <div class="bg-white rounded-2xl border border-outline-variant p-5 h-full">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-9 h-9 bg-amber-100 rounded-lg flex items-center justify-center">
-                        <span class="material-symbols-outlined text-amber-500 text-[20px]">emoji_events</span>
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 bg-amber-100 rounded-lg flex items-center justify-center">
+                            <span class="material-symbols-outlined text-amber-500 text-[20px]">emoji_events</span>
+                        </div>
+                        <h3 class="font-bold text-on-surface">Produk Terlaris</h3>
                     </div>
-                    <h3 class="font-bold text-on-surface">Produk Terlaris</h3>
+                    <div class="flex bg-gray-100 rounded-lg p-0.5">
+                        <button onclick="toggleTopView('sold')" id="btn-view-sold" class="px-2 py-1 rounded-md text-[10px] font-bold bg-white text-gray-800 shadow-sm">Terlaris</button>
+                        <button onclick="toggleTopView('profit')" id="btn-view-profit" class="px-2 py-1 rounded-md text-[10px] font-bold text-gray-500">Tertinggi Laba</button>
+                    </div>
                 </div>
                 @forelse ($topProducts as $product)
                     <div class="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0">
@@ -279,8 +333,38 @@
     </div>
 
     <!-- Footer -->
-    <footer class="pb-4 flex flex-col sm:flex-row justify-between items-center gap-2 opacity-40">
-        <p class="text-xs">&copy; 2025 TokoQ. All rights reserved.</p>
+    <footer class="pb-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+        <p class="text-xs text-gray-500">&copy; 2025 TokoQ. All rights reserved.</p>
     </footer>
 </div>
+
+<script>
+function filterReport() {
+    const period = document.getElementById('report-period').value;
+    const fromEl = document.getElementById('report-date-from');
+    const toEl = document.getElementById('report-date-to');
+    if (period === 'custom') {
+        fromEl.classList.remove('hidden');
+        toEl.classList.remove('hidden');
+    } else {
+        fromEl.classList.add('hidden');
+        toEl.classList.add('hidden');
+    }
+    alert('Filter ' + period + ' akan segera tersedia.');
+}
+function exportReportPDF() { alert('Export PDF laporan akan segera tersedia.'); }
+function exportReportExcel() { alert('Export Excel laporan akan segera tersedia.'); }
+function printDailyCash() { alert('Laporan kas harian akan segera tersedia.'); }
+function toggleTopView(view) {
+    const soldBtn = document.getElementById('btn-view-sold');
+    const profitBtn = document.getElementById('btn-view-profit');
+    if (view === 'sold') {
+        soldBtn.className = 'px-2 py-1 rounded-md text-[10px] font-bold bg-white text-gray-800 shadow-sm';
+        profitBtn.className = 'px-2 py-1 rounded-md text-[10px] font-bold text-gray-500';
+    } else {
+        profitBtn.className = 'px-2 py-1 rounded-md text-[10px] font-bold bg-white text-gray-800 shadow-sm';
+        soldBtn.className = 'px-2 py-1 rounded-md text-[10px] font-bold text-gray-500';
+    }
+}
+</script>
 @endsection

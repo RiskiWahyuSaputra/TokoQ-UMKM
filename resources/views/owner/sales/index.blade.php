@@ -11,10 +11,10 @@
 @keyframes barGrow {
     from { height: 0; }
 }
-.animate-fade-in { animation: fadeInUp 0.5s ease-out forwards; }
-.animate-fade-in-delay-1 { animation: fadeInUp 0.5s ease-out 0.1s forwards; opacity: 0; }
-.animate-fade-in-delay-2 { animation: fadeInUp 0.5s ease-out 0.2s forwards; opacity: 0; }
-.animate-fade-in-delay-3 { animation: fadeInUp 0.5s ease-out 0.3s forwards; opacity: 0; }
+. { animation: fadeInUp 0.5s ease-out forwards; }
+. { animation: fadeInUp 0.5s ease-out 0.1s forwards; opacity: 0; }
+. { animation: fadeInUp 0.5s ease-out 0.2s forwards; opacity: 0; }
+. { animation: fadeInUp 0.5s ease-out 0.3s forwards; opacity: 0; }
 .animate-bar-grow { animation: barGrow 0.8s ease-out forwards; }
 
 .gradient-success { background: linear-gradient(135deg, #10B981 0%, #34D399 100%); }
@@ -52,7 +52,7 @@
     <!-- Summary Cards -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <!-- Total Transaksi -->
-        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover animate-fade-in">
+        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover ">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-10 h-10 gradient-info rounded-xl flex items-center justify-center shadow-lg shadow-info/20">
                     <span class="material-symbols-outlined text-white text-[20px]">receipt_long</span>
@@ -70,7 +70,7 @@
         </div>
 
         <!-- Total Omzet -->
-        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover animate-fade-in-delay-1">
+        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover ">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-10 h-10 gradient-success rounded-xl flex items-center justify-center shadow-lg shadow-success/20">
                     <span class="material-symbols-outlined text-white text-[20px]">payments</span>
@@ -83,7 +83,7 @@
         </div>
 
         <!-- Rata-rata -->
-        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover animate-fade-in-delay-2">
+        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover ">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-10 h-10 gradient-purple rounded-xl flex items-center justify-center shadow-lg shadow-purple/20">
                     <span class="material-symbols-outlined text-white text-[20px]">analytics</span>
@@ -96,7 +96,7 @@
         </div>
 
         <!-- Hari Ini -->
-        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover animate-fade-in-delay-3">
+        <div class="bg-white rounded-2xl border border-outline-variant p-5 card-hover ">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-10 h-10 gradient-warning rounded-xl flex items-center justify-center shadow-lg shadow-warning/20">
                     <span class="material-symbols-outlined text-white text-[20px]">today</span>
@@ -222,6 +222,58 @@
         </div>
     </div>
 
+    <!-- Filter & Export Bar -->
+    <div class="bg-white rounded-2xl border border-outline-variant p-4">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+            <div class="flex items-center gap-2 flex-1">
+                <span class="material-symbols-outlined text-gray-400 text-[18px]">filter_list</span>
+                <input type="date" id="filter-date-from" class="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:ring-2 focus:ring-primary outline-none" placeholder="Dari"/>
+                <span class="text-gray-400 text-xs">—</span>
+                <input type="date" id="filter-date-to" class="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:ring-2 focus:ring-primary outline-none" placeholder="Sampai"/>
+                <button onclick="filterTransactions()" class="px-3 py-2 bg-primary text-white rounded-lg text-xs font-bold">Filter</button>
+                <button onclick="resetFilter()" class="px-3 py-2 bg-gray-100 text-gray-600 rounded-lg text-xs font-medium">Reset</button>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="exportExcel()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-bold hover:bg-emerald-100 transition-colors">
+                    <span class="material-symbols-outlined text-[14px]">download</span> Excel
+                </button>
+                <button onclick="exportPDF()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-red-50 text-red-600 rounded-lg text-xs font-bold hover:bg-red-100 transition-colors">
+                    <span class="material-symbols-outlined text-[14px]">picture_as_pdf</span> PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Summary -->
+    <div class="grid grid-cols-3 gap-3">
+        @php
+            $tunaiTotal = $transactions->where('payment_method', 'tunai')->sum('total_amount');
+            $qrisTotal = $transactions->where('payment_method', 'qris')->sum('total_amount');
+            $ewalletTotal = $transactions->whereNotIn('payment_method', ['tunai', 'qris'])->sum('total_amount');
+        @endphp
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+            <div class="flex items-center gap-2 mb-1">
+                <span class="material-symbols-outlined text-emerald-500 text-[16px]">payments</span>
+                <span class="text-xs text-gray-500">Tunai</span>
+            </div>
+            <p class="font-bold text-gray-800">Rp {{ number_format($tunaiTotal, 0, ',', '.') }}</p>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+            <div class="flex items-center gap-2 mb-1">
+                <span class="material-symbols-outlined text-blue-500 text-[16px]">qr_code</span>
+                <span class="text-xs text-gray-500">QRIS</span>
+            </div>
+            <p class="font-bold text-gray-800">Rp {{ number_format($qrisTotal, 0, ',', '.') }}</p>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+            <div class="flex items-center gap-2 mb-1">
+                <span class="material-symbols-outlined text-purple-500 text-[16px]">account_balance_wallet</span>
+                <span class="text-xs text-gray-500">E-Wallet</span>
+            </div>
+            <p class="font-bold text-gray-800">Rp {{ number_format($ewalletTotal, 0, ',', '.') }}</p>
+        </div>
+    </div>
+
     <!-- Transactions Table -->
     <div class="bg-white rounded-2xl border border-outline-variant overflow-hidden">
         <div class="p-5 border-b border-outline-variant flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -258,18 +310,22 @@
                     <thead class="bg-gray-50 text-gray-500 text-xs uppercase font-bold">
                         <tr>
                             <th class="px-5 py-3">Waktu</th>
+                            <th class="px-5 py-3 hidden sm:table-cell">Pelanggan</th>
                             <th class="px-5 py-3">Total</th>
                             <th class="px-5 py-3">Metode</th>
+                            <th class="px-5 py-3 hidden sm:table-cell">Kasir</th>
                             <th class="px-5 py-3">Status</th>
+                            <th class="px-5 py-3 text-right">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @foreach($transactions as $tx)
-                        <tr class="hover:bg-gray-50 transition-colors">
+                        <tr class="hover:bg-gray-50 transition-colors transaction-row" data-date="{{ $tx->created_at->format('Y-m-d') }}">
                             <td class="px-5 py-3">
                                 <p class="font-medium text-sm text-on-surface">{{ $tx->created_at->format('d M Y') }}</p>
                                 <p class="text-xs text-gray-400">{{ $tx->created_at->format('H:i') }}</p>
                             </td>
+                            <td class="px-5 py-3 text-sm text-gray-600 hidden sm:table-cell">{{ $tx->customer_name ?? '-' }}</td>
                             <td class="px-5 py-3 font-bold text-primary">Rp {{ number_format($tx->total_amount, 0, ',', '.') }}</td>
                             <td class="px-5 py-3">
                                 @php
@@ -283,17 +339,32 @@
                                         'qris' => 'bg-blue-100 text-blue-600',
                                         default => 'bg-purple-100 text-purple-600',
                                     };
+                                    $statusClass = ($tx->status ?? 'completed') === 'refunded' ? 'bg-red-100 text-red-600' : 'bg-emerald-100 text-emerald-600';
+                                    $statusLabel = ($tx->status ?? 'completed') === 'refunded' ? 'Refund' : 'Selesai';
                                 @endphp
                                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold {{ $pmColor }}">
                                     <span class="material-symbols-outlined text-[14px]">{{ $pmIcon }}</span>
                                     {{ ucfirst($tx->payment_method ?? 'Tunai') }}
                                 </span>
                             </td>
+                            <td class="px-5 py-3 text-sm text-gray-500 hidden sm:table-cell">{{ $tx->user?->name ?? 'Kasir' }}</td>
                             <td class="px-5 py-3">
-                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-600">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                    Selesai
+                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold {{ $statusClass }}">
+                                    <span class="w-1.5 h-1.5 rounded-full {{ ($tx->status ?? 'completed') === 'refunded' ? 'bg-red-500' : 'bg-emerald-500' }}"></span>
+                                    {{ $statusLabel }}
                                 </span>
+                            </td>
+                            <td class="px-5 py-3 text-right">
+                                <div class="flex items-center justify-end gap-1">
+                                    <button onclick="showTxDetail({{ $tx->id }}, '{{ $tx->created_at->format('d M Y H:i') }}', {{ $tx->total_amount }}, '{{ $tx->payment_method }}', '{{ $tx->customer_name ?? '' }}')" class="px-2 py-1 rounded-lg bg-gray-100 text-gray-600 text-xs font-bold hover:bg-gray-200" title="Detail">
+                                        <span class="material-symbols-outlined text-[14px]">visibility</span>
+                                    </button>
+                                    @if(($tx->status ?? 'completed') !== 'refunded')
+                                    <button onclick="refundTx({{ $tx->id }}, '{{ $tx->name ?? 'Transaksi' }}')" class="px-2 py-1 rounded-lg bg-red-50 text-red-500 text-xs font-bold hover:bg-red-100" title="Refund">
+                                        <span class="material-symbols-outlined text-[14px]">undo</span>
+                                    </button>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                         @endforeach
@@ -304,12 +375,70 @@
     </div>
 
     <!-- Footer -->
-    <footer class="pb-4 flex flex-col sm:flex-row justify-between items-center gap-2 opacity-40">
-        <p class="text-xs">&copy; 2025 TokoQ. All rights reserved.</p>
-        <div class="flex gap-4 text-xs">
-            <a class="hover:text-primary underline" href="#">Syarat & Ketentuan</a>
-            <a class="hover:text-primary underline" href="#">Kebijakan Privasi</a>
-        </div>
+    <footer class="pb-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+        <p class="text-xs text-gray-500">&copy; 2025 TokoQ. All rights reserved.</p>
     </footer>
 </div>
+
+<!-- Transaction Detail Modal -->
+<div id="tx-detail-modal" class="hidden fixed inset-0 z-[80]">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeTxDetail()"></div>
+    <div class="relative min-h-full flex items-end sm:items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md rounded-2xl p-6 animate-bounce-in">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-bold text-gray-800">Detail Transaksi</h3>
+                <button onclick="closeTxDetail()" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center"><span class="material-symbols-outlined text-gray-500 text-[18px]">close</span></button>
+            </div>
+            <div class="space-y-3 text-sm">
+                <div class="flex justify-between"><span class="text-gray-500">Waktu</span><span class="font-medium" id="detail-time">-</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Pelanggan</span><span class="font-medium" id="detail-customer">-</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Metode</span><span class="font-medium" id="detail-method">-</span></div>
+                <div class="flex justify-between border-t border-gray-100 pt-3"><span class="font-bold text-gray-800">Total</span><span class="font-bold text-primary" id="detail-total">-</span></div>
+            </div>
+            <button onclick="closeTxDetail()" class="w-full mt-4 py-3 bg-gray-100 text-gray-700 font-bold rounded-xl text-sm">Tutup</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function filterTransactions() {
+    const from = document.getElementById('filter-date-from').value;
+    const to = document.getElementById('filter-date-to').value;
+    document.querySelectorAll('.transaction-row').forEach(row => {
+        const date = row.dataset.date;
+        let show = true;
+        if (from && date < from) show = false;
+        if (to && date > to) show = false;
+        row.style.display = show ? '' : 'none';
+    });
+}
+function resetFilter() {
+    document.getElementById('filter-date-from').value = '';
+    document.getElementById('filter-date-to').value = '';
+    document.querySelectorAll('.transaction-row').forEach(row => row.style.display = '');
+}
+function exportExcel() {
+    alert('Export Excel akan segera tersedia. Data: {{ $totalTransactions }} transaksi.');
+}
+function exportPDF() {
+    alert('Export PDF akan segera tersedia. Data: {{ $totalTransactions }} transaksi.');
+}
+function showTxDetail(id, time, total, method, customer) {
+    document.getElementById('detail-time').textContent = time;
+    document.getElementById('detail-customer').textContent = customer || '-';
+    document.getElementById('detail-method').textContent = method;
+    document.getElementById('detail-total').textContent = 'Rp ' + Number(total).toLocaleString('id-ID');
+    document.getElementById('tx-detail-modal').classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+}
+function closeTxDetail() {
+    document.getElementById('tx-detail-modal').classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+}
+function refundTx(id, name) {
+    if (confirm('Refund transaksi "' + name + '"? Stok akan dikembalikan.')) {
+        alert('Refund untuk transaksi #' + id + ' akan segera diproses.');
+    }
+}
+</script>
 @endsection
