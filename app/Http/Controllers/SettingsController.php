@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class SettingsController extends Controller
 {
@@ -19,19 +21,24 @@ class SettingsController extends Controller
     {
         $user = Auth::user();
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
+        $validated = $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+            'email' => ['sometimes', 'required', 'email', Rule::unique('users', 'email')->ignore($user->id)],
             'password' => 'nullable|min:8|confirmed',
             'profile_photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'shop_name' => 'nullable|string|max:255',
+            'shop_name' => 'sometimes|required|string|max:255',
             'shop_description' => 'nullable|string|max:1000',
             'shop_address' => 'nullable|string|max:500',
             'shop_logo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        $user->name = $request->name;
-        $user->email = $request->email;
+        if ($request->has('name')) {
+            $user->name = $validated['name'];
+        }
+
+        if ($request->has('email')) {
+            $user->email = $validated['email'];
+        }
 
         if ($request->hasFile('profile_photo')) {
             if ($user->profile_photo_path) {
@@ -44,18 +51,20 @@ class SettingsController extends Controller
             $user->password = Hash::make($request->password);
         }
 
-        $user->save();
+        if ($user->isDirty()) {
+            $user->save();
+        }
 
         // Update or create shop profile
         $shopData = [];
-        if ($request->filled('shop_name')) {
-            $shopData['name'] = $request->shop_name;
+        if ($request->has('shop_name')) {
+            $shopData['name'] = $validated['shop_name'];
         }
-        if ($request->filled('shop_description')) {
-            $shopData['description'] = $request->shop_description;
+        if ($request->has('shop_description')) {
+            $shopData['description'] = $validated['shop_description'] ?? null;
         }
-        if ($request->filled('shop_address')) {
-            $shopData['address'] = $request->shop_address;
+        if ($request->has('shop_address')) {
+            $shopData['address'] = $validated['shop_address'] ?? null;
         }
 
         if ($request->hasFile('shop_logo')) {
@@ -70,9 +79,11 @@ class SettingsController extends Controller
                 $user->shop->update($shopData);
             } else {
                 // Create new shop if doesn't exist
-                $slug = \Illuminate\Support\Str::slug($request->shop_name ?? $user->name) . '-' . $user->id;
+                $shopName = $shopData['name'] ?? $user->name . "'s Shop";
+                $slug = Str::slug($shopName) . '-' . $user->id;
+
                 $user->shop()->create(array_merge($shopData, [
-                    'name' => $request->shop_name ?? $user->name . "'s Shop",
+                    'name' => $shopName,
                     'slug' => $slug,
                 ]));
             }

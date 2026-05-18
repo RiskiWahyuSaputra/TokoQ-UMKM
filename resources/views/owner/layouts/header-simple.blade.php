@@ -1,6 +1,6 @@
 @php
     $user = Auth::user();
-    $initials = collect(explode(' ', trim($user->name)))->filter()->take(2)->map(fn ($part) => strtoupper(substr($part, 0, 1)))->implode('');
+    $shop = $user->shop;
     $pageTitle = $pageTitle ?? 'Dashboard';
 @endphp
 
@@ -20,10 +20,12 @@
                 <p class="font-bold text-text leading-none">{{ $user->name }}</p>
                 <p class="text-body-sm text-text-light">{{ $user->shop?->name ?? 'Toko Anda' }}</p>
             </div>
-            @if ($user->profile_photo_url)
-                <img src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" class="w-10 h-10 rounded-full object-cover border-2 border-primary shadow-sm"/>
+            @if ($shop?->logo_url)
+                <img data-shop-logo-preview src="{{ $shop->logo_url }}?v={{ $shop->updated_at?->timestamp ?? time() }}" alt="{{ $shop->name }}" class="w-10 h-10 rounded-xl object-cover border-2 border-primary/20 shadow-sm"/>
             @else
-                <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">{{ $initials }}</div>
+                <div data-shop-logo-fallback data-shop-logo-alt="{{ $shop?->name ?? 'Logo Toko' }}" data-shop-logo-class="w-10 h-10 rounded-xl object-cover border-2 border-primary/20 shadow-sm" class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center border border-primary/20">
+                    <span class="material-symbols-outlined text-[22px]">storefront</span>
+                </div>
             @endif
         </div>
     </div>

@@ -430,6 +430,7 @@ function previewShopLogo(input) {
     if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
+            const previewSrc = e.target.result;
             // Preview di halaman settings
             const containers = document.querySelectorAll('.avatar-upload');
             const shopContainer = containers[1] || containers[0];
@@ -440,26 +441,27 @@ function previewShopLogo(input) {
                 const placeholder = shopContainer.querySelector('div');
                 if (placeholder) placeholder.replaceWith(img);
             }
-            img.src = e.target.result;
+            img.src = previewSrc;
 
-            // Update juga logo di sidebar
-            const sidebarLogoImg = document.querySelector('#sidebar img');
-            if (sidebarLogoImg) {
-                sidebarLogoImg.src = e.target.result;
-            } else {
-                // Kalau sidebar belum punya img (masih icon+text), ganti dengan img
-                const sidebarLogoContainer = document.querySelector('#sidebar .flex.items-center.gap-2');
-                if (sidebarLogoContainer) {
-                    const newImg = document.createElement('img');
-                    newImg.src = e.target.result;
-                    newImg.alt = 'Logo';
-                    newImg.className = 'w-full max-w-[180px] h-auto max-h-[80px] object-contain mb-2';
-                    sidebarLogoContainer.replaceWith(newImg);
-                }
-            }
+            updateShopLogoPreviews(previewSrc);
         };
         reader.readAsDataURL(input.files[0]);
     }
+}
+
+function updateShopLogoPreviews(src) {
+    document.querySelectorAll('[data-shop-logo-preview]').forEach(function(img) {
+        img.src = src;
+    });
+
+    document.querySelectorAll('[data-shop-logo-fallback]').forEach(function(fallback) {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = fallback.dataset.shopLogoAlt || 'Logo Toko';
+        img.className = fallback.dataset.shopLogoClass || 'w-10 h-10 rounded-xl object-cover';
+        img.setAttribute('data-shop-logo-preview', '');
+        fallback.replaceWith(img);
+    });
 }
 </script>
 @endsection
