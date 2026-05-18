@@ -334,7 +334,8 @@ section[id] { scroll-margin-top: 96px; }
                     <h3 class="text-2xl font-bold tracking-tight">Pencatatan Manual</h3>
                     <p class="text-sm text-white/80 mt-2 leading-relaxed">Buku nota sering hilang, kotor, atau salah hitung.</p>
                 </div>
-                <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=200&amp;h=200&amp;fit=crop" alt="Messy notebook" class="absolute -right-6 -bottom-6 w-32 h-32 object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 group-hover:rotate-6 transition-all duration-400 ease-in-out rounded-2xl" loading="lazy"/>
+                <div class="absolute -right-4 -bottom-4 w-28 h-28 bg-white/10 rounded-2xl rotate-12 group-hover:rotate-6 transition-transform duration-400"></div>
+                <div class="absolute -right-8 -bottom-8 w-20 h-20 bg-white/5 rounded-xl -rotate-12 group-hover:rotate-0 transition-transform duration-400"></div>
             </div>
             <div class="reveal delay-200 group relative flex flex-col justify-between w-full p-6 overflow-hidden rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-[1.02] min-h-[200px] bg-gray-600 text-white">
                 <div class="relative z-10 flex flex-col h-full">
@@ -344,7 +345,8 @@ section[id] { scroll-margin-top: 96px; }
                     <h3 class="text-2xl font-bold tracking-tight">Stok Tidak Terkontrol</h3>
                     <p class="text-sm text-white/80 mt-2 leading-relaxed">Barang habis tanpa diketahui, pelanggan kecewa.</p>
                 </div>
-                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=200&amp;h=200&amp;fit=crop" alt="Empty shelf" class="absolute -right-6 -bottom-6 w-32 h-32 object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 group-hover:rotate-6 transition-all duration-400 ease-in-out rounded-2xl" loading="lazy"/>
+                <div class="absolute -right-4 -bottom-4 w-28 h-28 bg-white/10 rounded-2xl rotate-12 group-hover:rotate-6 transition-transform duration-400"></div>
+                <div class="absolute -right-8 -bottom-8 w-20 h-20 bg-white/5 rounded-xl -rotate-12 group-hover:rotate-0 transition-transform duration-400"></div>
             </div>
             <div class="reveal delay-300 group relative flex flex-col justify-between w-full p-6 overflow-hidden rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-[1.02] min-h-[200px] bg-blue-500/90 text-white">
                 <div class="relative z-10 flex flex-col h-full">
@@ -354,7 +356,8 @@ section[id] { scroll-margin-top: 96px; }
                     <h3 class="text-2xl font-bold tracking-tight">Laba Tidak Jelas</h3>
                     <p class="text-sm text-white/80 mt-2 leading-relaxed">Uang toko dan pribadi sering tercampur.</p>
                 </div>
-                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=200&amp;h=200&amp;fit=crop" alt="Calculator and money" class="absolute -right-6 -bottom-6 w-32 h-32 object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 group-hover:rotate-6 transition-all duration-400 ease-in-out rounded-2xl" loading="lazy"/>
+                <div class="absolute -right-4 -bottom-4 w-28 h-28 bg-white/10 rounded-2xl rotate-12 group-hover:rotate-6 transition-transform duration-400"></div>
+                <div class="absolute -right-8 -bottom-8 w-20 h-20 bg-white/5 rounded-xl -rotate-12 group-hover:rotate-0 transition-transform duration-400"></div>
             </div>
         </div>
     </div>
@@ -374,8 +377,11 @@ section[id] { scroll-margin-top: 96px; }
         </div>
         <div id="fluid-grid" class="w-full max-w-2xl mx-auto">
             <div class="grid grid-cols-2 grid-rows-2 gap-5 w-full h-[300px] sm:h-[400px] md:h-[460px] transition-all duration-500 ease-in-out">
-                <div class="fluid-card relative cursor-pointer group w-full h-full rounded-[32px] overflow-hidden bg-zinc-100" data-id="kasir" data-color="#10B981" onclick="expandGridItem(this)">
-                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&amp;auto=format&amp;fit=crop&amp;q=60" alt="Kasir POS" class="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out"/>
+                <div class="fluid-card relative cursor-pointer group w-full h-full rounded-[32px] overflow-hidden" data-id="kasir" data-color="#10B981" onclick="expandGridItem(this)">
+                    <div class="absolute inset-0 bg-gradient-to-br from-emerald-500 to-emerald-700"></div>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-20">
+                        <span class="material-symbols-outlined text-white text-[120px]">point_of_sale</span>
+                    </div>
                     <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-700"></div>
                     <div class="absolute inset-0 pointer-events-none rounded-[32px]" style="background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);"></div>
                     <div class="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end text-white z-10 select-none">
@@ -383,8 +389,11 @@ section[id] { scroll-margin-top: 96px; }
                         <p class="text-xs sm:text-sm text-white/80 font-normal">Transaksi cepat &amp; QRIS otomatis</p>
                     </div>
                 </div>
-                <div class="fluid-card relative cursor-pointer group w-full h-full rounded-[32px] overflow-hidden bg-zinc-100" data-id="inventori" data-color="#3B82F6" onclick="expandGridItem(this)">
-                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&amp;auto=format&amp;fit=crop&amp;q=60" alt="Inventori" class="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out"/>
+                <div class="fluid-card relative cursor-pointer group w-full h-full rounded-[32px] overflow-hidden" data-id="inventori" data-color="#3B82F6" onclick="expandGridItem(this)">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-blue-700"></div>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-20">
+                        <span class="material-symbols-outlined text-white text-[120px]">inventory_2</span>
+                    </div>
                     <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-700"></div>
                     <div class="absolute inset-0 pointer-events-none rounded-[32px]" style="background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);"></div>
                     <div class="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end text-white z-10 select-none">
@@ -392,8 +401,11 @@ section[id] { scroll-margin-top: 96px; }
                         <p class="text-xs sm:text-sm text-white/80 font-normal">Stok otomatis &amp; notifikasi real-time</p>
                     </div>
                 </div>
-                <div class="fluid-card relative cursor-pointer group w-full h-full rounded-[32px] overflow-hidden bg-zinc-100" data-id="ai" data-color="#8B5CF6" onclick="expandGridItem(this)">
-                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&amp;auto=format&amp;fit=crop&amp;q=60" alt="AI Prediksi" class="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out"/>
+                <div class="fluid-card relative cursor-pointer group w-full h-full rounded-[32px] overflow-hidden" data-id="ai" data-color="#8B5CF6" onclick="expandGridItem(this)">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-500 to-purple-700"></div>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-20">
+                        <span class="material-symbols-outlined text-white text-[120px]">psychology</span>
+                    </div>
                     <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-700"></div>
                     <div class="absolute inset-0 pointer-events-none rounded-[32px]" style="background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);"></div>
                     <div class="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end text-white z-10 select-none">
@@ -401,8 +413,11 @@ section[id] { scroll-margin-top: 96px; }
                         <p class="text-xs sm:text-sm text-white/80 font-normal">Tahu kapan harus restok barang</p>
                     </div>
                 </div>
-                <div class="fluid-card relative cursor-pointer group w-full h-full rounded-[32px] overflow-hidden bg-zinc-100" data-id="laporan" data-color="#F59E0B" onclick="expandGridItem(this)">
-                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&amp;auto=format&amp;fit=crop&amp;q=60" alt="Laporan" class="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out"/>
+                <div class="fluid-card relative cursor-pointer group w-full h-full rounded-[32px] overflow-hidden" data-id="laporan" data-color="#F59E0B" onclick="expandGridItem(this)">
+                    <div class="absolute inset-0 bg-gradient-to-br from-amber-500 to-amber-700"></div>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-20">
+                        <span class="material-symbols-outlined text-white text-[120px]">bar_chart</span>
+                    </div>
                     <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-700"></div>
                     <div class="absolute inset-0 pointer-events-none rounded-[32px]" style="background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);"></div>
                     <div class="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end text-white z-10 select-none">
