@@ -14,7 +14,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'active' => \App\Http\Middleware\EnsureActive::class,
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
+            'security.headers' => \App\Http\Middleware\SecurityHeaders::class,
         ]);
+
+        // Apply security headers globally
+        $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

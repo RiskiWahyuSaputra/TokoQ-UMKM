@@ -102,7 +102,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/shops', [ValidationController::class, 'shops'])->name('admin.shops');
     Route::get('/admin/users', [ValidationController::class, 'users'])->name('admin.users');
     Route::get('/admin/transactions', [ValidationController::class, 'transactions'])->name('admin.transactions');
+    Route::post('/admin/users/{user}/suspend', [ValidationController::class, 'suspendUser'])->name('admin.users.suspend');
+    Route::post('/admin/users/{user}/activate', [ValidationController::class, 'activateUser'])->name('admin.users.activate');
+    Route::post('/admin/shops/{shop}/suspend', [ValidationController::class, 'suspendShop'])->name('admin.shops.suspend');
+    Route::post('/admin/shops/{shop}/activate', [ValidationController::class, 'activateShop'])->name('admin.shops.activate');
+    Route::post('/admin/validate/bulk-activate', [ValidationController::class, 'bulkActivate'])->name('admin.validate.bulk-activate');
+    Route::post('/admin/validate/{user}/reject', [ValidationController::class, 'reject'])->name('admin.validate.reject');
+    Route::post('/admin/validate/{user}/revisi', [ValidationController::class, 'revisi'])->name('admin.validate.revisi');
     Route::get('/admin/reports', [ValidationController::class, 'reports'])->name('admin.reports');
     Route::get('/admin/settings', [ValidationController::class, 'settings'])->name('admin.settings');
+    Route::post('/admin/settings', [ValidationController::class, 'settingsSave'])->name('admin.settings.save');
     Route::get('/admin/logs', [ValidationController::class, 'logs'])->name('admin.logs');
+    Route::get('/admin/audit-logs', [ValidationController::class, 'auditLogs'])->name('admin.audit-logs');
 });

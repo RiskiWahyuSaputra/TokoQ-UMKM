@@ -121,6 +121,11 @@
                 <span class="material-symbols-outlined text-[20px]">history</span>
                 Log Aktivitas
             </a>
+
+            <a href="{{ route('admin.audit-logs') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all {{ request()->routeIs('admin.audit-logs') ? 'bg-primary/20 text-emerald-400' : 'text-gray-300 hover:bg-white/5 hover:text-white' }}">
+                <span class="material-symbols-outlined text-[20px]">manage_history</span>
+                Log Audit
+            </a>
         </nav>
 
         <!-- User Profile -->
