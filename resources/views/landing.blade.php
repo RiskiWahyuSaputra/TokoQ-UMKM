@@ -146,6 +146,13 @@ section[id] { scroll-margin-top: 96px; }
     background-position: center;
     background-repeat: no-repeat;
 }
+.hero-section {
+    min-height: 100vh;
+    min-height: 100svh;
+}
+@supports (min-height: 100dvh) {
+    .hero-section { min-height: 100dvh; }
+}
 .impact-stat {
     background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
     backdrop-filter: blur(10px);
@@ -246,7 +253,7 @@ section[id] { scroll-margin-top: 96px; }
 
 <main>
 <!-- HERO -->
-<section class="relative min-h-[90vh] flex items-center hero-bg overflow-hidden pt-16">
+<section class="hero-section relative flex items-center hero-bg overflow-hidden pt-16">
     <div class="absolute inset-0 bg-gradient-to-r from-emerald-900/60 via-emerald-800/40 to-transparent"></div>
     <div class="max-w-7xl mx-auto px-6 py-16 lg:py-0 w-full relative z-10">
         <div class="max-w-2xl">
