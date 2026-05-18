@@ -56,11 +56,11 @@
         <div class="p-5 border-b border-white/10">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-primary to-emerald-400 rounded-xl flex items-center justify-center shadow-lg shadow-primary/30">
-                        <span class="material-symbols-outlined text-white text-[20px]">admin_panel_settings</span>
+                    <div class="w-12 h-12 bg-gradient-to-br from-primary to-emerald-400 rounded-xl flex items-center justify-center shadow-lg shadow-primary/30">
+                        <span class="material-symbols-outlined text-white text-[24px]">admin_panel_settings</span>
                     </div>
                     <div>
-                        <h1 class="text-lg font-extrabold text-white">TokoQ</h1>
+                        <h1 class="text-xl font-extrabold text-white">TokoQ</h1>
                         <p class="text-[10px] text-gray-400 uppercase tracking-wider">Admin Panel</p>
                     </div>
                 </div>

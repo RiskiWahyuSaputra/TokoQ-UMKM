@@ -206,10 +206,7 @@
         <!-- Left: Branding & Info -->
         <div class="hidden lg:block space-y-8 animate-fade-in-left">
             <a href="/" class="inline-flex items-center gap-2.5 group">
-                <div class="w-11 h-11 bg-gradient-to-br from-primary to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-white text-[20px]">storefront</span>
-                </div>
-                <span class="text-2xl font-extrabold gradient-text">TokoQ</span>
+                <img src="/images/logo-tokoq.png" alt="TokoQ" width="140" height="38" class="group-hover:scale-105 transition-transform"/>
             </a>
 
             <div>
@@ -280,10 +277,7 @@
                 <!-- Mobile logo -->
                 <div class="lg:hidden text-center mb-6">
                     <a href="/" class="inline-flex items-center gap-2">
-                        <div class="w-10 h-10 bg-gradient-to-br from-primary to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
-                            <span class="material-symbols-outlined text-white text-[18px]">storefront</span>
-                        </div>
-                        <span class="text-xl font-extrabold gradient-text">TokoQ</span>
+                        <img src="/images/logo-tokoq.png" alt="TokoQ" width="130" height="36"/>
                     </a>
                 </div>
 

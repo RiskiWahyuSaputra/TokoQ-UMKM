@@ -218,7 +218,7 @@ section[id] { scroll-margin-top: 96px; }
 <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-transparent border-b border-transparent">
     <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <a href="#" class="flex items-center gap-2.5 group">
-            <img src="/images/logo-tokoq.png" alt="TokoQ" width="120" height="32" class="group-hover:scale-105 transition-transform"/>
+            <img src="/images/logo-tokoq.png" alt="TokoQ" width="150" height="40" class="group-hover:scale-105 transition-transform"/>
         </a>
         <nav class="hidden md:flex items-center gap-8">
             <a href="#fitur" class="nav-link text-sm font-medium transition-colors">Fitur</a>
@@ -457,12 +457,13 @@ function closeDetail() {
                 LIHAT CARA KERJANYA
             </div>
             <h2 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">TokoQ dalam Aksi</h2>
-            <p class="text-gray-500 max-w-xl mx-auto">Jelajahi tampilan dashboard, kasir, stok, dan laporan yang akan Anda gunakan setiap hari.</p>
+            <p class="text-gray-500 max-w-xl mx-auto">Jelajahi tampilan dashboard, kasir, stok, prediksi AI, dan laporan yang akan Anda gunakan setiap hari.</p>
         </div>
         <div class="flex flex-wrap justify-center gap-3 mb-8 reveal">
             <button class="demo-tab-btn active px-5 py-2.5 rounded-xl text-sm font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all" onclick="switchDemo('dashboard', this)"><span class="material-symbols-outlined text-[16px] align-middle mr-1">dashboard</span>Dashboard</button>
             <button class="demo-tab-btn px-5 py-2.5 rounded-xl text-sm font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all" onclick="switchDemo('kasir', this)"><span class="material-symbols-outlined text-[16px] align-middle mr-1">point_of_sale</span>Kasir POS</button>
             <button class="demo-tab-btn px-5 py-2.5 rounded-xl text-sm font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all" onclick="switchDemo('stok', this)"><span class="material-symbols-outlined text-[16px] align-middle mr-1">inventory_2</span>Stok Barang</button>
+            <button class="demo-tab-btn px-5 py-2.5 rounded-xl text-sm font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all" onclick="switchDemo('ai', this)"><span class="material-symbols-outlined text-[16px] align-middle mr-1">psychology</span>Prediksi AI</button>
             <button class="demo-tab-btn px-5 py-2.5 rounded-xl text-sm font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all" onclick="switchDemo('laporan', this)"><span class="material-symbols-outlined text-[16px] align-middle mr-1">bar_chart</span>Laporan</button>
         </div>
         <div class="reveal-scale">
@@ -496,6 +497,92 @@ function closeDetail() {
                 <div class="demo-mockup bg-white max-w-5xl mx-auto">
                     <div class="demo-browser-bar"><div class="demo-dot bg-red-400"></div><div class="demo-dot bg-amber-400"></div><div class="demo-dot bg-green-400"></div><div class="demo-tab">tokoq.id/products</div></div>
                     <div class="p-4 md:p-6"><div class="flex flex-wrap gap-3 mb-4"><div class="px-3 py-1.5 bg-emerald-50 text-emerald-600 text-[10px] font-bold rounded-full">Semua (156)</div><div class="px-3 py-1.5 bg-red-50 text-red-500 text-[10px] font-bold rounded-full">Stok Habis (3)</div><div class="px-3 py-1.5 bg-amber-50 text-amber-600 text-[10px] font-bold rounded-full">Stok Menipis (8)</div></div><div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="border-b border-gray-100"><th class="text-[10px] font-bold text-gray-400 uppercase pb-3 pr-4">Produk</th><th class="text-[10px] font-bold text-gray-400 uppercase pb-3 pr-4">Kategori</th><th class="text-[10px] font-bold text-gray-400 uppercase pb-3 pr-4">Harga</th><th class="text-[10px] font-bold text-gray-400 uppercase pb-3 pr-4">Stok</th><th class="text-[10px] font-bold text-gray-400 uppercase pb-3">Status</th></tr></thead><tbody class="text-xs"><tr class="border-b border-gray-50"><td class="py-3 pr-4 font-bold text-gray-700">Beras 5kg</td><td class="py-3 pr-4 text-gray-500">Sembako</td><td class="py-3 pr-4 text-gray-700">Rp 65.000</td><td class="py-3 pr-4 font-bold text-gray-700">12</td><td class="py-3"><span class="px-2 py-1 bg-amber-50 text-amber-600 text-[10px] font-bold rounded-full">Menipis</span></td></tr><tr class="border-b border-gray-50"><td class="py-3 pr-4 font-bold text-gray-700">Minyak Goreng 1L</td><td class="py-3 pr-4 text-gray-500">Sembako</td><td class="py-3 pr-4 text-gray-700">Rp 18.500</td><td class="py-3 pr-4 font-bold text-gray-700">2</td><td class="py-3"><span class="px-2 py-1 bg-red-50 text-red-500 text-[10px] font-bold rounded-full">Hampir Habis</span></td></tr><tr class="border-b border-gray-50"><td class="py-3 pr-4 font-bold text-gray-700">Gula Pasir 1kg</td><td class="py-3 pr-4 text-gray-500">Sembako</td><td class="py-3 pr-4 text-gray-700">Rp 14.000</td><td class="py-3 pr-4 font-bold text-gray-700">45</td><td class="py-3"><span class="px-2 py-1 bg-emerald-50 text-emerald-600 text-[10px] font-bold rounded-full">Aman</span></td></tr><tr class="border-b border-gray-50"><td class="py-3 pr-4 font-bold text-gray-700">Telur Ayam 1kg</td><td class="py-3 pr-4 text-gray-500">Protein</td><td class="py-3 pr-4 text-gray-700">Rp 28.000</td><td class="py-3 pr-4 font-bold text-gray-700">0</td><td class="py-3"><span class="px-2 py-1 bg-red-50 text-red-500 text-[10px] font-bold rounded-full">Habis</span></td></tr><tr><td class="py-3 pr-4 font-bold text-gray-700">Indomie Goreng</td><td class="py-3 pr-4 text-gray-500">Makanan</td><td class="py-3 pr-4 text-gray-700">Rp 3.500</td><td class="py-3 pr-4 font-bold text-gray-700">120</td><td class="py-3"><span class="px-2 py-1 bg-emerald-50 text-emerald-600 text-[10px] font-bold rounded-full">Aman</span></td></tr></tbody></table></div></div>
+                </div>
+            </div>
+            <div id="demo-ai" class="demo-panel">
+                <div class="demo-mockup bg-white max-w-5xl mx-auto">
+                    <div class="demo-browser-bar"><div class="demo-dot bg-red-400"></div><div class="demo-dot bg-amber-400"></div><div class="demo-dot bg-green-400"></div><div class="demo-tab">tokoq.id/ai-predictions</div></div>
+                    <div class="p-6 md:p-8 bg-gradient-to-br from-purple-50/50 to-emerald-50/30">
+                        <div class="grid md:grid-cols-3 gap-4 mb-6">
+                            <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                                <div class="flex items-center gap-2 mb-2"><span class="material-symbols-outlined text-purple-500 text-[18px]">psychology</span><p class="text-[10px] text-gray-400 uppercase font-bold">Total Prediksi</p></div>
+                                <p class="text-2xl font-extrabold text-gray-800">12</p>
+                                <p class="text-[10px] text-purple-500 font-bold mt-1">barang perlu restok</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                                <div class="flex items-center gap-2 mb-2"><span class="material-symbols-outlined text-emerald-500 text-[18px]">trending_up</span><p class="text-[10px] text-gray-400 uppercase font-bold">Akurasi Model</p></div>
+                                <p class="text-2xl font-extrabold text-gray-800">94%</p>
+                                <p class="text-[10px] text-emerald-500 font-bold mt-1">terus meningkat</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                                <div class="flex items-center gap-2 mb-2"><span class="material-symbols-outlined text-amber-500 text-[18px]">schedule</span><p class="text-[10px] text-gray-400 uppercase font-bold">Hemat Waktu</p></div>
+                                <p class="text-2xl font-extrabold text-gray-800">2 Jam</p>
+                                <p class="text-[10px] text-amber-500 font-bold mt-1">per hari dari hitung manual</p>
+                            </div>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4 mb-6">
+                            <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                                <p class="text-xs font-bold text-gray-600 mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-purple-500 text-[18px]">auto_awesome</span>Rekomendasi Restok</p>
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-3 p-3 bg-red-50 rounded-xl border border-red-100">
+                                        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-red-500 text-[20px]">error</span></div>
+                                        <div class="flex-1">
+                                            <p class="text-xs font-bold text-gray-700">Minyak Goreng 1L</p>
+                                            <p class="text-[10px] text-gray-400">Stok: 2 unit • Habis dalam ~1 hari</p>
+                                        </div>
+                                        <span class="text-[10px] font-bold text-red-500 bg-red-100 px-2 py-1 rounded-full">Darurat</span>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-3 bg-amber-50 rounded-xl border border-amber-100">
+                                        <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-amber-500 text-[20px]">warning</span></div>
+                                        <div class="flex-1">
+                                            <p class="text-xs font-bold text-gray-700">Beras 5kg</p>
+                                            <p class="text-[10px] text-gray-400">Stok: 12 unit • Habis dalam ~3 hari</p>
+                                        </div>
+                                        <span class="text-[10px] font-bold text-amber-600 bg-amber-100 px-2 py-1 rounded-full">Segera</span>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-3 bg-amber-50 rounded-xl border border-amber-100">
+                                        <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-amber-500 text-[20px]">warning</span></div>
+                                        <div class="flex-1">
+                                            <p class="text-xs font-bold text-gray-700">Indomie Goreng</p>
+                                            <p class="text-[10px] text-gray-400">Stok: 25 unit • Habis dalam ~5 hari</p>
+                                        </div>
+                                        <span class="text-[10px] font-bold text-amber-600 bg-amber-100 px-2 py-1 rounded-full">Perhatian</span>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-3 bg-emerald-50 rounded-xl border border-emerald-100">
+                                        <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-emerald-500 text-[20px]">check_circle</span></div>
+                                        <div class="flex-1">
+                                            <p class="text-xs font-bold text-gray-700">Gula Pasir 1kg</p>
+                                            <p class="text-[10px] text-gray-400">Stok: 45 unit • Aman untuk ~14 hari</p>
+                                        </div>
+                                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">Aman</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                                    <p class="text-xs font-bold text-gray-600 mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-blue-500 text-[18px]">insights</span>Pola Penjualan</p>
+                                    <div class="space-y-3">
+                                        <div>
+                                            <div class="flex justify-between text-[10px] mb-1"><span class="font-bold text-gray-600">Senin - Rabu</span><span class="text-gray-400">Naik 25%</span></div>
+                                            <div class="w-full bg-gray-100 rounded-full h-2"><div class="bg-purple-500 h-2 rounded-full" style="width:75%"></div></div>
+                                        </div>
+                                        <div>
+                                            <div class="flex justify-between text-[10px] mb-1"><span class="font-bold text-gray-600">Kamis - Jumat</span><span class="text-gray-400">Stabil</span></div>
+                                            <div class="w-full bg-gray-100 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width:60%"></div></div>
+                                        </div>
+                                        <div>
+                                            <div class="flex justify-between text-[10px] mb-1"><span class="font-bold text-gray-600">Sabtu - Minggu</span><span class="text-gray-400">Puncak 40%</span></div>
+                                            <div class="w-full bg-gray-100 rounded-full h-2"><div class="bg-emerald-500 h-2 rounded-full" style="width:90%"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl p-5 text-white">
+                                    <div class="flex items-center gap-2 mb-2"><span class="material-symbols-outlined text-white/80 text-[18px]">lightbulb</span><p class="text-xs font-bold">Saran AI</p></div>
+                                    <p class="text-sm leading-relaxed text-white/90">Berdasarkan pola penjualan, disarankan restok <strong>Minyak Goreng</strong> dan <strong>Beras 5kg</strong> sebelum akhir pekan untuk menghindari kehabisan stok.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="demo-laporan" class="demo-panel">
@@ -760,10 +847,7 @@ function switchDemo(tab, btn) {
         <div class="grid md:grid-cols-4 gap-10 mb-12">
             <div class="md:col-span-2">
                 <div class="flex items-center gap-2.5 mb-5">
-                    <div class="w-9 h-9 bg-gradient-to-br from-primary to-emerald-600 rounded-xl flex items-center justify-center">
-                        <span class="material-symbols-outlined text-white text-[18px]">storefront</span>
-                    </div>
-                    <span class="text-lg font-extrabold text-white">TokoQ</span>
+                    <img src="/images/logo-tokoq.png" alt="TokoQ" width="120" height="32"/>
                 </div>
                 <p class="text-gray-400 text-sm max-w-sm mb-6 leading-relaxed">Mendigitalisasi UMKM Indonesia melalui solusi kasir dan inventori berbasis AI yang intuitif dan mudah digunakan.</p>
                 <div class="flex gap-3">
