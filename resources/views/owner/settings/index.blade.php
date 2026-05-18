@@ -443,9 +443,19 @@ function previewShopLogo(input) {
             img.src = e.target.result;
 
             // Update juga logo di sidebar
-            const sidebarLogo = document.querySelector('#sidebar img');
-            if (sidebarLogo) {
-                sidebarLogo.src = e.target.result;
+            const sidebarLogoImg = document.querySelector('#sidebar img');
+            if (sidebarLogoImg) {
+                sidebarLogoImg.src = e.target.result;
+            } else {
+                // Kalau sidebar belum punya img (masih icon+text), ganti dengan img
+                const sidebarLogoContainer = document.querySelector('#sidebar .flex.items-center.gap-2');
+                if (sidebarLogoContainer) {
+                    const newImg = document.createElement('img');
+                    newImg.src = e.target.result;
+                    newImg.alt = 'Logo';
+                    newImg.className = 'w-full max-w-[180px] h-auto max-h-[80px] object-contain mb-2';
+                    sidebarLogoContainer.replaceWith(newImg);
+                }
             }
         };
         reader.readAsDataURL(input.files[0]);
