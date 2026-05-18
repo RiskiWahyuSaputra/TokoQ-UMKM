@@ -430,6 +430,7 @@ function previewShopLogo(input) {
     if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
+            // Preview di halaman settings
             const containers = document.querySelectorAll('.avatar-upload');
             const shopContainer = containers[1] || containers[0];
             let img = shopContainer.querySelector('img');
@@ -440,6 +441,12 @@ function previewShopLogo(input) {
                 if (placeholder) placeholder.replaceWith(img);
             }
             img.src = e.target.result;
+
+            // Update juga logo di sidebar
+            const sidebarLogo = document.querySelector('#sidebar img');
+            if (sidebarLogo) {
+                sidebarLogo.src = e.target.result;
+            }
         };
         reader.readAsDataURL(input.files[0]);
     }

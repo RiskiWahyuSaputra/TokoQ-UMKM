@@ -224,15 +224,17 @@
 
     <!-- Filter & Export Bar -->
     <div class="bg-white rounded-2xl border border-outline-variant p-4">
-        <div class="flex flex-col sm:flex-row sm:items-center gap-3">
-            <div class="flex items-center gap-2 flex-1">
+        <div class="flex flex-col gap-3">
+            <!-- Row 1: Date filters -->
+            <div class="flex flex-wrap items-center gap-2">
                 <span class="material-symbols-outlined text-gray-400 text-[18px]">filter_list</span>
-                <input type="date" id="filter-date-from" class="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:ring-2 focus:ring-primary outline-none" placeholder="Dari"/>
+                <input type="date" id="filter-date-from" class="flex-1 min-w-[120px] px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:ring-2 focus:ring-primary outline-none" placeholder="Dari"/>
                 <span class="text-gray-400 text-xs">—</span>
-                <input type="date" id="filter-date-to" class="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:ring-2 focus:ring-primary outline-none" placeholder="Sampai"/>
-                <button onclick="filterTransactions()" class="px-3 py-2 bg-primary text-white rounded-lg text-xs font-bold">Filter</button>
-                <button onclick="resetFilter()" class="px-3 py-2 bg-gray-100 text-gray-600 rounded-lg text-xs font-medium">Reset</button>
+                <input type="date" id="filter-date-to" class="flex-1 min-w-[120px] px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:ring-2 focus:ring-primary outline-none" placeholder="Sampai"/>
+                <button onclick="filterTransactions()" class="px-4 py-2 bg-primary text-white rounded-lg text-xs font-bold whitespace-nowrap">Filter</button>
+                <button onclick="resetFilter()" class="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg text-xs font-medium whitespace-nowrap">Reset</button>
             </div>
+            <!-- Row 2: Export buttons -->
             <div class="flex items-center gap-2">
                 <button onclick="exportExcel()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-bold hover:bg-emerald-100 transition-colors">
                     <span class="material-symbols-outlined text-[14px]">download</span> Excel
