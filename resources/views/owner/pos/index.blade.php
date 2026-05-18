@@ -575,6 +575,102 @@ const ewalletPicker = document.getElementById('ewallet-picker');
 const ewalletOptions = document.querySelectorAll('.ewallet-option');
 let ewalletProvider = 'dana';
 let ewalletNumber = '085789910963';
+let confirmPaymentMethod = 'tunai';
+
+// Confirm modal
+const confirmModal = document.getElementById('confirm-modal');
+const confirmSubtotalEl = document.getElementById('confirm-subtotal');
+const confirmTotalEl = document.getElementById('confirm-total');
+const confirmDiscountRow = document.getElementById('confirm-discount-row');
+const confirmDiscountEl = document.getElementById('confirm-discount');
+const discountInput = document.getElementById('discount-amount');
+const cashReceivedInput = document.getElementById('cash-received');
+const cashReceivedSection = document.getElementById('cash-received-section');
+const changeAmountEl = document.getElementById('change-amount');
+const changeValueEl = document.getElementById('change-value');
+const confirmPayBtn = document.getElementById('confirm-pay-btn');
+
+function openConfirmModal() {
+    const subtotal = currentSubtotal();
+    confirmSubtotalEl.textContent = currency(subtotal);
+    confirmTotalEl.textContent = currency(subtotal);
+    confirmDiscountRow.style.display = 'none';
+    confirmDiscountEl.textContent = '- Rp 0';
+    discountInput.value = '';
+    cashReceivedInput.value = '';
+    changeAmountEl.classList.add('hidden');
+    confirmModal.classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+}
+
+function closeConfirmModal() {
+    confirmModal.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+}
+
+// Confirm modal payment method buttons
+document.querySelectorAll('.confirm-pay-btn').forEach((button) => {
+    button.addEventListener('click', () => {
+        confirmPaymentMethod = button.dataset.confirmPayment;
+        document.querySelectorAll('.confirm-pay-btn').forEach((item) => {
+            item.className = 'confirm-pay-btn px-3 py-2.5 rounded-xl border border-gray-200 font-bold text-xs flex flex-col items-center gap-1 text-gray-600';
+        });
+        button.className = 'confirm-pay-btn px-3 py-2.5 rounded-xl border-2 border-primary bg-primary/5 text-primary font-bold text-xs flex flex-col items-center gap-1';
+
+        if (confirmPaymentMethod === 'tunai') {
+            cashReceivedSection.classList.remove('hidden');
+        } else {
+            cashReceivedSection.classList.add('hidden');
+        }
+
+        if (confirmPaymentMethod === 'qris') {
+            closeConfirmModal();
+            openQrisModal();
+        } else {
+            closeQrisModal();
+        }
+    });
+});
+
+// Cash received calculation
+cashReceivedInput.addEventListener('input', () => {
+    const received = parseFloat(cashReceivedInput.value) || 0;
+    const discount = Math.min(parseFloat(discountInput.value) || 0, currentSubtotal());
+    const total = currentSubtotal() - discount;
+    if (received >= total) {
+        changeAmountEl.classList.remove('hidden');
+        changeValueEl.textContent = currency(received - total);
+    } else {
+        changeAmountEl.classList.add('hidden');
+    }
+});
+
+// Discount input
+discountInput.addEventListener('input', () => {
+    const discount = Math.min(parseFloat(discountInput.value) || 0, currentSubtotal());
+    const total = currentSubtotal() - discount;
+    if (discount > 0) {
+        confirmDiscountRow.style.display = 'flex';
+        confirmDiscountEl.textContent = `- ${currency(discount)}`;
+    } else {
+        confirmDiscountRow.style.display = 'none';
+    }
+    confirmTotalEl.textContent = currency(total);
+    // Recalculate change
+    cashReceivedInput.dispatchEvent(new Event('input'));
+});
+
+// Confirm pay button
+confirmPayBtn.addEventListener('click', async () => {
+    hideMessage();
+    const discount = Math.min(parseFloat(discountInput.value) || 0, currentSubtotal());
+    await submitCheckout(discount, document.getElementById('customer-name').value);
+});
+
+// Close confirm modal on overlay click
+confirmModal.addEventListener('click', (e) => {
+    if (e.target === confirmModal) closeConfirmModal();
+});
 
 function showMessage(type, text) {
     messageEl.className = `mx-4 mt-4 rounded-xl px-4 py-3 text-sm ${type === 'error' ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-emerald-50 text-emerald-600 border border-emerald-200'}`;
