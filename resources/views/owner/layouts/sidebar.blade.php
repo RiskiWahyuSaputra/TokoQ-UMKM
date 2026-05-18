@@ -27,8 +27,17 @@
 
 <!-- Sidebar -->
 <aside id="sidebar" class="app-sidebar bg-white h-screen w-64 fixed left-0 top-0 shadow-lg flex flex-col  px-4 z-50 border-r border-outline transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
-    <div class="mb-10 px-4">
-        <img src="/images/logo-tokoq.png" alt="TokoQ" style="width: 180px;" class=" mb-2">
+    <div class="mb-10 px-4 pt-6">
+        @if ($shop && $shop->logo_url)
+            <img src="{{ $shop->logo_url }}" alt="{{ $shop->name }}" class="w-full max-w-[180px] h-auto max-h-[80px] object-contain mb-2">
+        @else
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary">store</span>
+                </div>
+                <span class="font-bold text-primary text-lg">{{ $shop?->name ?? 'TokoQ' }}</span>
+            </div>
+        @endif
     </div>
 
     <nav class="flex-1 space-y-2 overflow-y-auto">
