@@ -91,6 +91,12 @@
     -moz-appearance: textfield;
 }
 
+@keyframes slide-up {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+.animate-slide-up { animation: slide-up 0.3s ease-out; }
+
 @keyframes slideInRight {
     from { opacity: 0; transform: translateX(20px); }
     to { opacity: 1; transform: translateX(0); }
@@ -361,7 +367,7 @@
     </aside>
 </div>
 
-<!-- Mobile Sticky Cart Bar -->
+    <!-- Mobile Sticky Cart Bar -->
 <div id="mobile-cart-bar" class="mobile-cart-bar cursor-pointer" onclick="openMobileCart()">
     <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shrink-0 relative">
         <span class="material-symbols-outlined text-white">shopping_cart</span>
@@ -374,6 +380,46 @@
     <button type="button" class="px-4 py-2 bg-gradient-to-r from-primary to-emerald-600 text-white text-sm font-bold rounded-xl disabled:opacity-40" id="mobile-checkout-btn" disabled>
         Bayar
     </button>
+</div>
+
+<!-- Mobile Cart Modal -->
+<div id="mobile-cart-modal" class="hidden fixed inset-0 z-[70]">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeMobileCart()"></div>
+    <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl max-h-[80vh] flex flex-col animate-slide-up">
+        <div class="flex items-center justify-between p-4 border-b border-gray-100">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary">shopping_cart</span>
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-800">Keranjang</h3>
+                    <p class="text-xs text-gray-400" id="mobile-cart-modal-count">0 item</p>
+                </div>
+            </div>
+            <button type="button" onclick="closeMobileCart()" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+                <span class="material-symbols-outlined text-gray-500 text-[18px]">close</span>
+            </button>
+        </div>
+        <div id="mobile-cart-items" class="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-thin">
+            <div id="mobile-cart-empty" class="text-center py-10">
+                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span class="material-symbols-outlined text-3xl text-gray-300">shopping_basket</span>
+                </div>
+                <p class="text-sm text-gray-400">Keranjang kosong</p>
+                <p class="text-xs text-gray-300 mt-1">Tap produk untuk menambah</p>
+            </div>
+        </div>
+        <div class="p-4 border-t border-gray-100 bg-gray-50 space-y-3">
+            <div class="flex justify-between items-center">
+                <span class="font-bold text-gray-800">Total Bayar</span>
+                <span id="mobile-cart-modal-total" class="text-xl font-extrabold text-primary">Rp 0</span>
+            </div>
+            <button type="button" id="mobile-modal-checkout-btn" onclick="closeMobileCart(); openConfirmModal();" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-primary to-emerald-600 text-white font-bold text-sm shadow-lg shadow-primary/25 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2" disabled>
+                <span class="material-symbols-outlined text-[18px]">lock</span>
+                Selesaikan Transaksi
+            </button>
+        </div>
+    </div>
 </div>
 
 <!-- Confirmation Modal -->
@@ -567,11 +613,14 @@ function closeQrisModal() {
 function renderCart() {
     const items = Array.from(cart.values());
     cartItemsEl.querySelectorAll('[data-cart-item]').forEach((node) => node.remove());
+    document.querySelectorAll('[data-mobile-cart-item]').forEach((node) => node.remove());
 
     if (!items.length) {
         cartEmptyEl.classList.remove('hidden');
+        document.getElementById('mobile-cart-empty').classList.remove('hidden');
     } else {
         cartEmptyEl.classList.add('hidden');
+        document.getElementById('mobile-cart-empty').classList.add('hidden');
     }
 
     let totalQty = 0;
@@ -581,6 +630,7 @@ function renderCart() {
         totalQty += item.quantity;
         subtotal += item.quantity * item.price;
 
+        // Desktop cart item
         const row = document.createElement('div');
         row.dataset.cartItem = item.id;
         row.className = 'cart-item flex items-center gap-3 rounded-xl bg-gray-50 p-3';
@@ -604,6 +654,31 @@ function renderCart() {
             </div>
         `;
         cartItemsEl.appendChild(row);
+
+        // Mobile cart item
+        const mobileRow = document.createElement('div');
+        mobileRow.dataset.mobileCartItem = item.id;
+        mobileRow.className = 'cart-item flex items-center gap-3 rounded-xl bg-gray-50 p-3';
+        mobileRow.innerHTML = `
+            ${item.image_url
+                ? `<img src="${item.image_url}" alt="${item.name}" class="w-11 h-11 rounded-lg object-cover border border-gray-200 shrink-0">`
+                : `<div class="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[20px]">shopping_bag</span></div>`
+            }
+            <div class="flex-1 min-w-0">
+                <p class="font-bold text-sm truncate text-gray-800">${item.name}</p>
+                <p class="text-xs text-gray-400">${currency(item.price)} × ${item.quantity}</p>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+                <button type="button" class="mobile-cart-decrease w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-red-50 hover:text-red-500 hover:border-red-200 transition-colors" data-id="${item.id}">
+                    <span class="material-symbols-outlined text-[14px]">remove</span>
+                </button>
+                <span class="w-6 text-center font-bold text-sm">${item.quantity}</span>
+                <button type="button" class="mobile-cart-increase w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-emerald-50 hover:text-emerald-500 hover:border-emerald-200 transition-colors" data-id="${item.id}">
+                    <span class="material-symbols-outlined text-[14px]">add</span>
+                </button>
+            </div>
+        `;
+        document.getElementById('mobile-cart-items').appendChild(mobileRow);
     });
 
     const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
@@ -611,6 +686,17 @@ function renderCart() {
     subtotalEl.textContent = currency(subtotal);
     totalEl.textContent = currency(subtotal);
     checkoutBtn.disabled = !items.length;
+
+    // Update mobile cart bar
+    document.getElementById('mobile-cart-count').textContent = totalItems;
+    document.getElementById('mobile-cart-total').textContent = currency(subtotal);
+    document.getElementById('mobile-cart-items-label').textContent = totalItems ? `${totalItems} item di keranjang` : 'Keranjang kosong';
+    document.getElementById('mobile-checkout-btn').disabled = !items.length;
+
+    // Update mobile cart modal
+    document.getElementById('mobile-cart-modal-count').textContent = `${totalItems} item`;
+    document.getElementById('mobile-cart-modal-total').textContent = currency(subtotal);
+    document.getElementById('mobile-modal-checkout-btn').disabled = !items.length;
 }
 
 async function submitCheckout(discountAmount = 0, customerName = '') {
@@ -681,6 +767,24 @@ function updateCart(productId, delta) {
 
     renderCart();
 }
+
+// Mobile cart modal
+function openMobileCart() {
+    document.getElementById('mobile-cart-modal').classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+}
+function closeMobileCart() {
+    document.getElementById('mobile-cart-modal').classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+}
+
+// Mobile cart quantity controls
+document.getElementById('mobile-cart-items').addEventListener('click', (event) => {
+    const decrease = event.target.closest('.mobile-cart-decrease');
+    const increase = event.target.closest('.mobile-cart-increase');
+    if (decrease) updateCart(Number(decrease.dataset.id), -1);
+    if (increase) updateCart(Number(increase.dataset.id), 1);
+});
 
 // Add to cart
 document.querySelectorAll('[data-add-product]').forEach((button) => {
